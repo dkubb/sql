@@ -208,7 +208,6 @@ module SQL
       # @api private
       #
       def indented
-        buffer = self.buffer
         buffer.indent
         yield
         buffer.unindent
