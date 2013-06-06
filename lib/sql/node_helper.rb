@@ -14,5 +14,5 @@ module SQL
       AST::Node.new(type, children)
     end
 
-  end # NodeHElper
+  end # NodeHelper
 end # SQL
