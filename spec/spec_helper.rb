@@ -15,7 +15,6 @@ if ENV['COVERAGE'] == 'true'
   end
 end
 
-# encoding: utf-8
 require 'sql'
 require 'devtools/spec_helper'
 
