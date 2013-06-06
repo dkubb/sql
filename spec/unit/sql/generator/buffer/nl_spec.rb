@@ -5,7 +5,7 @@ describe SQL::Generator::Buffer, '#nl' do
 
   subject { object.nl }
 
-  it 'should indent with two chars' do
+  it 'indents with two chars' do
     object.append('foo')
     subject
     object.append('bar')

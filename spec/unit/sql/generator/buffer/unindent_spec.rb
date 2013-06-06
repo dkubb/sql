@@ -5,7 +5,7 @@ describe SQL::Generator::Buffer, '#unindent' do
 
   subject { object.unindent }
 
-  it 'should unindent two chars' do
+  it 'unindents two chars' do
     object.append('foo')
     object.indent
     object.append('bar')
