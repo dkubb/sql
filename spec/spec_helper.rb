@@ -1,7 +1,3 @@
-# encoding: utf-8
-require 'sql'
-require 'devtools/spec_helper'
-
 if ENV['COVERAGE'] == 'true'
   require 'simplecov'
   require 'coveralls'
@@ -19,6 +15,9 @@ if ENV['COVERAGE'] == 'true'
   end
 end
 
+# encoding: utf-8
+require 'sql'
+require 'devtools/spec_helper'
 
 RSpec.configure do |config|
   config.include(SQL::NodeHelper)
