@@ -21,6 +21,8 @@ require 'sql/generator/emitter/literal/integer'
 require 'sql/generator/emitter/literal/float'
 require 'sql/generator/emitter/literal/singleton'
 
+require 'sql/generator/emitter/unary_scalar'
+
 require 'sql/parser'
 require 'sql/version'
 require 'sql/node_helper'
