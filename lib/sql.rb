@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'ast'
+
 require 'sql/ast/node'
 require 'sql/fuzzer'
 require 'sql/generator'
