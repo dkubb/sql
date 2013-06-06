@@ -15,11 +15,9 @@ module SQL
         def dispatch
           left, right = children
 
-          parentheses do
-            visit(left)
-            write(WS, TYPES.fetch(node.type), WS)
-            visit(right)
-          end
+          parentheses { visit(left) }
+          write(WS, TYPES.fetch(node.type), WS)
+          parentheses { visit(right) }
         end
 
       end # Identifier
