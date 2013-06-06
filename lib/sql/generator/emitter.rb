@@ -30,9 +30,11 @@ module SQL
       O_NEGATION = '!'.freeze
 
       # Delimiters
-      D_QUOTE           = %q(').freeze
-      D_ESCAPED_QUOTE   = %q('').freeze
-      DEFAULT_DELIMITER = ', '.freeze
+      D_QUOTE             = %q(').freeze
+      D_ESCAPED_QUOTE     = %q('').freeze
+      D_DBL_QUOTE         = %q(").freeze
+      D_ESCAPED_DBL_QUOTE = %q("").freeze
+      DEFAULT_DELIMITER   = ', '.freeze
 
       # Register emitter for type
       #

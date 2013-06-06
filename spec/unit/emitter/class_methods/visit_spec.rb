@@ -46,6 +46,10 @@ describe SQL::Generator::Emitter, '.visit' do
     end
   end
 
+  context 'identifiers' do
+    assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
+  end
+
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), buffer) }.
