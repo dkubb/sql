@@ -3,7 +3,7 @@ module SQL
     class Emitter
 
       class UnaryScalar < self
-        TYPES = { :uplus => '+', :uminus => '-' }.freeze
+        TYPES = { :uplus => '+', :uminus => '-', :not => '!' }.freeze
 
         handle(*TYPES.keys)
 

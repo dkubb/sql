@@ -40,6 +40,10 @@ describe SQL::Generator::Emitter, '.visit' do
     context 'with unary minus' do
       assert_generates s(:uminus, s(:integer, 1)), '-1'
     end
+
+    context 'with unary negation' do
+      assert_generates s(:not, s(:true)), '!TRUE'
+    end
   end
 
   context 'when emitter is missing' do
