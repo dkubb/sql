@@ -8,11 +8,13 @@ module SQL
 
       # Registry for node emitters
       REGISTRY = {}
-      
-      CURLY_BRACKETS = IceNine.deep_freeze(%w({ }))
 
-      WS      = ' '.freeze
-      NL      = "\n".freeze
+      CB_L           = '{'.freeze
+      CB_R           = '}'.freeze
+      CURLY_BRACKETS = [ CB_L, CB_R ].freeze
+
+      WS = ' '.freeze
+      NL = "\n".freeze
 
       # Keywords
       K_TRUE  = 'TRUE'.freeze
@@ -20,7 +22,7 @@ module SQL
       K_NULL  = 'NULL'.freeze
 
       # Delimiters
-      D_QUOTE  = %q(').freeze
+      D_QUOTE           = %q(').freeze
       DEFAULT_DELIMITER = ', '.freeze
 
       # Register emitter for type
