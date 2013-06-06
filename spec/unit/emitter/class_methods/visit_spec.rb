@@ -15,13 +15,17 @@ describe SQL::Generator::Emitter, '.visit' do
   end
 
   context 'with literal singletons' do
-    assert_generates s(:true),  'TRUE'
-    assert_generates s(:false), 'FALSE'
-    assert_generates s(:null),  'NULL'
+    assert_generates s(:true),    'TRUE'
+    assert_generates s(:false),   'FALSE'
+    assert_generates s(:null),    'NULL'
   end
 
   context 'with strings' do
     assert_generates s(:string, %q(echo 'Hello')), %q('echo ''Hello''')
+  end
+
+  context 'with integers' do
+    assert_generates s(:integer, 1), '1'
   end
 
   context 'when emitter is missing' do
