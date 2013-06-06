@@ -36,6 +36,10 @@ describe SQL::Generator::Emitter, '.visit' do
     context 'with unary plus' do
       assert_generates s(:uplus, s(:integer, 1)), '+1'
     end
+
+    context 'with unary minus' do
+      assert_generates s(:uminus, s(:integer, 1)), '-1'
+    end
   end
 
   context 'when emitter is missing' do
