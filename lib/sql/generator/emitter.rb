@@ -23,6 +23,8 @@ module SQL
       K_TRUE  = 'TRUE'.freeze
       K_FALSE = 'FALSE'.freeze
       K_NULL  = 'NULL'.freeze
+      K_AND   = 'AND'.freeze
+      K_OR    = 'OR'.freeze
 
       # Operators
       O_PLUS     = '+'.freeze

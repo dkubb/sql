@@ -58,6 +58,18 @@ describe SQL::Generator::Emitter, '.visit' do
     context ':or' do
       assert_generates s(:or, s(:id, 'foo'), s(:id, 'bar')), '("foo") OR ("bar")'
     end
+
+    context 'scalars' do
+      {
+        :mul => '*',
+        :add => '+',
+        :sub => '+',
+        :div => '/',
+        :mod => '%'
+      }.each do |type, operator|
+        assert_generates s(type, s(:integer, 1), s(:integer, 1)), "(1) #{operator} (1)"
+      end
+    end
   end
 
   context 'when emitter is missing' do

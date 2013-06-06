@@ -4,8 +4,13 @@ module SQL
 
       class BinaryOperation < self
         TYPES = IceNine.deep_freeze(
-          :and => 'AND',
-          :or  => 'OR'
+          :and => K_AND,
+          :or  => K_OR,
+          :mul => '*',
+          :add => '+',
+          :sub => '+',
+          :div => '/',
+          :mod => '%',
         )
 
         handle(*TYPES.keys)
