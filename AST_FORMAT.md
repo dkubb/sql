@@ -1,4 +1,4 @@
-AST Format 
+AST Format
 ==========
 
 ## Literals
@@ -29,15 +29,56 @@ Format:
 "'fo''o'"
 ~~~
 
-### Unary Scalars
+### Integer
 
 ~~~
-(uplus 1)
+(int 1)
+"1"
+~~~
+
+## Unary scalar operators
+
+~~~
+(uplus (int 1))
 "+(1)"
 
-(uminus 1)
+(uminus (int 1))
 "-(1)"
 
 (not true)
 "!(TRUE)"
+~~~
+
+## Binary scalar operators
+
+~~~
+(add (int 1) (int 1))
+"1 + 1"
+~~~
+
+~~~
+(sub (int 1) (int 1))
+"1 - 1"
+~~~
+
+~~~
+(div (int 1) (int 1))
+"1 / 1"
+~~~
+
+~~~
+(mul (int 1) (int 1))
+"1 * 1"
+~~~
+
+## Binary boolean operators
+
+~~~
+(and left right)
+"left AND right"
+~~~
+
+~~~
+(or left right)
+"left OR right"
 ~~~
