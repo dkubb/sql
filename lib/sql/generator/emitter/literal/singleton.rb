@@ -18,7 +18,7 @@ module SQL
 
           # Perform dispatch
           #
-          # @return [undefied]
+          # @return [undefined]
           #
           # @api private
           #
