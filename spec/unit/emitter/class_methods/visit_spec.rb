@@ -50,6 +50,12 @@ describe SQL::Generator::Emitter, '.visit' do
     assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
   end
 
+  context 'binary operations' do
+    describe ':and' do
+      assert_generates s(:and, s(:id, 'foo'), s(:id, 'bar')), '("foo" AND "bar")'
+    end
+  end
+
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), buffer) }.
