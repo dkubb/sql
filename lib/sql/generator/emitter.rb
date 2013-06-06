@@ -1,5 +1,4 @@
 module SQL
-
   module Generator
 
     # Emitter base class
@@ -65,7 +64,6 @@ module SQL
         @node, @buffer = node, buffer
         dispatch
       end
-
       private_class_method :new
 
       # Visit node
@@ -79,7 +77,7 @@ module SQL
       #
       def self.visit(node, buffer)
         type = node.type
-        emitter = REGISTRY.fetch(type) do 
+        emitter = REGISTRY.fetch(type) do
           raise ArgumentError, "No emitter for node: #{type.inspect}"
         end
         emitter.emit(node, buffer)
@@ -94,8 +92,6 @@ module SQL
       #
       attr_reader :node
 
-    private
-
       # Return buffer
       #
       # @return [Buffer] buffer
@@ -104,6 +100,8 @@ module SQL
       #
       attr_reader :buffer
       protected :buffer
+
+    private
 
       # Emit contents of block within parentheses
       #
@@ -215,5 +213,6 @@ module SQL
       end
 
     end # Emitter
+
   end # Generator
 end # SQL
