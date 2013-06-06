@@ -55,6 +55,10 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates s(:and, s(:id, 'foo'), s(:id, 'bar')), '("foo") AND ("bar")'
     end
 
+    context ':concat' do
+      assert_generates s(:concat, s(:string, 'foo'), s(:string, 'bar')), %q[('foo') || ('bar')]
+    end
+
     context ':or' do
       assert_generates s(:or, s(:id, 'foo'), s(:id, 'bar')), '("foo") OR ("bar")'
     end
