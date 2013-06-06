@@ -11,12 +11,7 @@ module SQL
         private
 
           def dispatch
-            write(quote(first_child))
-          end
-
-          def quote(string)
-            escaped = string.gsub(Emitter::D_QUOTE, Emitter::D_ESCAPED_QUOTE)
-            escaped.insert(0, Emitter::D_QUOTE) << Emitter::D_QUOTE
+            write(D_QUOTE, first_child.gsub(D_QUOTE, D_ESCAPED_QUOTE), D_QUOTE)
           end
 
         end # String
