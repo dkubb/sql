@@ -18,7 +18,6 @@ Format:
 "NULL"
 ~~~
 
-
 ### String
 
 ~~~
@@ -28,4 +27,17 @@ Format:
 # Quoted delimiter
 (string "fo'o")
 "'fo''o'"
+~~~
+
+### Unary Scalars
+
+~~~
+(uplus 1)
+"+(1)"
+
+(uminus 1)
+"-(1)"
+
+(not true)
+"!(TRUE)"
 ~~~
