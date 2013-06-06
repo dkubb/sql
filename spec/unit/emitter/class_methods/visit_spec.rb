@@ -21,9 +21,6 @@ describe SQL::Generator::Emitter, '.visit' do
   end
 
   context 'with strings' do
-    it 'quotes and escapes the input string' do
-      described_class.visit(s(:string, %q(echo 'Hello World')), buffer)
-      expect(buffer.content).to eql(%q('echo ''Hello World'''))
-    end
+    assert_generates s(:string, %q(echo 'Hello')), %q('echo ''Hello''')
   end
 end
