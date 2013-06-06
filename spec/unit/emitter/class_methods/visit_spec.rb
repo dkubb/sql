@@ -23,4 +23,11 @@ describe SQL::Generator::Emitter, '.visit' do
   context 'with strings' do
     assert_generates s(:string, %q(echo 'Hello')), %q('echo ''Hello''')
   end
+
+  context 'when emitter is missing' do
+    it 'raises argument error' do
+      expect { described_class.visit(s(:not_supported, []), buffer) }.
+        to raise_error(ArgumentError, 'No emitter for node: :not_supported')
+    end
+  end
 end
