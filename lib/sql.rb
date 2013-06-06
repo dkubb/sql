@@ -2,11 +2,12 @@
 
 require 'ast'
 
+# Library namespace
+module SQL
+end # module SQL
+
 require 'sql/ast/node'
 require 'sql/fuzzer'
 require 'sql/generator'
 require 'sql/parser'
 require 'sql/version'
-
-module SQL
-end # module SQL
