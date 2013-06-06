@@ -3,10 +3,10 @@ module SQL
     class Emitter
       class Literal
 
-        # Literal integer emitter base class
+        # Literal integer emitter
         class Integer < self
 
-          handle :integer
+          handle :int
 
         private
 
