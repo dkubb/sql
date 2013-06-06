@@ -10,10 +10,10 @@
 [codeclimate]: https://codeclimate.com/github/dkubb/sql
 [coveralls]: https://coveralls.io/r/dkubb/sql
 
-sql
-===
+sql.rb
+======
 
-SQL Parser and Generator
+SQL Parser and Generator for Ruby
 
 Installation
 ------------
