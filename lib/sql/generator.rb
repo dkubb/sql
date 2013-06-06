@@ -2,7 +2,8 @@
 
 module SQL
 
-  # An SQL generator
+  # Namepsace for SQL generator
   module Generator
   end # module Generator
+
 end # module SQL
