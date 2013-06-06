@@ -26,7 +26,7 @@ module SQL
           parentheses { visit(right) }
         end
 
-      end # Identifier
+      end # BinaryOperation
 
     end # Emitter
   end # Generator
