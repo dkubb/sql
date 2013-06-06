@@ -15,7 +15,7 @@ module SQL
 
         def dispatch
           write(TYPES.fetch(node.type))
-          visit(first_child)
+          parentheses { visit(first_child) }
         end
 
       end # UnaryPlus

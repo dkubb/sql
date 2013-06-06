@@ -34,15 +34,15 @@ describe SQL::Generator::Emitter, '.visit' do
 
   context 'unary scalars' do
     context 'with unary plus' do
-      assert_generates s(:uplus, s(:integer, 1)), '+1'
+      assert_generates s(:uplus, s(:integer, 1)), '+(1)'
     end
 
     context 'with unary minus' do
-      assert_generates s(:uminus, s(:integer, 1)), '-1'
+      assert_generates s(:uminus, s(:integer, 1)), '-(1)'
     end
 
     context 'with unary negation' do
-      assert_generates s(:not, s(:true)), '!TRUE'
+      assert_generates s(:not, s(:true)), '!(TRUE)'
     end
   end
 
