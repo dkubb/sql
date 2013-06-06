@@ -3,9 +3,10 @@ module SQL
     class Emitter
 
       class BinaryOperation < self
-        TYPES = {
-          :and => 'AND'
-        }.freeze
+        TYPES = IceNine.deep_freeze(
+          :and => 'AND',
+          :or  => 'OR'
+        )
 
         handle(*TYPES.keys)
 

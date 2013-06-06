@@ -51,8 +51,12 @@ describe SQL::Generator::Emitter, '.visit' do
   end
 
   context 'binary operations' do
-    describe ':and' do
+    context ':and' do
       assert_generates s(:and, s(:id, 'foo'), s(:id, 'bar')), '("foo" AND "bar")'
+    end
+
+    context ':or' do
+      assert_generates s(:or, s(:id, 'foo'), s(:id, 'bar')), '("foo" OR "bar")'
     end
   end
 
