@@ -23,6 +23,7 @@ module SQL
 
       # Delimiters
       D_QUOTE           = %q(').freeze
+      D_ESCAPED_QUOTE   = %q('').freeze
       DEFAULT_DELIMITER = ', '.freeze
 
       # Register emitter for type
