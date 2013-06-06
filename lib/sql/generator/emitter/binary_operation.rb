@@ -8,7 +8,7 @@ module SQL
           :or     => K_OR,
           :mul    => '*',
           :add    => '+',
-          :sub    => '+',
+          :sub    => '-',
           :div    => '/',
           :mod    => '%',
           :concat => '||',

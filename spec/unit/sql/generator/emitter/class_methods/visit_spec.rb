@@ -67,7 +67,7 @@ describe SQL::Generator::Emitter, '.visit' do
       {
         :mul => '*',
         :add => '+',
-        :sub => '+',
+        :sub => '-',
         :div => '/',
         :mod => '%'
       }.each do |type, operator|
