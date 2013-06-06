@@ -28,6 +28,10 @@ describe SQL::Generator::Emitter, '.visit' do
     assert_generates s(:integer, 1), '1'
   end
 
+  context 'with floats' do
+    assert_generates s(:float, 1.0), '1.0'
+  end
+
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), buffer) }.
