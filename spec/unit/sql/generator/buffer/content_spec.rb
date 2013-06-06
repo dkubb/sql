@@ -6,13 +6,13 @@ describe SQL::Generator::Buffer, '#content' do
   let(:object) { described_class.new }
 
   shared_examples_for 'buffer content' do
-    it 'should contain expected content' do
+    it 'contains expected content' do
       should eql(expected_content)
     end
 
     it { should be_frozen }
 
-    it 'should return fresh string copies' do
+    it 'returns fresh string copies' do
       first  = object.content
       second = object.content
       expect(first).to eql(second)
@@ -33,6 +33,6 @@ describe SQL::Generator::Buffer, '#content' do
 
     let(:expected_content) { 'foo' }
 
-    it_should_behave_like 'buffer content'
+    it_behaves_like 'buffer content'
   end
 end
