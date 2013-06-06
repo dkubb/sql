@@ -20,6 +20,11 @@ module SQL
       K_FALSE = 'FALSE'.freeze
       K_NULL  = 'NULL'.freeze
 
+      # Operators
+      O_PLUS     = '+'.freeze
+      O_MINUS    = '-'.freeze
+      O_NEGATION = '!'.freeze
+
       # Delimiters
       D_QUOTE           = %q(').freeze
       D_ESCAPED_QUOTE   = %q('').freeze
