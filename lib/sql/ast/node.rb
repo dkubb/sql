@@ -15,9 +15,7 @@ module SQL
       #
       # @api public
       def to_sql
-        buffer = Generator::Buffer.new
-        Generator::Emitter.visit(self, buffer)
-        buffer.content
+        Generator.generate(self)
       end
 
     end # class Node
