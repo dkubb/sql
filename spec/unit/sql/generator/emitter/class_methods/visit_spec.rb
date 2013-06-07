@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SQL::Generator::Emitter, '.visit' do
-  let(:buffer) { SQL::Generator::Buffer.new }
+  include_context 'emitter'
 
   context 'with literal singletons' do
     assert_generates s(:true),  'TRUE'
