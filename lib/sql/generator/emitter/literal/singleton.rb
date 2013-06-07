@@ -27,6 +27,7 @@ module SQL
           end
 
         end # Singleton
+
       end # Literal
     end # Emitter
   end # Generator

@@ -10,11 +10,17 @@ module SQL
 
         private
 
+          # Perform dispatch
+          #
+          # @return [undefined]
+          #
+          # @api private
+          #
           def dispatch
             write(first_child.to_s)
           end
 
-        end # String
+        end # Integer
 
       end # Literal
     end # Emitter

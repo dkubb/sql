@@ -2,7 +2,9 @@ module SQL
   module Generator
     class Emitter
 
+      # Binary Operation emitter base class
       class BinaryOperation < self
+
         TYPES = IceNine.deep_freeze(
           :and    => K_AND,
           :or     => K_OR,
@@ -18,6 +20,12 @@ module SQL
 
       private
 
+        # Perform dispatch
+        #
+        # @return [undefined]
+        #
+        # @api private
+        #
         def dispatch
           left, right = children
 

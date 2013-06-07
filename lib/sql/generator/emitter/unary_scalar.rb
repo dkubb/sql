@@ -2,6 +2,7 @@ module SQL
   module Generator
     class Emitter
 
+      # Unary Scalar emitter class
       class UnaryScalar < self
         TYPES = {
           :uplus  => O_PLUS,
@@ -13,12 +14,18 @@ module SQL
 
       private
 
+        # Perform dispatch
+        #
+        # @return [undefined]
+        #
+        # @api private
+        #
         def dispatch
           write(TYPES.fetch(node.type))
           parentheses { visit(first_child) }
         end
 
-      end # UnaryPlus
+      end # UnaryScalar
 
     end # Emitter
   end # Generator

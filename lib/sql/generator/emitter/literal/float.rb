@@ -3,18 +3,24 @@ module SQL
     class Emitter
       class Literal
 
-        # Literal float emitter base class
+        # Literal float emitter
         class Float < self
 
           handle :float
 
         private
 
+          # Perform dispatch
+          #
+          # @return [undefined]
+          #
+          # @api private
+          #
           def dispatch
             write(first_child.to_s)
           end
 
-        end # String
+        end # Float
 
       end # Literal
     end # Emitter

@@ -3,13 +3,19 @@ module SQL
     class Emitter
       class Literal
 
-        # Literal string emitter base class
+        # Literal string emitter
         class String < self
 
           handle :str
 
         private
 
+          # Perform dispatch
+          #
+          # @return [undefined]
+          #
+          # @api private
+          #
           def dispatch
             write(D_QUOTE, first_child.gsub(D_QUOTE, D_ESCAPED_QUOTE), D_QUOTE)
           end
