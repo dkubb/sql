@@ -63,6 +63,7 @@ module SQL
       #
       def nl
         @content << NL
+        self
       end
 
       # Return current content of buffer as immutable string

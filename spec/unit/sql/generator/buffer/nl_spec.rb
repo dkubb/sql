@@ -5,10 +5,12 @@ describe SQL::Generator::Buffer, '#nl' do
 
   subject { object.nl }
 
-  it 'indents with two chars' do
+  it 'writes a newline' do
     object.append('foo')
     subject
     object.append('bar')
     expect(object.content).to eql("foo\nbar")
   end
+
+  it_should_behave_like 'a command method'
 end
