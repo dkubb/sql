@@ -6,7 +6,7 @@ describe SQL::Generator::Buffer, '#append' do
   let(:object) { described_class.new }
   let(:string) { 'foo' }
 
-  specify do 
+  specify do
     expect { subject }.to change { object.content }.from('').to('foo')
   end
 
