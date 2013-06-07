@@ -6,11 +6,11 @@ module SQL
         # Literal Singleton emitter base class
         class Singleton < self
 
-          TYPES = {
+          TYPES = IceNine.deep_freeze(
             :true  => K_TRUE,
             :false => K_FALSE,
             :null  => K_NULL
-          }.freeze
+          )
 
           handle(*TYPES.keys)
 

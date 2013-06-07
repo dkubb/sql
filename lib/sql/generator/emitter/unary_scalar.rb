@@ -4,11 +4,12 @@ module SQL
 
       # Unary Scalar emitter class
       class UnaryScalar < self
-        TYPES = {
+
+        TYPES = IceNine.deep_freeze(
           :uplus  => O_PLUS,
           :uminus => O_MINUS,
           :not    => O_NEGATION
-        }.freeze
+        )
 
         handle(*TYPES.keys)
 
