@@ -1,7 +1,8 @@
 ---
 Attribute:
   enabled: true
-  exclude: []
+  exclude:
+  - SQL::Generator::Emitter
 BooleanParameter:
   enabled: true
   exclude: []
@@ -18,7 +19,9 @@ DataClump:
   min_clump_size: 2
 DuplicateMethodCall:
   enabled: true
-  exclude: []
+  exclude:
+   - SQL::Generator::Emitter#indented
+   - SQL::Generator::Emitter::BinaryOperation#dispatch
   max_calls: 1
   allow_calls: []
 FeatureEnvy:
@@ -61,11 +64,21 @@ TooManyMethods:
 TooManyStatements:
   enabled: true
   exclude:
+  - SQL::Generator#self.generate
+  - SQL::Generator::Buffer#append
+  - SQL::Generator::Buffer#indent
+  - SQL::Generator::Buffer#unindent
+  - SQL::Generator::Emitter#delimited
+  - SQL::Generator::Emitter#indented
+  - SQL::Generator::Emitter#parentheses
+  - SQL::Generator::Emitter#self.visit
+  - SQL::Generator::Emitter::BinaryOperation#dispatch
   - each
   max_statements: 2
 UncommunicativeMethodName:
   enabled: true
-  exclude: []
+  exclude:
+  - SQL::NodeHelper#s
   reject:
   - !ruby/regexp /^[a-z]$/
   - !ruby/regexp /[0-9]$/
@@ -99,5 +112,6 @@ UnusedParameters:
   exclude: []
 UtilityFunction:
   enabled: true
-  exclude: []
+  exclude:
+  - SQL::NodeHelper#s
   max_helper_calls: 0
