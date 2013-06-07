@@ -91,7 +91,7 @@ module SQL
       def self.visit(node, buffer)
         type = node.type
         emitter = REGISTRY.fetch(type) do
-          raise ArgumentError, "No emitter for node: #{type.inspect}"
+          raise UnknownTypeError, "No emitter for node: #{type.inspect}"
         end
         emitter.emit(node, buffer)
         self

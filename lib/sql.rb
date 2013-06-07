@@ -7,6 +7,10 @@ require 'abstract_type'
 
 # Library namespace
 module SQL
+
+  # Raised when a node type is unknown
+  class UnknownTypeError < ArgumentError; end
+
 end # module SQL
 
 require 'sql/ast/node'
