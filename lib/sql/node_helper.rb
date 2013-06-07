@@ -1,4 +1,5 @@
 module SQL
+
   # A mixin for node helpers
   module NodeHelper
 
@@ -15,4 +16,5 @@ module SQL
     end
 
   end # NodeHelper
+
 end # SQL
