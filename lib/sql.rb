@@ -28,3 +28,6 @@ require 'sql/generator/emitter/unary_scalar'
 require 'sql/parser'
 require 'sql/version'
 require 'sql/node_helper'
+
+# Freeze the registry once it is setup
+IceNine.deep_freeze(SQL::Generator::Emitter::REGISTRY)
