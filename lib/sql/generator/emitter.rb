@@ -6,7 +6,9 @@ module SQL
       include Adamantium::Flat, AbstractType
 
       # Registry for node emitters
-      REGISTRY = {}
+      REGISTRY = Hash.new do |_registry, type|
+        raise UnknownTypeError, "No emitter for node: #{type.inspect}"
+      end
 
       CB_L           = '{'.freeze
       CB_R           = '}'.freeze
@@ -89,11 +91,7 @@ module SQL
       # @api private
       #
       def self.visit(node, buffer)
-        type = node.type
-        emitter = REGISTRY.fetch(type) do
-          raise UnknownTypeError, "No emitter for node: #{type.inspect}"
-        end
-        emitter.emit(node, buffer)
+        REGISTRY[node.type].emit(node, buffer)
         self
       end
 
