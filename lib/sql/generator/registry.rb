@@ -39,7 +39,7 @@ module SQL
       #
       # @api private
       def []=(type, emitter)
-        @emitters[key] = value
+        @emitters[type] = emitter
         self
       end
 
