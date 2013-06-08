@@ -7,11 +7,6 @@ module SQL
     class Emitter
       include Adamantium::Flat, AbstractType
 
-      # Registry for node emitters
-      REGISTRY = Hash.new do |_registry, type|
-        raise UnknownTypeError, "No emitter for node: #{type.inspect}"
-      end
-
       CB_L           = '{'.freeze
       CB_R           = '}'.freeze
       CURLY_BRACKETS = [ CB_L, CB_R ].freeze
@@ -42,6 +37,12 @@ module SQL
       D_ESCAPED_DBL_QUOTE = %q("").freeze
       DEFAULT_DELIMITER   = ', '.freeze
 
+      class << self
+        attr_accessor :registry
+      end
+
+      self.registry = Registry.new
+
       # Register emitter for type
       #
       # @param [Symbol] type
@@ -52,7 +53,7 @@ module SQL
       #
       def self.handle(*types)
         types.each do |type|
-          REGISTRY[type] = self
+          Emitter.registry[type] = self
         end
       end
       private_class_method :handle
@@ -93,7 +94,7 @@ module SQL
       # @api private
       #
       def self.visit(node, buffer)
-        REGISTRY[node.type].emit(node, buffer)
+        Emitter.registry[node.type].emit(node, buffer)
         self
       end
 

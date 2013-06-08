@@ -11,13 +11,14 @@ module SQL
   # Raised when a node type is unknown
   class UnknownTypeError < ArgumentError; end
 
-end # module SQL
+end # SQL
 
 require 'sql/ast/node'
 require 'sql/fuzzer'
 
 require 'sql/generator'
 require 'sql/generator/buffer'
+require 'sql/generator/registry'
 require 'sql/generator/emitter'
 require 'sql/generator/emitter/literal'
 require 'sql/generator/emitter/literal/string'
@@ -34,4 +35,4 @@ require 'sql/version'
 require 'sql/node_helper'
 
 # Freeze the registry once it is setup
-IceNine.deep_freeze(SQL::Generator::Emitter::REGISTRY)
+SQL::Generator::Emitter.registry.finalize
