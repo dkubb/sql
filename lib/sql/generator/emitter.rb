@@ -8,7 +8,14 @@ module SQL
       include Adamantium::Flat, AbstractType, Constants
 
       class << self
+
+        # Accessor for registry
+        #
+        # @return [Registry]
+        #
+        # @api private
         attr_accessor :registry
+
       end
 
       private_class_method :registry=
