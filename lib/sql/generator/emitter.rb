@@ -11,6 +11,8 @@ module SQL
         attr_accessor :registry
       end
 
+      private_class_method :registry=
+
       self.registry = Registry.new
 
       # Emit node into buffer
