@@ -16,9 +16,9 @@ module SQL
       CB_R           = '}'.freeze
       CURLY_BRACKETS = [ CB_L, CB_R ].freeze
 
-      PARENTHESES_L  = '('.freeze
-      PARENTHESES_R  = ')'.freeze
-      PARENTHESES    = [ PARENTHESES_L, PARENTHESES_R ].freeze
+      BRACKET_L = '('.freeze
+      BRACKET_R = ')'.freeze
+      BRACKETS  = [ BRACKET_L, BRACKET_R ].freeze
 
       WS = ' '.freeze
       NL = "\n".freeze
@@ -116,16 +116,16 @@ module SQL
 
     private
 
-      # Emit contents of block within parentheses
+      # Emit contents of block within brackets
       #
       # @return [undefined]
       #
       # @api private
       #
-      def parentheses(left = PARENTHESES_L, right = PARENTHESES_R)
-        write(left)
+      def brackets
+        write(BRACKET_L)
         yield
-        write(right)
+        write(BRACKET_R)
       end
 
       # Dispatch helper
