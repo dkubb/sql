@@ -149,13 +149,13 @@ module SQL
       #
       # @api private
       #
-      def delimited(nodes, delimiter = DEFAULT_DELIMITER)
-        max = nodes.length - 1
-        nodes.each_with_index do |node, index|
-          visit(node)
-          write(delimiter) if index < max
-        end
-      end
+      #def delimited(nodes, delimiter = DEFAULT_DELIMITER)
+        #max = nodes.length - 1
+        #nodes.each_with_index do |node, index|
+          #visit(node)
+          #write(delimiter) if index < max
+        #end
+      #end
 
       # Return children of node
       #
@@ -173,9 +173,9 @@ module SQL
       #
       # @api private
       #
-      def nl
-        buffer.nl
-      end
+      #def nl
+        #buffer.nl
+      #end
 
       # Write strings into buffer
       #
@@ -209,9 +209,9 @@ module SQL
       #
       # @api private
       #
-      def ws
-        write(WS)
-      end
+      #def ws
+        #write(WS)
+      #end
 
       # Call emit contents of block indented
       #
@@ -219,11 +219,11 @@ module SQL
       #
       # @api private
       #
-      def indented
-        buffer.indent
-        yield
-        buffer.unindent
-      end
+      #def indented
+        #buffer.indent
+        #yield
+        #buffer.unindent
+      #end
 
     end # Emitter
 
