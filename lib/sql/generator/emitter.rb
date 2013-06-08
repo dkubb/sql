@@ -5,43 +5,24 @@ module SQL
 
     # Emitter base class
     class Emitter
-      include Adamantium::Flat, AbstractType
-
-      CB_L           = '{'.freeze
-      CB_R           = '}'.freeze
-      CURLY_BRACKETS = [ CB_L, CB_R ].freeze
-
-      BRACKET_L = '('.freeze
-      BRACKET_R = ')'.freeze
-      BRACKETS  = [ BRACKET_L, BRACKET_R ].freeze
-
-      WS = ' '.freeze
-      NL = "\n".freeze
-
-      # Keywords
-      K_TRUE  = 'TRUE'.freeze
-      K_FALSE = 'FALSE'.freeze
-      K_NULL  = 'NULL'.freeze
-      K_AND   = 'AND'.freeze
-      K_OR    = 'OR'.freeze
-
-      # Operators
-      O_PLUS     = '+'.freeze
-      O_MINUS    = '-'.freeze
-      O_NEGATION = '!'.freeze
-
-      # Delimiters
-      D_QUOTE             = %q(').freeze
-      D_ESCAPED_QUOTE     = %q('').freeze
-      D_DBL_QUOTE         = %q(").freeze
-      D_ESCAPED_DBL_QUOTE = %q("").freeze
-      DEFAULT_DELIMITER   = ', '.freeze
+      include Adamantium::Flat, AbstractType, Constants
 
       class << self
         attr_accessor :registry
       end
 
       self.registry = Registry.new
+
+      # Emit node into buffer
+      #
+      # @return [self]
+      #
+      # @api private
+      #
+      def self.emit(*arguments)
+        new(*arguments)
+        self
+      end
 
       # Register emitter for type
       #
@@ -57,17 +38,6 @@ module SQL
         end
       end
       private_class_method :handle
-
-      # Emit node into buffer
-      #
-      # @return [self]
-      #
-      # @api private
-      #
-      def self.emit(*arguments)
-        new(*arguments)
-        self
-      end
 
       # Initialize object
       #

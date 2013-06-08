@@ -19,6 +19,8 @@ require 'sql/fuzzer'
 require 'sql/generator'
 require 'sql/generator/buffer'
 require 'sql/generator/registry'
+require 'sql/generator/constants'
+
 require 'sql/generator/emitter'
 require 'sql/generator/emitter/literal'
 require 'sql/generator/emitter/literal/string'
