@@ -64,7 +64,11 @@ module SQL
         self
       end
 
+      # Finalize the emitter registry
+      #
       # @return [Class<Emitter>]
+      #
+      # @return [self]
       #
       # @api private
       #
