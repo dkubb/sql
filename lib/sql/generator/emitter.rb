@@ -24,7 +24,7 @@ module SQL
 
       # Emit node into buffer
       #
-      # @return [self]
+      # @return [Class<Emitter>]
       #
       # @api private
       #
@@ -68,7 +68,7 @@ module SQL
       # @param [Parser::AST::Node] node
       # @param [Buffer] buffer
       #
-      # @return [Emitter]
+      # @return [Class<Emitter>]
       #
       # @api private
       #
