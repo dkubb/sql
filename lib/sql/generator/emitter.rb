@@ -7,24 +7,11 @@ module SQL
     class Emitter
       include Adamantium::Flat, AbstractType, Constants
 
-      class << self
-
-        # Accessor for registry
-        #
-        # @return [Registry]
-        #
-        # @api private
-        attr_accessor :registry
-
-      end
-
-      private_class_method :registry=
-
-      self.registry = Registry.new
+      @@registry = Registry.new
 
       # Emit node into buffer
       #
-      # @return [self]
+      # @return [Class<Emitter>]
       #
       # @api private
       #
@@ -43,7 +30,7 @@ module SQL
       #
       def self.handle(*types)
         types.each do |type|
-          Emitter.registry[type] = self
+          @@registry[type] = self
         end
       end
       private_class_method :handle
@@ -68,12 +55,21 @@ module SQL
       # @param [Parser::AST::Node] node
       # @param [Buffer] buffer
       #
-      # @return [Emitter]
+      # @return [Class<Emitter>]
       #
       # @api private
       #
       def self.visit(node, buffer)
-        Emitter.registry[node.type].emit(node, buffer)
+        @@registry[node.type].emit(node, buffer)
+        self
+      end
+
+      # @return [Class<Emitter>]
+      #
+      # @api private
+      #
+      def self.finalize
+        @@registry.finalize
         self
       end
 

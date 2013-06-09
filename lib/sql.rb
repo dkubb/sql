@@ -36,5 +36,5 @@ require 'sql/parser'
 require 'sql/version'
 require 'sql/node_helper'
 
-# Freeze the registry once it is setup
-SQL::Generator::Emitter.registry.finalize
+# Finalize the emitter dispatch table
+SQL::Generator::Emitter.finalize
