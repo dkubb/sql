@@ -68,8 +68,6 @@ module SQL
       #
       # @return [Class<Emitter>]
       #
-      # @return [self]
-      #
       # @api private
       #
       def self.finalize
