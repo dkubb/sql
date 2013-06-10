@@ -7,6 +7,7 @@ module SQL
     class Emitter
       include Adamantium::Flat, AbstractType, Constants
 
+      # Regitry of Emitter subclasses by node type
       @@registry = Registry.new
 
       # Emit node into buffer
