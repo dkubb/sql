@@ -14,9 +14,9 @@ module SQL
     # @api private
     #
     def self.generate(node)
-      buffer = Buffer.new
-      Emitter.visit(node, buffer)
-      buffer.content
+      stream = Stream.new
+      Emitter.visit(node, stream)
+      stream.output
     end
 
   end # module Generator

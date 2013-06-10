@@ -3,6 +3,7 @@ Attribute:
   enabled: true
   exclude:
   - SQL::Generator::Emitter
+  - SQL::Generator::Stream
 BooleanParameter:
   enabled: true
   exclude: []
@@ -23,6 +24,7 @@ DuplicateMethodCall:
   exclude:
    - SQL::Generator::Emitter#indented
    - SQL::Generator::Emitter::BinaryOperation#dispatch
+   - SQL::Generator::Stream::Indented#<<
   max_calls: 1
   allow_calls: []
 FeatureEnvy:
@@ -66,14 +68,12 @@ TooManyStatements:
   enabled: true
   exclude:
   - SQL::Generator#self.generate
-  - SQL::Generator::Buffer#append
-  - SQL::Generator::Buffer#indent
-  - SQL::Generator::Buffer#unindent
+  - SQL::Generator::Emitter#brackets
   - SQL::Generator::Emitter#delimited
   - SQL::Generator::Emitter#indented
-  - SQL::Generator::Emitter#brackets
   - SQL::Generator::Emitter#self.visit
   - SQL::Generator::Emitter::BinaryOperation#dispatch
+  - SQL::Generator::Stream#<<
   - each
   max_statements: 2
 UncommunicativeMethodName:

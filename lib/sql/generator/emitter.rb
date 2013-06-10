@@ -10,7 +10,7 @@ module SQL
       # Regitry of Emitter subclasses by node type
       @@registry = Registry.new
 
-      # Emit node into buffer
+      # Emit node into stream
       #
       # @return [Class<Emitter>]
       #
@@ -39,14 +39,14 @@ module SQL
       # Initialize object
       #
       # @param [Parser::AST::Node] node
-      # @param [Buffer] buffer
+      # @param [Stream] stream
       #
       # @return [undefined]
       #
       # @api private
       #
-      def initialize(node, buffer)
-        @node, @buffer = node, buffer
+      def initialize(node, stream)
+        @node, @stream = node, stream
         dispatch
       end
       private_class_method :new
@@ -54,14 +54,14 @@ module SQL
       # Visit node
       #
       # @param [Parser::AST::Node] node
-      # @param [Buffer] buffer
+      # @param [Stream] stream
       #
       # @return [Class<Emitter>]
       #
       # @api private
       #
-      def self.visit(node, buffer)
-        @@registry[node.type].emit(node, buffer)
+      def self.visit(node, stream)
+        @@registry[node.type].emit(node, stream)
         self
       end
 
@@ -84,14 +84,14 @@ module SQL
       #
       attr_reader :node
 
-      # Return buffer
+      # Return stream
       #
-      # @return [Buffer] buffer
+      # @return [Stream] stream
       #
       # @api private
       #
-      attr_reader :buffer
-      protected :buffer
+      attr_reader :stream
+      protected :stream
 
     private
 
@@ -116,7 +116,7 @@ module SQL
       # @api private
       #
       def visit(node)
-        self.class.visit(node, buffer)
+        self.class.visit(node, stream)
       end
 
       # Emit delimited body
@@ -153,19 +153,17 @@ module SQL
       # @api private
       #
       #def nl
-        #buffer.nl
+        #stream.nl
       #end
 
-      # Write strings into buffer
+      # Write strings into stream
       #
       # @return [undefined]
       #
       # @api private
       #
       def write(*strings)
-        strings.each do |string|
-          buffer.append(string)
-        end
+        strings.each { |string| stream << string }
       end
 
       # Return first child
@@ -199,9 +197,9 @@ module SQL
       # @api private
       #
       #def indented
-        #buffer.indent
+        #self.stream = stream.indent
         #yield
-        #buffer.unindent
+        #self.stream = stream.unindent
       #end
 
     end # Emitter
