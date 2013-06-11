@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module EmitterSpecHelper
 
   # Create an example that the expected SQL is generated
