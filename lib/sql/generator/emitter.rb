@@ -5,42 +5,21 @@ module SQL
 
     # Emitter base class
     class Emitter
-      include Adamantium::Flat, AbstractType
+      include Adamantium::Flat, AbstractType, Constants
 
-      # Registry for node emitters
-      REGISTRY = Hash.new do |_registry, type|
-        raise UnknownTypeError, "No emitter for node: #{type.inspect}"
+      # Regitry of Emitter subclasses by node type
+      @@registry = Registry.new
+
+      # Emit node into stream
+      #
+      # @return [Class<Emitter>]
+      #
+      # @api private
+      #
+      def self.emit(*arguments)
+        new(*arguments)
+        self
       end
-
-      CB_L           = '{'.freeze
-      CB_R           = '}'.freeze
-      CURLY_BRACKETS = [ CB_L, CB_R ].freeze
-
-      PARENTHESES_L  = '('.freeze
-      PARENTHESES_R  = ')'.freeze
-      PARENTHESES    = [ PARENTHESES_L, PARENTHESES_R ].freeze
-
-      WS = ' '.freeze
-      NL = "\n".freeze
-
-      # Keywords
-      K_TRUE  = 'TRUE'.freeze
-      K_FALSE = 'FALSE'.freeze
-      K_NULL  = 'NULL'.freeze
-      K_AND   = 'AND'.freeze
-      K_OR    = 'OR'.freeze
-
-      # Operators
-      O_PLUS     = '+'.freeze
-      O_MINUS    = '-'.freeze
-      O_NEGATION = '!'.freeze
-
-      # Delimiters
-      D_QUOTE             = %q(').freeze
-      D_ESCAPED_QUOTE     = %q('').freeze
-      D_DBL_QUOTE         = %q(").freeze
-      D_ESCAPED_DBL_QUOTE = %q("").freeze
-      DEFAULT_DELIMITER   = ', '.freeze
 
       # Register emitter for type
       #
@@ -52,33 +31,22 @@ module SQL
       #
       def self.handle(*types)
         types.each do |type|
-          REGISTRY[type] = self
+          @@registry[type] = self
         end
       end
       private_class_method :handle
 
-      # Emit node into buffer
-      #
-      # @return [self]
-      #
-      # @api private
-      #
-      def self.emit(*arguments)
-        new(*arguments)
-        self
-      end
-
       # Initialize object
       #
       # @param [Parser::AST::Node] node
-      # @param [Buffer] buffer
+      # @param [Stream] stream
       #
       # @return [undefined]
       #
       # @api private
       #
-      def initialize(node, buffer)
-        @node, @buffer = node, buffer
+      def initialize(node, stream)
+        @node, @stream = node, stream
         dispatch
       end
       private_class_method :new
@@ -86,14 +54,25 @@ module SQL
       # Visit node
       #
       # @param [Parser::AST::Node] node
-      # @param [Buffer] buffer
+      # @param [Stream] stream
       #
-      # @return [Emitter]
+      # @return [Class<Emitter>]
       #
       # @api private
       #
-      def self.visit(node, buffer)
-        REGISTRY[node.type].emit(node, buffer)
+      def self.visit(node, stream)
+        @@registry[node.type].emit(node, stream)
+        self
+      end
+
+      # Finalize the emitter registry
+      #
+      # @return [Class<Emitter>]
+      #
+      # @api private
+      #
+      def self.finalize
+        @@registry.finalize
         self
       end
 
@@ -105,27 +84,27 @@ module SQL
       #
       attr_reader :node
 
-      # Return buffer
+      # Return stream
       #
-      # @return [Buffer] buffer
+      # @return [Stream] stream
       #
       # @api private
       #
-      attr_reader :buffer
-      protected :buffer
+      attr_reader :stream
+      protected :stream
 
     private
 
-      # Emit contents of block within parentheses
+      # Emit contents of block within brackets
       #
       # @return [undefined]
       #
       # @api private
       #
-      def parentheses(left = PARENTHESES_L, right = PARENTHESES_R)
-        write(left)
+      def brackets
+        write(BRACKET_L)
         yield
-        write(right)
+        write(BRACKET_R)
       end
 
       # Dispatch helper
@@ -137,7 +116,7 @@ module SQL
       # @api private
       #
       def visit(node)
-        self.class.visit(node, buffer)
+        self.class.visit(node, stream)
       end
 
       # Emit delimited body
@@ -149,13 +128,13 @@ module SQL
       #
       # @api private
       #
-      def delimited(nodes, delimiter = DEFAULT_DELIMITER)
-        max = nodes.length - 1
-        nodes.each_with_index do |node, index|
-          visit(node)
-          write(delimiter) if index < max
-        end
-      end
+      #def delimited(nodes, delimiter = DEFAULT_DELIMITER)
+        #max = nodes.length - 1
+        #nodes.each_with_index do |node, index|
+          #visit(node)
+          #write(delimiter) if index < max
+        #end
+      #end
 
       # Return children of node
       #
@@ -173,20 +152,18 @@ module SQL
       #
       # @api private
       #
-      def nl
-        buffer.nl
-      end
+      #def nl
+        #stream.nl
+      #end
 
-      # Write strings into buffer
+      # Write strings into stream
       #
       # @return [undefined]
       #
       # @api private
       #
       def write(*strings)
-        strings.each do |string|
-          buffer.append(string)
-        end
+        strings.each { |string| stream << string }
       end
 
       # Return first child
@@ -209,9 +186,9 @@ module SQL
       #
       # @api private
       #
-      def ws
-        write(WS)
-      end
+      #def ws
+        #write(WS)
+      #end
 
       # Call emit contents of block indented
       #
@@ -219,11 +196,11 @@ module SQL
       #
       # @api private
       #
-      def indented
-        buffer.indent
-        yield
-        buffer.unindent
-      end
+      #def indented
+        #self.stream = stream.indent
+        #yield
+        #self.stream = stream.unindent
+      #end
 
     end # Emitter
 

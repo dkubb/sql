@@ -31,9 +31,9 @@ module SQL
         def dispatch
           left, right = children
 
-          parentheses { visit(left) }
+          brackets { visit(left) }
           write(WS, TYPES.fetch(node.type), WS)
-          parentheses { visit(right) }
+          brackets { visit(right) }
         end
 
       end # BinaryOperation
