@@ -17,7 +17,7 @@ require 'sql/ast/node'
 require 'sql/fuzzer'
 
 require 'sql/generator'
-require 'sql/generator/buffer'
+require 'sql/generator/stream'
 require 'sql/generator/registry'
 require 'sql/generator/constants'
 

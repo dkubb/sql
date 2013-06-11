@@ -13,7 +13,7 @@ describe SQL::Fuzzer, '#each' do
   context 'with a block' do
     subject { object.each {} }
 
-    it_should_behave_like 'a command method'
+    it_behaves_like 'a command method'
 
     it 'yields the ast' do
       expect { |block| object.each(&block) }.to yield_with_args(ast)
