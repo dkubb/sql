@@ -1,5 +1,5 @@
 # encoding: utf-8
 
 shared_context 'emitter' do
-  let(:buffer) { SQL::Generator::Buffer.new }
+  let(:stream) { SQL::Generator::Stream.new }
 end
