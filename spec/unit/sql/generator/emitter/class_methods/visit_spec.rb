@@ -37,6 +37,10 @@ describe SQL::Generator::Emitter, '.visit' do
     end
   end
 
+  context 'with dates' do
+    assert_generates s(:date, Date.new(2013, 1, 1)), %q('2013-01-01')
+  end
+
   context 'identifiers' do
     assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
   end
