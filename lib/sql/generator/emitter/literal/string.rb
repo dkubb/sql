@@ -8,7 +8,7 @@ module SQL
         # Literal string emitter
         class String < self
 
-          handle :str
+          handle :string
 
         private
 

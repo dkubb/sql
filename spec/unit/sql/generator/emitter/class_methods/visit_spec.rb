@@ -12,7 +12,7 @@ describe SQL::Generator::Emitter, '.visit' do
   end
 
   context 'with strings' do
-    assert_generates s(:str, %q(echo 'Hello')), %q('echo ''Hello''')
+    assert_generates s(:string, %q(echo 'Hello')), %q('echo ''Hello''')
   end
 
   context 'with integers' do
@@ -47,7 +47,7 @@ describe SQL::Generator::Emitter, '.visit' do
     end
 
     context ':concat' do
-      assert_generates s(:concat, s(:str, 'foo'), s(:str, 'bar')), %q[('foo') || ('bar')]
+      assert_generates s(:concat, s(:string, 'foo'), s(:string, 'bar')), %q[('foo') || ('bar')]
     end
 
     context ':or' do
