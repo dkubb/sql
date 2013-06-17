@@ -8,7 +8,7 @@ module SQL
         # Literal integer emitter
         class Integer < self
 
-          handle :int
+          handle :integer
 
         private
 
