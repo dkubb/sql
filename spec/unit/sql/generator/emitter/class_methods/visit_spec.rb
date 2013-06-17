@@ -16,7 +16,7 @@ describe SQL::Generator::Emitter, '.visit' do
   end
 
   context 'with integers' do
-    assert_generates s(:int, 1), '1'
+    assert_generates s(:integer, 1), '1'
   end
 
   context 'with floats' do
@@ -25,11 +25,11 @@ describe SQL::Generator::Emitter, '.visit' do
 
   context 'unary scalars' do
     context 'with unary plus' do
-      assert_generates s(:uplus, s(:int, 1)), '+(1)'
+      assert_generates s(:uplus, s(:integer, 1)), '+(1)'
     end
 
     context 'with unary minus' do
-      assert_generates s(:uminus, s(:int, 1)), '-(1)'
+      assert_generates s(:uminus, s(:integer, 1)), '-(1)'
     end
 
     context 'with unary negation' do
@@ -62,7 +62,7 @@ describe SQL::Generator::Emitter, '.visit' do
         :div => '/',
         :mod => '%'
       }.each do |type, operator|
-        assert_generates s(type, s(:int, 1), s(:int, 1)), "(1) #{operator} (1)"
+        assert_generates s(type, s(:integer, 1), s(:integer, 1)), "(1) #{operator} (1)"
       end
     end
   end
