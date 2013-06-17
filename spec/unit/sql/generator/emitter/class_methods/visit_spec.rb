@@ -41,6 +41,13 @@ describe SQL::Generator::Emitter, '.visit' do
     assert_generates s(:date, Date.new(2013, 1, 1)), %q('2013-01-01')
   end
 
+  context 'with datetimes' do
+    nsec_in_seconds = Rational(1, 10**9)
+    datetime        = DateTime.new(2013, 12, 31, 23, 59, 59 + nsec_in_seconds)
+
+    assert_generates s(:datetime, datetime), %q('2013-12-31T23:59:59.000000001+00:00')
+  end
+
   context 'identifiers' do
     assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
   end
