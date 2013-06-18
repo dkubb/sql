@@ -65,6 +65,10 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates s(:or, s(:id, 'foo'), s(:id, 'bar')), '("foo") OR ("bar")'
     end
 
+    context ':eql' do
+      assert_generates s(:eql, s(:id, 'foo'), s(:string, 'bar')), %q[("foo") = ('bar')]
+    end
+
     context 'scalars' do
       {
         :mul => '*',

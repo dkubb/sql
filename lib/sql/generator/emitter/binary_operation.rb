@@ -16,6 +16,7 @@ module SQL
           :div    => '/',
           :mod    => '%',
           :concat => '||',
+          :eql    => '='
         )
 
         handle(*TYPES.keys)
