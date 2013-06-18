@@ -15,7 +15,12 @@ module SQL
 
       private
 
+        # Perform dispatch
+        #
+        # @return [undefined]
+        #
         # @api private
+        #
         def dispatch
           write(K_INSERT, WS)
           visit(identifier)

@@ -11,7 +11,12 @@ module SQL
 
       private
 
+        # Perform dispatch
+        #
+        # @return [undefined]
+        #
         # @api private
+        #
         def dispatch
           brackets { delimited(children) }
         end
