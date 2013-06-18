@@ -86,6 +86,13 @@ describe SQL::Generator::Emitter, '.visit' do
     assert_generates s(:tuple, s(:integer, 1), s(:string, 'foo')), "(1, 'foo')"
   end
 
+  context 'where' do
+    assert_generates(
+      s(:where, s(:eql, s(:id, 'name'), s(:string, 'foo'))),
+      %q[WHERE ("name") = ('foo')]
+    )
+  end
+
   context 'insert' do
     assert_generates(
       s(:insert, s(:id, 'users'), s(:tuple, s(:integer, 1), s(:string, 'foo'))),
