@@ -180,16 +180,6 @@ module SQL
         children.first
       end
 
-      # Write whitespace
-      #
-      # @return [undefined]
-      #
-      # @api private
-      #
-      def ws
-        write(WS)
-      end
-
       # Call emit contents of block indented
       #
       # @return [undefined]
