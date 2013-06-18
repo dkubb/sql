@@ -68,16 +68,8 @@ TooManyMethods:
 TooManyStatements:
   enabled: true
   exclude:
-  - SQL::Generator#self.generate
-  - SQL::Generator::Emitter#brackets
-  - SQL::Generator::Emitter#delimited
-  - SQL::Generator::Emitter#indented
-  - SQL::Generator::Emitter#self.visit
-  - SQL::Generator::Emitter#self.children
-  - SQL::Generator::Emitter::BinaryOperation#dispatch
-  - SQL::Generator::Stream#<<
-  - each
-  max_statements: 2
+    - SQL::Generator::Emitter::Insert#dispatch # 5 statements
+  max_statements: 4
 UncommunicativeMethodName:
   enabled: true
   exclude:
