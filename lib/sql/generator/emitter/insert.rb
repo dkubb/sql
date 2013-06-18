@@ -14,9 +14,11 @@ module SQL
         # @api private
         def dispatch
           identifier, tuple = children
-          write('INSERT INTO', WS)
+          write('INSERT INTO')
+          ws
           visit(identifier)
-          write(WS, 'VALUES')
+          ws
+          write('VALUES')
           visit(tuple)
           write(';')
         end

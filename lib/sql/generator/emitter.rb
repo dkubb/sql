@@ -186,9 +186,9 @@ module SQL
       #
       # @api private
       #
-      #def ws
-        #write(WS)
-      #end
+      def ws
+        write(WS)
+      end
 
       # Call emit contents of block indented
       #
