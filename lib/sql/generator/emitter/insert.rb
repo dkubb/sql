@@ -11,11 +11,12 @@ module SQL
 
         handle :insert
 
+        children :identifier, :tuple
+
       private
 
         # @api private
         def dispatch
-          identifier, tuple = children
           write(K_INSERT, WS)
           visit(identifier)
           write(WS, K_VALUES, WS)
