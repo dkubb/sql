@@ -20,9 +20,10 @@ Rake::Task['metrics:mutant'].overwrite do
   end
 
   if defined?(Mutant)
-    status = Mutant::CLI.run(%W(--rspec-full -r ./spec/spec_helper.rb ::SQL))
-    unless status.zero?
-      fail "Not mutation covered :("
-    end
+    puts 'mutant is disabled until 0.3 is ready'
+    #status = Mutant::CLI.run(%W(--rspec-full -r ./spec/spec_helper.rb ::SQL))
+    #unless status.zero?
+      #fail "Not mutation covered :("
+    #end
   end
 end
