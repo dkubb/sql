@@ -85,7 +85,7 @@ describe SQL::Generator::Emitter, '.visit' do
   context 'insert' do
     assert_generates(
       s(:insert, s(:id, 'users'), s(:tuple, s(:integer, 1), s(:string, 'foo'))),
-      %q(INSERT INTO "users" VALUES(1, 'foo');)
+      %q(INSERT INTO "users" VALUES (1, 'foo');)
     )
   end
 

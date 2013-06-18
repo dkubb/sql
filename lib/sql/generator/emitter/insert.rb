@@ -19,6 +19,7 @@ module SQL
           visit(identifier)
           ws
           write('VALUES')
+          ws
           visit(tuple)
           write(';')
         end
