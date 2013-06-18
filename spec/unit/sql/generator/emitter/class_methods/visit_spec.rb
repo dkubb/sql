@@ -78,6 +78,10 @@ describe SQL::Generator::Emitter, '.visit' do
     end
   end
 
+  context 'tuples' do
+    assert_generates s(:tuple, s(:integer, 1), s(:string, 'foo')), "(1, 'foo')"
+  end
+
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), stream) }.

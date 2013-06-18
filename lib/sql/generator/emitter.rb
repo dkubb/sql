@@ -128,13 +128,13 @@ module SQL
       #
       # @api private
       #
-      #def delimited(nodes, delimiter = DEFAULT_DELIMITER)
-        #max = nodes.length - 1
-        #nodes.each_with_index do |node, index|
-          #visit(node)
-          #write(delimiter) if index < max
-        #end
-      #end
+      def delimited(nodes, delimiter = DEFAULT_DELIMITER)
+        max = nodes.length - 1
+        nodes.each_with_index do |node, index|
+          visit(node)
+          write(delimiter) if index < max
+        end
+      end
 
       # Return children of node
       #
