@@ -6,7 +6,10 @@ module SQL
 
       # Identifier emitter class
       class Identifier < self
+
         handle(:id)
+
+        children :value
 
       private
 
@@ -17,7 +20,7 @@ module SQL
         # @api private
         #
         def dispatch
-          identifier = first_child.gsub(D_DBL_QUOTE, D_ESCAPED_DBL_QUOTE)
+          identifier = value.gsub(D_DBL_QUOTE, D_ESCAPED_DBL_QUOTE)
           write(D_DBL_QUOTE, identifier, D_DBL_QUOTE)
         end
 

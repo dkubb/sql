@@ -46,7 +46,8 @@ LongYieldList:
   max_params: 2
 NestedIterators:
   enabled: true
-  exclude: []
+  exclude:
+  - SQL::Generator::Emitter#self.children # metaprogramming
   max_allowed_nesting: 1
   ignore_iterators: []
 NilCheck:
@@ -72,6 +73,7 @@ TooManyStatements:
   - SQL::Generator::Emitter#delimited
   - SQL::Generator::Emitter#indented
   - SQL::Generator::Emitter#self.visit
+  - SQL::Generator::Emitter#self.children
   - SQL::Generator::Emitter::BinaryOperation#dispatch
   - SQL::Generator::Stream#<<
   - each

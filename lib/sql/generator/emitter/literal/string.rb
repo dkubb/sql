@@ -19,7 +19,7 @@ module SQL
           # @api private
           #
           def dispatch
-            write(D_QUOTE, first_child.gsub(D_QUOTE, D_ESCAPED_QUOTE), D_QUOTE)
+            write(D_QUOTE, value.gsub(D_QUOTE, D_ESCAPED_QUOTE), D_QUOTE)
           end
 
         end # String

@@ -19,7 +19,7 @@ module SQL
           # @api private
           #
           def dispatch
-            write(first_child.to_s)
+            write(value.to_s)
           end
 
         end # Integer

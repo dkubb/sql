@@ -10,6 +10,23 @@ module SQL
       # Regitry of Emitter subclasses by node type
       @@registry = Registry.new
 
+      # Create name helpers
+      #
+      # @return [undefined]
+      #
+      # @api private
+      #
+      def self.children(*names)
+        names.each_with_index do |name, index|
+          define_method(name) do
+            children[index]
+          end
+          private name
+        end
+      end
+      private_class_method :children
+
+
       # Emit node into stream
       #
       # @return [Class<Emitter>]

@@ -20,6 +20,8 @@ module SQL
 
         handle(*TYPES.keys)
 
+        children :left, :right
+
       private
 
         # Perform dispatch
@@ -29,8 +31,6 @@ module SQL
         # @api private
         #
         def dispatch
-          left, right = children
-
           brackets { visit(left) }
           write(WS, TYPES.fetch(node.type), WS)
           brackets { visit(right) }

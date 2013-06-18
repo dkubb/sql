@@ -15,6 +15,8 @@ module SQL
 
         handle(*TYPES.keys)
 
+        children :value
+
       private
 
         # Perform dispatch
@@ -25,7 +27,7 @@ module SQL
         #
         def dispatch
           write(TYPES.fetch(node.type))
-          brackets { visit(first_child) }
+          brackets { visit(value) }
         end
 
       end # UnaryScalar

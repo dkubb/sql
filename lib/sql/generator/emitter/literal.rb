@@ -6,6 +6,9 @@ module SQL
 
       # Namespace for literal emitters
       class Literal < self
+
+        children :value
+
       end
 
     end # Emitter
