@@ -89,6 +89,12 @@ describe SQL::Generator::Emitter, '.visit' do
     )
   end
 
+  context 'delete' do
+    context 'without where clause' do
+      assert_generates s(:delete, s(:id, 'users')), %q(DELETE FROM "users";)
+    end
+  end
+
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), stream) }.

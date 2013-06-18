@@ -36,6 +36,7 @@ require 'sql/generator/emitter/unary_scalar'
 
 require 'sql/generator/emitter/tuple'
 require 'sql/generator/emitter/insert'
+require 'sql/generator/emitter/delete'
 
 require 'sql/parser'
 require 'sql/version'
