@@ -14,8 +14,13 @@ module SQL
 
         # @api private
         def dispatch
+          identifier, where = children
           write(K_DELETE, WS)
-          visit(first_child)
+          visit(identifier)
+          if where
+            write(WS)
+            visit(where)
+          end
           write(';')
         end
 

@@ -104,6 +104,13 @@ describe SQL::Generator::Emitter, '.visit' do
     context 'without where clause' do
       assert_generates s(:delete, s(:id, 'users')), %q(DELETE FROM "users";)
     end
+
+    context 'with where clause' do
+      assert_generates(
+        s(:delete, s(:id, 'users'), s(:where, s(:eql, s(:id, 'name'), s(:string, 'foo')))),
+        %q(DELETE FROM "users" WHERE ("name") = ('foo');)
+      )
+    end
   end
 
   context 'when emitter is missing' do
