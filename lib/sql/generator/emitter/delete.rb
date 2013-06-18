@@ -14,6 +14,10 @@ module SQL
 
       private
 
+        # @see Emitter#dispatch
+        #
+        # @return [undefined]
+        #
         # @api private
         def dispatch
           write(K_DELETE, WS)
