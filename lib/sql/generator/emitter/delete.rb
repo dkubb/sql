@@ -10,11 +10,12 @@ module SQL
 
         handle :delete
 
+        children :identifier, :where
+
       private
 
         # @api private
         def dispatch
-          identifier, where = children
           write(K_DELETE, WS)
           visit(identifier)
           if where
