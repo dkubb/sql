@@ -11,7 +11,7 @@ module SQL
 
         handle :select
 
-        children :columns, :identifier, :where
+        children :columns, :identifier
 
       private
 
@@ -25,14 +25,14 @@ module SQL
           visit(columns)
           write(WS, K_FROM, WS)
           visit(identifier)
-          if where
+          children[2..(children.size)].each do |clause|
             write(WS)
-            visit(where)
+            visit(clause)
           end
           write(';')
         end
 
-      end # Delete
+      end # Select
 
     end # Emitter
   end # Generator

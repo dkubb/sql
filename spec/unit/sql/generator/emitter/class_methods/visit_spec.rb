@@ -143,6 +143,13 @@ describe SQL::Generator::Emitter, '.visit' do
         %q(SELECT "name", "age" FROM "users" WHERE ("id") = (1);)
       )
     end
+
+    context 'with group by' do
+      assert_generates(
+        s(:select, s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users'), s(:group_by, s(:id, 'name'), s(:id, 'age'))),
+        %q(SELECT "name", "age" FROM "users" GROUP BY "name", "age";)
+      )
+    end
   end
 
   context 'when emitter is missing' do

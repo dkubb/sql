@@ -34,8 +34,10 @@ require 'sql/generator/emitter/identifier'
 require 'sql/generator/emitter/binary_operation'
 require 'sql/generator/emitter/unary_scalar'
 
-require 'sql/generator/emitter/where'
 require 'sql/generator/emitter/delimited'
+
+require 'sql/generator/emitter/where'
+require 'sql/generator/emitter/group_by'
 
 require 'sql/generator/emitter/tuple'
 require 'sql/generator/emitter/insert'
