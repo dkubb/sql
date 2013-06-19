@@ -4,24 +4,22 @@ module SQL
   module Generator
     class Emitter
 
-      # Assignment emitter
-      class Assignment < self
-
-        handle :assignment
+      # Column names emitter
+      class Delimited < self
+        handle :assignments, :columns
 
       private
 
-        # Perform dispatch
+        # @see Emitter#dispatch
         #
         # @return [undefined]
         #
         # @api private
-        #
         def dispatch
           delimited(children)
         end
 
-      end # Assignment
+      end # Delete
 
     end # Emitter
   end # Generator
