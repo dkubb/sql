@@ -6,7 +6,7 @@ module SQL
 
       # Column names emitter
       class Delimited < self
-        handle :assignments, :columns
+        handle :delimited
 
       private
 
