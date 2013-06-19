@@ -13,7 +13,8 @@ ClassVariable:
   - SQL::Generator::Emitter
 ControlParameter:
   enabled: true
-  exclude: []
+  exclude:
+    - SQL::Generator::Emitter::Select#write_node
 DataClump:
   enabled: true
   exclude: []
@@ -25,6 +26,8 @@ DuplicateMethodCall:
    - SQL::Generator::Emitter#indented
    - SQL::Generator::Emitter::BinaryOperation#dispatch
    - SQL::Generator::Emitter::Delete#dispatch
+   - SQL::Generator::Emitter::Select#dispatch
+   - SQL::Generator::Emitter::Update#dispatch
    - SQL::Generator::Stream::Indented#<<
   max_calls: 1
   allow_calls: []
@@ -68,7 +71,7 @@ TooManyMethods:
   max_methods: 10
 TooManyStatements:
   enabled: true
-  max_statements: 5
+  max_statements: 7
 UncommunicativeMethodName:
   enabled: true
   exclude:
