@@ -26,7 +26,7 @@ module SQL
           write(WS, K_SET, WS)
           visit(assignment)
           if where
-            write(WS)
+            write(WS, K_WHERE, WS)
             visit(where)
           end
           write(';')

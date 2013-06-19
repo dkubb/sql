@@ -23,7 +23,7 @@ module SQL
           write(K_DELETE, WS)
           visit(identifier)
           if where
-            write(WS)
+            write(WS, K_WHERE, WS)
             visit(where)
           end
           write(';')

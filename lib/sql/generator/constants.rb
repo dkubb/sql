@@ -24,6 +24,7 @@ module SQL
       K_NULL  = 'NULL'.freeze
       K_AND   = 'AND'.freeze
       K_OR    = 'OR'.freeze
+      K_WHERE = 'WHERE'.freeze
 
       # Operators
       O_PLUS     = '+'.freeze
