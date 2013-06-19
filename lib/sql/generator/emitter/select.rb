@@ -28,7 +28,7 @@ module SQL
           visit(identifier)
           write_node(where, K_WHERE)
           write_node(group_by, K_GROUP_BY)
-          write(';')
+          sc
         end
 
         # @api private
