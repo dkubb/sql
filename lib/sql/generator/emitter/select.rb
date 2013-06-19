@@ -10,12 +10,9 @@ module SQL
         K_FROM     = 'FROM'.freeze
         K_GROUP_BY = 'GROUP BY'.freeze
 
-        INDEX_WHERE    = 2
-        INDEX_GROUP_BY = 3
-
         handle :select
 
-        children :columns, :identifier
+        children :columns, :identifier, :where, :group_by
 
       private
 
@@ -29,14 +26,13 @@ module SQL
           visit(columns)
           write(WS, K_FROM, WS)
           visit(identifier)
-          write_node(INDEX_WHERE, K_WHERE)
-          write_node(INDEX_GROUP_BY, K_GROUP_BY)
+          write_node(where, K_WHERE)
+          write_node(group_by, K_GROUP_BY)
           write(';')
         end
 
         # @api private
-        def write_node(index, keyword)
-          node = children[index]
+        def write_node(node, keyword)
           if node
             write(WS, keyword, WS)
             visit(node)
