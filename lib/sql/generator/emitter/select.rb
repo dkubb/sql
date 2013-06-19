@@ -29,26 +29,17 @@ module SQL
           visit(columns)
           write(WS, K_FROM, WS)
           visit(identifier)
-          write_where
-          write_group_by
+          write_node(INDEX_WHERE, K_WHERE)
+          write_node(INDEX_GROUP_BY, K_GROUP_BY)
           write(';')
         end
 
         # @api private
-        def write_where
-          where_node = children[INDEX_WHERE]
-          if where_node
-            write(WS, K_WHERE, WS)
-            visit(where_node)
-          end
-        end
-
-        # @api private
-        def write_group_by
-          group_by_node = children[INDEX_GROUP_BY]
-          if group_by_node
-            write(WS, K_GROUP_BY, WS)
-            visit(group_by_node)
+        def write_node(index, keyword)
+          node = children[index]
+          if node
+            write(WS, keyword, WS)
+            visit(node)
           end
         end
 
