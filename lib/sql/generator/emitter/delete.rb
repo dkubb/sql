@@ -4,7 +4,7 @@ module SQL
   module Generator
     class Emitter
 
-      # Insert statement emitter
+      # Delete statement emitter
       class Delete < self
         K_DELETE = 'DELETE FROM'.freeze
 
