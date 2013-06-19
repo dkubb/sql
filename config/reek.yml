@@ -13,7 +13,8 @@ ClassVariable:
   - SQL::Generator::Emitter
 ControlParameter:
   enabled: true
-  exclude: []
+  exclude:
+    - SQL::Generator::Emitter::Select#write_node
 DataClump:
   enabled: true
   exclude: []
