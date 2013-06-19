@@ -183,20 +183,6 @@ module SQL
         strings.each { |string| stream << string }
       end
 
-      # Return first child
-      #
-      # @return [Parser::AST::Node]
-      #   if present
-      #
-      # @return [nil]
-      #   otherwise
-      #
-      # @api private
-      #
-      def first_child
-        children.first
-      end
-
       # Call emit contents of block indented
       #
       # @return [undefined]
