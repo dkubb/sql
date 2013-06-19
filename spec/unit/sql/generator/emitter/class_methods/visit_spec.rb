@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# FIXME: split this spec into smaller files
 describe SQL::Generator::Emitter, '.visit' do
   include_context 'emitter'
 
@@ -141,6 +142,13 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates(
         s(:select, s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users'), nil, s(:delimited, s(:id, 'name'), s(:id, 'age'))),
         %q(SELECT "name", "age" FROM "users" GROUP BY "name", "age";)
+      )
+    end
+
+    context 'with where and group by' do
+      assert_generates(
+        s(:select, s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users'), s(:delimited, s(:eql, s(:id, 'id'), s(:integer, 1))), s(:delimited, s(:id, 'name'), s(:id, 'age'))),
+        %q(SELECT "name", "age" FROM "users" WHERE ("id") = (1) GROUP BY "name", "age";)
       )
     end
   end
