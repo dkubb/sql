@@ -10,12 +10,14 @@ module SQL
 
         handle :where
 
+        children :predicate
+
       private
 
         # @api private
         def dispatch
           write(K_WHERE, WS)
-          visit(first_child)
+          visit(predicate)
         end
 
       end # Where

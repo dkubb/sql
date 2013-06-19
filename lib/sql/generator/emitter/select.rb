@@ -25,7 +25,7 @@ module SQL
           visit(columns)
           write(WS, K_FROM, WS)
           visit(identifier)
-          children[2..(children.size)].each do |clause|
+          remaining_children.each do |clause|
             write(WS)
             visit(clause)
           end

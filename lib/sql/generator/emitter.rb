@@ -10,6 +10,35 @@ module SQL
       # Regitry of Emitter subclasses by node type
       @@registry = Registry.new
 
+      # Define named child
+      #
+      # @param [Symbol] name
+      # @param [Fixnum] index
+      #
+      # @return [undefined]
+      #
+      # @api private
+      #
+      def self.define_named_child(name, index)
+        define_method(name) do
+          children[index]
+        end
+      end
+
+      # Define remaining children
+      #
+      # @param [Fixnum] from_index
+      #
+      # @return [undefined]
+      #
+      # @api private
+      #
+      def self.define_remaining_children(from_index)
+        define_method(:remaining_children) do
+          children[from_index..-1]
+        end
+      end
+
       # Create name helpers
       #
       # @return [undefined]
@@ -18,14 +47,11 @@ module SQL
       #
       def self.children(*names)
         names.each_with_index do |name, index|
-          define_method(name) do
-            children[index]
-          end
-          private name
+          define_named_child(name, index)
         end
+        define_remaining_children(names.length)
       end
       private_class_method :children
-
 
       # Emit node into stream
       #
@@ -181,20 +207,6 @@ module SQL
       #
       def write(*strings)
         strings.each { |string| stream << string }
-      end
-
-      # Return first child
-      #
-      # @return [Parser::AST::Node]
-      #   if present
-      #
-      # @return [nil]
-      #   otherwise
-      #
-      # @api private
-      #
-      def first_child
-        children.first
       end
 
       # Call emit contents of block indented
