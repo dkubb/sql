@@ -59,7 +59,9 @@ describe SQL::Generator::Emitter, '.visit' do
     end
 
     context ':concat' do
-      assert_generates s(:concat, s(:string, 'foo'), s(:string, 'bar')), %q[('foo') || ('bar')]
+      assert_generates(
+        s(:concat, s(:string, 'foo'), s(:string, 'bar')),
+        %q[('foo') || ('bar')])
     end
 
     context ':or' do
@@ -67,7 +69,9 @@ describe SQL::Generator::Emitter, '.visit' do
     end
 
     context ':eql' do
-      assert_generates s(:eql, s(:id, 'foo'), s(:string, 'bar')), %q[("foo") = ('bar')]
+      assert_generates(
+        s(:eql, s(:id, 'foo'), s(:string, 'bar')), %q[("foo") = ('bar')]
+      )
     end
 
     context 'scalars' do
@@ -78,7 +82,9 @@ describe SQL::Generator::Emitter, '.visit' do
         :div => '/',
         :mod => '%'
       }.each do |type, operator|
-        assert_generates s(type, s(:integer, 1), s(:integer, 1)), "(1) #{operator} (1)"
+        assert_generates(
+          s(type, s(:integer, 1), s(:integer, 1)), "(1) #{operator} (1)"
+        )
       end
     end
   end
@@ -101,7 +107,12 @@ describe SQL::Generator::Emitter, '.visit' do
 
     context 'with where clause' do
       assert_generates(
-        s(:delete, s(:id, 'users'), s(:delimited, s(:eql, s(:id, 'name'), s(:string, 'foo')))),
+        s(:delete,
+          s(:id, 'users'),
+          s(:delimited,
+            s(:eql, s(:id, 'name'), s(:string, 'foo'))
+           )
+         ),
         %q(DELETE FROM "users" WHERE ("name") = ('foo');)
       )
     end
@@ -110,14 +121,28 @@ describe SQL::Generator::Emitter, '.visit' do
   context 'update' do
     context 'without where clause' do
       assert_generates(
-        s(:update, s(:id, 'users'), s(:delimited, s(:eql, s(:id, 'name'), s(:string, 'foo')), s(:eql, s(:id, 'age'), s(:integer, 1)))),
+        s(:update,
+          s(:id, 'users'),
+          s(:delimited,
+            s(:eql, s(:id, 'name'), s(:string, 'foo')),
+            s(:eql, s(:id, 'age'), s(:integer, 1))
+           )
+         ),
         %q(UPDATE "users" SET ("name") = ('foo'), ("age") = (1);)
       )
     end
 
     context 'with where clause' do
       assert_generates(
-        s(:update, s(:id, 'users'), s(:delimited, s(:eql, s(:id, 'name'), s(:string, 'foo')), s(:eql, s(:id, 'age'), s(:integer, 1))), s(:delimited, s(:eql, s(:id, 'age'), s(:integer, 2)))),
+        s(:update,
+          s(:id, 'users'),
+          s(:delimited,
+            s(:eql, s(:id, 'name'), s(:string, 'foo')),
+            s(:eql, s(:id, 'age'), s(:integer, 1))),
+          s(:delimited,
+            s(:eql, s(:id, 'age'), s(:integer, 2))
+           )
+         ),
         %q(UPDATE "users" SET ("name") = ('foo'), ("age") = (1) WHERE ("age") = (2);)
       )
     end
@@ -133,21 +158,38 @@ describe SQL::Generator::Emitter, '.visit' do
 
     context 'with where clause' do
       assert_generates(
-        s(:select, s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users'), s(:delimited, s(:eql, s(:id, 'id'), s(:integer, 1)))),
+        s(:select,
+          s(:delimited,
+            s(:id, 'name'), s(:id, 'age')),
+          s(:id, 'users'),
+          s(:delimited,
+            s(:eql, s(:id, 'id'), s(:integer, 1))
+           )
+         ),
         %q(SELECT "name", "age" FROM "users" WHERE ("id") = (1);)
       )
     end
 
     context 'with group by' do
       assert_generates(
-        s(:select, s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users'), nil, s(:delimited, s(:id, 'name'), s(:id, 'age'))),
+        s(:select,
+          s(:delimited, s(:id, 'name'), s(:id, 'age')),
+          s(:id, 'users'),
+          nil,
+          s(:delimited, s(:id, 'name'), s(:id, 'age'))
+         ),
         %q(SELECT "name", "age" FROM "users" GROUP BY "name", "age";)
       )
     end
 
     context 'with where and group by' do
       assert_generates(
-        s(:select, s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users'), s(:delimited, s(:eql, s(:id, 'id'), s(:integer, 1))), s(:delimited, s(:id, 'name'), s(:id, 'age'))),
+        s(:select,
+          s(:delimited, s(:id, 'name'), s(:id, 'age')),
+          s(:id, 'users'),
+          s(:delimited, s(:eql, s(:id, 'id'), s(:integer, 1))),
+          s(:delimited, s(:id, 'name'), s(:id, 'age'))
+         ),
         %q(SELECT "name", "age" FROM "users" WHERE ("id") = (1) GROUP BY "name", "age";)
       )
     end
