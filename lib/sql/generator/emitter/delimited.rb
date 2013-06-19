@@ -4,7 +4,7 @@ module SQL
   module Generator
     class Emitter
 
-      # Column names emitter
+      # Delimited names emitter
       class Delimited < self
         handle :delimited
 
@@ -19,7 +19,7 @@ module SQL
           delimited(children)
         end
 
-      end # Delete
+      end # Delimited
 
     end # Emitter
   end # Generator
