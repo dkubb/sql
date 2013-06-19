@@ -129,6 +129,22 @@ describe SQL::Generator::Emitter, '.visit' do
     end
   end
 
+  context 'select' do
+    context 'without where clause' do
+      assert_generates(
+        s(:select, s(:columns, s(:id, 'name'), s(:id, 'age')), s(:id, 'users')),
+        %q(SELECT "name", "age" FROM "users";)
+      )
+    end
+
+    context 'with where clause' do
+      assert_generates(
+        s(:select, s(:columns, s(:id, 'name'), s(:id, 'age')), s(:id, 'users'), s(:where, s(:eql, s(:id, 'id'), s(:integer, 1)))),
+        %q(SELECT "name", "age" FROM "users" WHERE ("id") = (1);)
+      )
+    end
+  end
+
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), stream) }.
