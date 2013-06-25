@@ -21,6 +21,8 @@ notifications:
     on_success: never
     on_failure: change
 matrix:
+  allow_failures:
+    - rvm: ruby-head # Bundler broken on travis
   include:
     - rvm: jruby-19mode
       env: JRUBY_OPTS="$JRUBY_OPTS --debug"
