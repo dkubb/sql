@@ -46,7 +46,10 @@ describe SQL::Generator::Emitter, '.visit' do
     nsec_in_seconds = Rational(1, 10**9)
     datetime        = DateTime.new(2013, 12, 31, 23, 59, 59 + nsec_in_seconds)
 
-    assert_generates s(:datetime, datetime), %q('2013-12-31T23:59:59.000000001+00:00')
+    assert_generates(
+      s(:datetime, datetime),
+      %q('2013-12-31T23:59:59.000000001+00:00')
+    )
   end
 
   context 'identifiers' do
@@ -55,47 +58,62 @@ describe SQL::Generator::Emitter, '.visit' do
 
   context 'binary operations' do
     context ':and' do
-      assert_generates s(:and, s(:id, 'foo'), s(:id, 'bar')), '("foo") AND ("bar")'
+      assert_generates(
+        s(:and, s(:id, 'foo'), s(:id, 'bar')),
+        '("foo") AND ("bar")'
+      )
     end
 
     context ':concat' do
       assert_generates(
         s(:concat, s(:string, 'foo'), s(:string, 'bar')),
-        %q[('foo') || ('bar')])
+        %q[('foo') || ('bar')]
+      )
     end
 
     context ':or' do
-      assert_generates s(:or, s(:id, 'foo'), s(:id, 'bar')), '("foo") OR ("bar")'
+      assert_generates(
+        s(:or, s(:id, 'foo'), s(:id, 'bar')),
+        '("foo") OR ("bar")'
+      )
     end
 
     context ':eql' do
       assert_generates(
-        s(:eql, s(:id, 'foo'), s(:string, 'bar')), %q[("foo") = ('bar')]
+        s(:eql, s(:id, 'foo'), s(:string, 'bar')),
+        %q[("foo") = ('bar')]
       )
     end
 
     context 'scalars' do
       {
-        :mul => '*',
-        :add => '+',
-        :sub => '-',
-        :div => '/',
-        :mod => '%'
+        mul: '*',
+        add: '+',
+        sub: '-',
+        div: '/',
+        mod: '%',
       }.each do |type, operator|
         assert_generates(
-          s(type, s(:integer, 1), s(:integer, 1)), "(1) #{operator} (1)"
+          s(type, s(:integer, 1), s(:integer, 1)),
+          "(1) #{operator} (1)"
         )
       end
     end
   end
 
   context 'tuples' do
-    assert_generates s(:tuple, s(:integer, 1), s(:string, 'foo')), "(1, 'foo')"
+    assert_generates(
+      s(:tuple, s(:integer, 1), s(:string, 'foo')),
+      "(1, 'foo')"
+    )
   end
 
   context 'insert' do
     assert_generates(
-      s(:insert, s(:id, 'users'), s(:tuple, s(:integer, 1), s(:string, 'foo'))),
+      s(:insert,
+        s(:id, 'users'),
+        s(:tuple, s(:integer, 1), s(:string, 'foo'))
+      ),
       %q(INSERT INTO "users" VALUES (1, 'foo');)
     )
   end
@@ -142,8 +160,12 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:delimited,
             s(:eql, s(:id, 'age'), s(:integer, 2))
            )
-         ),
-        %q(UPDATE "users" SET ("name") = ('foo'), ("age") = (1) WHERE ("age") = (2);)
+        ),
+        <<-SQL.gsub(/\s+/, ' ').strip
+          UPDATE "users"
+          SET ("name") = ('foo'), ("age") = (1)
+          WHERE ("age") = (2);
+        SQL
       )
     end
   end
@@ -151,7 +173,9 @@ describe SQL::Generator::Emitter, '.visit' do
   context 'select' do
     context 'without where clause' do
       assert_generates(
-        s(:select, s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users')),
+        s(:select,
+          s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users')
+        ),
         %q(SELECT "name", "age" FROM "users";)
       )
     end
@@ -178,7 +202,11 @@ describe SQL::Generator::Emitter, '.visit' do
           nil,
           s(:delimited, s(:id, 'name'), s(:id, 'age'))
          ),
-        %q(SELECT "name", "age" FROM "users" GROUP BY "name", "age";)
+        <<-SQL.gsub(/\s+/, ' ').strip
+          SELECT "name", "age"
+          FROM "users"
+          GROUP BY "name", "age";
+        SQL
       )
     end
 
@@ -190,15 +218,20 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:delimited, s(:eql, s(:id, 'id'), s(:integer, 1))),
           s(:delimited, s(:id, 'name'), s(:id, 'age'))
          ),
-        %q(SELECT "name", "age" FROM "users" WHERE ("id") = (1) GROUP BY "name", "age";)
+        <<-SQL.gsub(/\s+/, ' ').strip
+          SELECT "name", "age"
+          FROM "users"
+          WHERE ("id") = (1)
+          GROUP BY "name", "age";
+        SQL
       )
     end
   end
 
   context 'when emitter is missing' do
     it 'raises argument error' do
-      expect { described_class.visit(s(:not_supported, []), stream) }.
-        to raise_error(ArgumentError, 'No emitter for node: :not_supported')
+      expect { described_class.visit(s(:not_supported, []), stream) }
+        .to raise_error(ArgumentError, 'No emitter for node: :not_supported')
     end
   end
 end

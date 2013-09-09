@@ -9,9 +9,9 @@ module SQL
         class Singleton < self
 
           TYPES = IceNine.deep_freeze(
-            :true  => K_TRUE,
-            :false => K_FALSE,
-            :null  => K_NULL
+            true:  K_TRUE,
+            false: K_FALSE,
+            null:  K_NULL
           )
 
           handle(*TYPES.keys)

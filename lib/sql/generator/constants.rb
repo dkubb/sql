@@ -9,11 +9,11 @@ module SQL
     module Constants
       CB_L           = '{'.freeze
       CB_R           = '}'.freeze
-      CURLY_BRACKETS = [ CB_L, CB_R ].freeze
+      CURLY_BRACKETS = [CB_L, CB_R].freeze
 
       BRACKET_L = '('.freeze
       BRACKET_R = ')'.freeze
-      BRACKETS  = [ BRACKET_L, BRACKET_R ].freeze
+      BRACKETS  = [BRACKET_L, BRACKET_R].freeze
 
       WS = ' '.freeze
       NL = "\n".freeze

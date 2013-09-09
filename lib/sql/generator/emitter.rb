@@ -8,7 +8,7 @@ module SQL
       include Adamantium::Flat, AbstractType, Constants
 
       # Regitry of Emitter subclasses by node type
-      @@registry = Registry.new
+      REGISTRY = Registry.new
 
       # Define named child
       #
@@ -74,7 +74,7 @@ module SQL
       #
       def self.handle(*types)
         types.each do |type|
-          @@registry[type] = self
+          REGISTRY[type] = self
         end
       end
       private_class_method :handle
@@ -104,7 +104,7 @@ module SQL
       # @api private
       #
       def self.visit(node, stream)
-        @@registry[node.type].emit(node, stream)
+        REGISTRY[node.type].emit(node, stream)
         self
       end
 
@@ -115,7 +115,7 @@ module SQL
       # @api private
       #
       def self.finalize
-        @@registry.finalize
+        REGISTRY.finalize
         self
       end
 
@@ -199,16 +199,6 @@ module SQL
         write(SC)
       end
 
-      # Write newline
-      #
-      # @return [undefined]
-      #
-      # @api private
-      #
-      #def nl
-        #stream.nl
-      #end
-
       # Write strings into stream
       #
       # @return [undefined]
@@ -218,18 +208,6 @@ module SQL
       def write(*strings)
         strings.each { |string| stream << string }
       end
-
-      # Call emit contents of block indented
-      #
-      # @return [undefined]
-      #
-      # @api private
-      #
-      #def indented
-        #self.stream = stream.indent
-        #yield
-        #self.stream = stream.unindent
-      #end
 
     end # Emitter
 

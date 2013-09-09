@@ -8,9 +8,9 @@ module SQL
       class UnaryScalar < self
 
         TYPES = IceNine.deep_freeze(
-          :uplus  => O_PLUS,
-          :uminus => O_MINUS,
-          :not    => O_NEGATION
+          uplus:  O_PLUS,
+          uminus: O_MINUS,
+          not:    O_NEGATION
         )
 
         handle(*TYPES.keys)
