@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe SQL::Fuzzer, '#each' do
-  let(:object) { described_class.new(ast)   }
-  let(:ast)    { stub('ast').as_null_object }
+  let(:object) { described_class.new(ast)     }
+  let(:ast)    { double('ast').as_null_object }
 
   before do
     ast.should_receive(:to_ast)
