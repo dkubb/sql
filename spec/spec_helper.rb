@@ -13,7 +13,7 @@ if ENV['COVERAGE'] == 'true'
     command_name     'spec:unit'
     add_filter       'config/'
     add_filter       'spec/'
-    minimum_coverage 95.93
+    minimum_coverage 99.72
   end
 end
 
