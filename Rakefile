@@ -12,3 +12,18 @@ class Rake::Task
 end
 
 Rake.application.load_imports
+
+Rake::Task['metrics:mutant'].overwrite do
+  begin
+    require 'mutant'
+  rescue LoadError
+  end
+
+  if defined?(Mutant)
+    puts 'mutant is disabled until 0.3 is ready'
+    #status = Mutant::CLI.run(%W(--rspec-full -r ./spec/spec_helper.rb ::SQL))
+    #unless status.zero?
+      #fail "Not mutation covered :("
+    #end
+  end
+end
