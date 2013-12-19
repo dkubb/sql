@@ -21,7 +21,7 @@ module SQL
       #
       def self.define_named_child(name, index)
         define_method(name) do
-          children[index]
+          children.at(index)
         end
       end
 
@@ -35,7 +35,7 @@ module SQL
       #
       def self.define_remaining_children(from_index)
         define_method(:remaining_children) do
-          children[from_index..-1]
+          children.drop(from_index)
         end
       end
 
