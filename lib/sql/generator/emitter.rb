@@ -206,7 +206,7 @@ module SQL
       # @api private
       #
       def write(*strings)
-        strings.each { |string| stream << string }
+        strings.each(&stream.method(:<<))
       end
 
     end # Emitter
