@@ -31,14 +31,6 @@ module SQL
           sc
         end
 
-        # @api private
-        def write_node(node, keyword)
-          if node
-            write(WS, keyword, WS)
-            visit(node)
-          end
-        end
-
       end # Select
 
     end # Emitter

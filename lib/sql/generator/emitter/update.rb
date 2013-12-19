@@ -25,10 +25,7 @@ module SQL
           visit(identifier)
           write(WS, K_SET, WS)
           visit(assignment)
-          if where
-            write(WS, K_WHERE, WS)
-            visit(where)
-          end
+          write_node(where, K_WHERE)
           sc
         end
 

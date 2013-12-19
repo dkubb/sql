@@ -22,10 +22,7 @@ module SQL
         def dispatch
           write(K_DELETE, WS)
           visit(identifier)
-          if where
-            write(WS, K_WHERE, WS)
-            visit(where)
-          end
+          write_node(where, K_WHERE)
           sc
         end
 
