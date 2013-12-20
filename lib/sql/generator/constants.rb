@@ -33,10 +33,10 @@ module SQL
       O_NEGATION = '!'.freeze
 
       # Delimiters
-      D_QUOTE             = %q(').freeze
-      D_ESCAPED_QUOTE     = %q('').freeze
-      D_DBL_QUOTE         = %q(").freeze
-      D_ESCAPED_DBL_QUOTE = %q("").freeze
+      D_QUOTE             = %q['].freeze
+      D_ESCAPED_QUOTE     = %q[''].freeze
+      D_DBL_QUOTE         = '"'.freeze
+      D_ESCAPED_DBL_QUOTE = '""'.freeze
       DEFAULT_DELIMITER   = ', '.freeze
 
     end # Constants

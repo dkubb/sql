@@ -13,7 +13,7 @@ describe SQL::Generator::Emitter, '.visit' do
   end
 
   context 'with strings' do
-    assert_generates s(:string, %q(echo 'Hello')), %q('echo ''Hello''')
+    assert_generates s(:string, %q[echo 'Hello']), %q['echo ''Hello''']
   end
 
   context 'with integers' do
@@ -39,7 +39,7 @@ describe SQL::Generator::Emitter, '.visit' do
   end
 
   context 'with dates' do
-    assert_generates s(:date, Date.new(2013, 1, 1)), %q('2013-01-01')
+    assert_generates s(:date, Date.new(2013, 1, 1)), %q['2013-01-01']
   end
 
   context 'with datetimes' do
@@ -48,7 +48,7 @@ describe SQL::Generator::Emitter, '.visit' do
 
     assert_generates(
       s(:datetime, datetime),
-      %q('2013-12-31T23:59:59.000000001+00:00')
+      %q['2013-12-31T23:59:59.000000001+00:00']
     )
   end
 
@@ -114,13 +114,13 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:id, 'users'),
         s(:tuple, s(:integer, 1), s(:string, 'foo'))
       ),
-      %q(INSERT INTO "users" VALUES (1, 'foo');)
+      %q[INSERT INTO "users" VALUES (1, 'foo');]
     )
   end
 
   context 'delete' do
     context 'without where clause' do
-      assert_generates s(:delete, s(:id, 'users')), %q(DELETE FROM "users";)
+      assert_generates s(:delete, s(:id, 'users')), %q[DELETE FROM "users";]
     end
 
     context 'with where clause' do
@@ -131,7 +131,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eql, s(:id, 'name'), s(:string, 'foo'))
            )
          ),
-        %q(DELETE FROM "users" WHERE "name" = 'foo';)
+        %q[DELETE FROM "users" WHERE "name" = 'foo';]
       )
     end
   end
@@ -146,7 +146,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eql, s(:id, 'age'), s(:integer, 1))
            )
          ),
-        %q(UPDATE "users" SET "name" = 'foo', "age" = 1;)
+        %q[UPDATE "users" SET "name" = 'foo', "age" = 1;]
       )
     end
 
@@ -176,7 +176,7 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:select,
           s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users')
         ),
-        %q(SELECT "name", "age" FROM "users";)
+        %q[SELECT "name", "age" FROM "users";]
       )
     end
 
@@ -190,7 +190,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eql, s(:id, 'id'), s(:integer, 1))
            )
          ),
-        %q(SELECT "name", "age" FROM "users" WHERE "id" = 1;)
+        %q[SELECT "name", "age" FROM "users" WHERE "id" = 1;]
       )
     end
 
