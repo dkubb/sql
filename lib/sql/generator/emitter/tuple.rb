@@ -18,7 +18,7 @@ module SQL
         # @api private
         #
         def dispatch
-          brackets { delimited(children) }
+          parenthesis { delimited(children) }
         end
 
       end # Tuple

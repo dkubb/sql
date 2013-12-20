@@ -27,7 +27,7 @@ module SQL
         #
         def dispatch
           write(TYPES.fetch(node.type))
-          brackets { visit(value) }
+          parenthesis { visit(value) }
         end
 
       end # UnaryScalar

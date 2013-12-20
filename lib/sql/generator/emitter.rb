@@ -138,16 +138,16 @@ module SQL
 
     private
 
-      # Emit contents of block within brackets
+      # Emit contents of block within parenthesis
       #
       # @return [undefined]
       #
       # @api private
       #
-      def brackets
-        write(BRACKET_L)
+      def parenthesis
+        write(PARENTHESIS_L)
         yield
-        write(BRACKET_R)
+        write(PARENTHESIS_R)
       end
 
       # Dispatch helper

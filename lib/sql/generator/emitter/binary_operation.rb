@@ -32,9 +32,9 @@ module SQL
         # @api private
         #
         def dispatch
-          brackets { visit(left) }
+          parenthesis { visit(left) }
           write(WS, TYPES.fetch(node.type), WS)
-          brackets { visit(right) }
+          parenthesis { visit(right) }
         end
 
       end # BinaryOperation

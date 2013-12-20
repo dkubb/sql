@@ -11,9 +11,9 @@ module SQL
       CB_R           = '}'.freeze
       CURLY_BRACKETS = [CB_L, CB_R].freeze
 
-      BRACKET_L = '('.freeze
-      BRACKET_R = ')'.freeze
-      BRACKETS  = [BRACKET_L, BRACKET_R].freeze
+      PARENTHESIS_L = '('.freeze
+      PARENTHESIS_R = ')'.freeze
+      PARENTHESIS   = [PARENTHESIS_L, PARENTHESIS_R].freeze
 
       WS = ' '.freeze
       NL = "\n".freeze
