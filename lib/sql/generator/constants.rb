@@ -7,9 +7,9 @@ module SQL
     #
     # @api private
     module Constants
-      CB_L           = '{'.freeze
-      CB_R           = '}'.freeze
-      CURLY_BRACKETS = [CB_L, CB_R].freeze
+      BRACES_L = '{'.freeze
+      BRACES_R = '}'.freeze
+      BRACES   = [BRACES_L, BRACES_R].freeze
 
       PARENTHESIS_L = '('.freeze
       PARENTHESIS_R = ')'.freeze
