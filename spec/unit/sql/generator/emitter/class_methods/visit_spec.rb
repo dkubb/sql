@@ -60,28 +60,28 @@ describe SQL::Generator::Emitter, '.visit' do
     context ':and' do
       assert_generates(
         s(:and, s(:id, 'foo'), s(:id, 'bar')),
-        '("foo") AND ("bar")'
+        '"foo" AND "bar"'
       )
     end
 
     context ':concat' do
       assert_generates(
         s(:concat, s(:string, 'foo'), s(:string, 'bar')),
-        %q[('foo') || ('bar')]
+        %q['foo' || 'bar']
       )
     end
 
     context ':or' do
       assert_generates(
         s(:or, s(:id, 'foo'), s(:id, 'bar')),
-        '("foo") OR ("bar")'
+        '"foo" OR "bar"'
       )
     end
 
     context ':eql' do
       assert_generates(
         s(:eql, s(:id, 'foo'), s(:string, 'bar')),
-        %q[("foo") = ('bar')]
+        %q["foo" = 'bar']
       )
     end
 
@@ -95,7 +95,7 @@ describe SQL::Generator::Emitter, '.visit' do
       }.each do |type, operator|
         assert_generates(
           s(type, s(:integer, 1), s(:integer, 1)),
-          "(1) #{operator} (1)"
+          "1 #{operator} 1"
         )
       end
     end
@@ -131,7 +131,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eql, s(:id, 'name'), s(:string, 'foo'))
            )
          ),
-        %q(DELETE FROM "users" WHERE ("name") = ('foo');)
+        %q(DELETE FROM "users" WHERE "name" = 'foo';)
       )
     end
   end
@@ -146,7 +146,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eql, s(:id, 'age'), s(:integer, 1))
            )
          ),
-        %q(UPDATE "users" SET ("name") = ('foo'), ("age") = (1);)
+        %q(UPDATE "users" SET "name" = 'foo', "age" = 1;)
       )
     end
 
@@ -163,8 +163,8 @@ describe SQL::Generator::Emitter, '.visit' do
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
           UPDATE "users"
-          SET ("name") = ('foo'), ("age") = (1)
-          WHERE ("age") = (2);
+          SET "name" = 'foo', "age" = 1
+          WHERE "age" = 2;
         SQL
       )
     end
@@ -190,7 +190,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eql, s(:id, 'id'), s(:integer, 1))
            )
          ),
-        %q(SELECT "name", "age" FROM "users" WHERE ("id") = (1);)
+        %q(SELECT "name", "age" FROM "users" WHERE "id" = 1;)
       )
     end
 
@@ -221,7 +221,7 @@ describe SQL::Generator::Emitter, '.visit' do
         <<-SQL.gsub(/\s+/, ' ').strip
           SELECT "name", "age"
           FROM "users"
-          WHERE ("id") = (1)
+          WHERE "id" = 1
           GROUP BY "name", "age";
         SQL
       )
