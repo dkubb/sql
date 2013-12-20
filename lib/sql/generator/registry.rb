@@ -15,7 +15,7 @@ module SQL
       # @api private
       def initialize
         @emitters = Hash.new do |_emitters, type|
-          raise UnknownTypeError, "No emitter for node: #{type.inspect}"
+          fail UnknownTypeError, "No emitter for node: #{type.inspect}"
         end
       end
 
