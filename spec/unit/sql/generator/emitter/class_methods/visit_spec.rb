@@ -55,6 +55,21 @@ describe SQL::Generator::Emitter, '.visit' do
     )
   end
 
+  context 'with times' do
+    # A Time not in the UTC timezone
+    time = begin
+      original, ENV['TZ'] = ENV['TZ'], 'America/Vancouver'
+      Time.local(2010, 12, 31, 15, 59, 59, 1).freeze
+    ensure
+      ENV['TZ'] = original
+    end
+
+    assert_generates(
+      s(:time, time),
+      %q['2010-12-31T23:59:59.000001000Z']  # converts to UTC
+    )
+  end
+
   context 'identifiers' do
     assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
   end

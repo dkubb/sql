@@ -29,6 +29,7 @@ require 'sql/generator/emitter/literal/float'
 require 'sql/generator/emitter/literal/integer'
 require 'sql/generator/emitter/literal/singleton'
 require 'sql/generator/emitter/literal/string'
+require 'sql/generator/emitter/literal/time'
 
 require 'sql/generator/emitter/identifier'
 require 'sql/generator/emitter/binary_operation'

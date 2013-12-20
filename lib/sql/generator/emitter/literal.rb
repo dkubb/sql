@@ -9,6 +9,22 @@ module SQL
 
         children :value
 
+        # Returns an unfrozen object
+        #
+        # Some objects, like Date, DateTime and Time memoize values
+        # when serialized to a String, so when they are frozen this will
+        # dup them and then return the unfrozen copy.
+        #
+        # @param [Object] object
+        #
+        # @return [Object]
+        #   non-frozen object
+        #
+        # @api private
+        def self.unfrozen(object)
+          object.frozen? ? object.dup : object
+        end
+
       end
 
     end # Emitter
