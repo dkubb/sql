@@ -74,7 +74,7 @@ describe SQL::Generator::Emitter, '.visit' do
     assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
   end
 
-  context 'binary operations' do
+  context 'binary infix operations' do
     context ':and' do
       assert_generates(
         s(:and, s(:id, 'foo'), s(:id, 'bar')),

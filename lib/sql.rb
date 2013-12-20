@@ -32,7 +32,7 @@ require 'sql/generator/emitter/literal/string'
 require 'sql/generator/emitter/literal/time'
 
 require 'sql/generator/emitter/identifier'
-require 'sql/generator/emitter/binary_operation'
+require 'sql/generator/emitter/binary_infix_operation'
 require 'sql/generator/emitter/unary_scalar'
 
 require 'sql/generator/emitter/delimited'

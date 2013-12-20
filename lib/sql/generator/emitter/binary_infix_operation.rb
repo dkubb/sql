@@ -5,7 +5,7 @@ module SQL
     class Emitter
 
       # Binary Operation emitter base class
-      class BinaryOperation < self
+      class BinaryInfixOperation < self
 
         TYPES = IceNine.deep_freeze(
           and:    K_AND,
@@ -37,7 +37,7 @@ module SQL
           visit(right)
         end
 
-      end # BinaryOperation
+      end # BinaryInfixOperation
 
     end # Emitter
   end # Generator

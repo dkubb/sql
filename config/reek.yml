@@ -25,7 +25,7 @@ DuplicateMethodCall:
   enabled: true
   exclude:
    - SQL::Generator::Emitter#indented
-   - SQL::Generator::Emitter::BinaryOperation#dispatch
+   - SQL::Generator::Emitter::BinaryInfixOperation#dispatch
    - SQL::Generator::Emitter::Delete#dispatch
    - SQL::Generator::Emitter::Select#dispatch
    - SQL::Generator::Emitter::Update#dispatch
