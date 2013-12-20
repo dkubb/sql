@@ -22,7 +22,7 @@ module SQL
           # @api private
           #
           def dispatch
-            write(D_QUOTE, value.iso8601(TIME_SCALE), D_QUOTE)
+            write(D_QUOTE, value.new_offset.iso8601(TIME_SCALE), D_QUOTE)
           end
 
         end # Datetime

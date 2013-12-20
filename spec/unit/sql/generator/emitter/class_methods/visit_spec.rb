@@ -44,11 +44,14 @@ describe SQL::Generator::Emitter, '.visit' do
 
   context 'with datetimes' do
     nsec_in_seconds = Rational(1, 10**9)
-    datetime        = DateTime.new(2013, 12, 31, 23, 59, 59 + nsec_in_seconds)
+    offset          = Rational(-8, 24)
+
+    # A DateTime not in the UTC timezone
+    datetime = DateTime.new(2013, 12, 31, 15, 59, 59 + nsec_in_seconds, offset)
 
     assert_generates(
       s(:datetime, datetime),
-      %q['2013-12-31T23:59:59.000000001+00:00']
+      %q['2013-12-31T23:59:59.000000001+00:00']  # converts to UTC
     )
   end
 
