@@ -25,7 +25,7 @@ module SQL
           object.frozen? ? object.dup : object
         end
 
-      end
+      end # Literal
 
     end # Emitter
   end # Generator
