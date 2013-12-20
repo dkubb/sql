@@ -15,6 +15,7 @@ module SQL
           sub:    '-',
           div:    '/',
           mod:    '%',
+          pow:    '^',
           concat: '||',
           eq:     '='
         )

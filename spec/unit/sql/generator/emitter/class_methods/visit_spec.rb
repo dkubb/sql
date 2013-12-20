@@ -110,6 +110,7 @@ describe SQL::Generator::Emitter, '.visit' do
         sub: '-',
         div: '/',
         mod: '%',
+        pow: '^',
       }.each do |type, operator|
         assert_generates(
           s(type, s(:integer, 1), s(:integer, 1)),
