@@ -10,7 +10,7 @@ module SQL
         TYPES = IceNine.deep_freeze(
           uplus:  O_PLUS,
           uminus: O_MINUS,
-          not:    O_NEGATION + WS
+          not:    O_NEGATION
         )
 
         handle(*TYPES.keys)

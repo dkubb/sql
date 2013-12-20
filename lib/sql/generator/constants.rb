@@ -30,7 +30,7 @@ module SQL
       # Operators
       O_PLUS     = '+'.freeze
       O_MINUS    = '-'.freeze
-      O_NEGATION = 'NOT'.freeze
+      O_NEGATION = ('NOT' << WS).freeze
 
       # Delimiters
       D_QUOTE             = %q['].freeze
