@@ -161,7 +161,7 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates(
         s(:delete,
           s(:id, 'users'),
-          s(:delimited,
+          s(:where,
             s(:eq, s(:id, 'name'), s(:string, 'foo'))
           )
         ),
@@ -175,7 +175,7 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates(
         s(:update,
           s(:id, 'users'),
-          s(:delimited,
+          s(:where,
             s(:eq, s(:id, 'name'), s(:string, 'foo')),
             s(:eq, s(:id, 'age'), s(:integer, 1))
           )
@@ -188,11 +188,11 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates(
         s(:update,
           s(:id, 'users'),
-          s(:delimited,
+          s(:set,
             s(:eq, s(:id, 'name'), s(:string, 'foo')),
             s(:eq, s(:id, 'age'), s(:integer, 1))
           ),
-          s(:delimited,
+          s(:where,
             s(:eq, s(:id, 'age'), s(:integer, 2))
           )
         ),
@@ -209,7 +209,7 @@ describe SQL::Generator::Emitter, '.visit' do
     context 'without where clause' do
       assert_generates(
         s(:select,
-          s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users')
+          s(:fields, s(:id, 'name'), s(:id, 'age')), s(:id, 'users')
         ),
         %q[SELECT "name", "age" FROM "users"]
       )
@@ -218,11 +218,11 @@ describe SQL::Generator::Emitter, '.visit' do
     context 'with where clause' do
       assert_generates(
         s(:select,
-          s(:delimited,
+          s(:fields,
             s(:id, 'name'), s(:id, 'age')
           ),
           s(:id, 'users'),
-          s(:delimited,
+          s(:where,
             s(:eq, s(:id, 'id'), s(:integer, 1))
           )
         ),
@@ -233,10 +233,10 @@ describe SQL::Generator::Emitter, '.visit' do
     context 'with group by' do
       assert_generates(
         s(:select,
-          s(:delimited, s(:id, 'name'), s(:id, 'age')),
+          s(:fields, s(:id, 'name'), s(:id, 'age')),
           s(:id, 'users'),
           nil,
-          s(:delimited, s(:id, 'name'), s(:id, 'age'))
+          s(:where, s(:id, 'name'), s(:id, 'age'))
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
           SELECT "name", "age"
@@ -249,10 +249,10 @@ describe SQL::Generator::Emitter, '.visit' do
     context 'with where and group by' do
       assert_generates(
         s(:select,
-          s(:delimited, s(:id, 'name'), s(:id, 'age')),
+          s(:fields, s(:id, 'name'), s(:id, 'age')),
           s(:id, 'users'),
-          s(:delimited, s(:eq, s(:id, 'id'), s(:integer, 1))),
-          s(:delimited, s(:id, 'name'), s(:id, 'age'))
+          s(:where, s(:eq, s(:id, 'id'), s(:integer, 1))),
+          s(:group_by, s(:id, 'name'), s(:id, 'age'))
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
           SELECT "name", "age"
@@ -273,9 +273,9 @@ describe SQL::Generator::Emitter, '.visit' do
       context type.inspect do
         assert_generates(
           s(type,
-            s(:select, s(:delimited, s(:id, 'name')), s(:id, 'users')),
-            s(:select, s(:delimited, s(:id, 'name')), s(:id, 'customers')),
-            s(:select, s(:delimited, s(:id, 'name')), s(:id, 'employees')),
+            s(:select, s(:fields, s(:id, 'name')), s(:id, 'users')),
+            s(:select, s(:fields, s(:id, 'name')), s(:id, 'customers')),
+            s(:select, s(:fields, s(:id, 'name')), s(:id, 'employees')),
           ),
           <<-SQL.gsub(/\s+/, ' ').strip
             (SELECT "name" FROM "users")
