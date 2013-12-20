@@ -96,9 +96,9 @@ describe SQL::Generator::Emitter, '.visit' do
       )
     end
 
-    context ':eql' do
+    context ':eq' do
       assert_generates(
-        s(:eql, s(:id, 'foo'), s(:string, 'bar')),
+        s(:eq, s(:id, 'foo'), s(:string, 'bar')),
         %q["foo" = 'bar']
       )
     end
@@ -146,7 +146,7 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:delete,
           s(:id, 'users'),
           s(:delimited,
-            s(:eql, s(:id, 'name'), s(:string, 'foo'))
+            s(:eq, s(:id, 'name'), s(:string, 'foo'))
            )
          ),
         %q[DELETE FROM "users" WHERE "name" = 'foo';]
@@ -160,8 +160,8 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:update,
           s(:id, 'users'),
           s(:delimited,
-            s(:eql, s(:id, 'name'), s(:string, 'foo')),
-            s(:eql, s(:id, 'age'), s(:integer, 1))
+            s(:eq, s(:id, 'name'), s(:string, 'foo')),
+            s(:eq, s(:id, 'age'), s(:integer, 1))
            )
          ),
         %q[UPDATE "users" SET "name" = 'foo', "age" = 1;]
@@ -173,10 +173,10 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:update,
           s(:id, 'users'),
           s(:delimited,
-            s(:eql, s(:id, 'name'), s(:string, 'foo')),
-            s(:eql, s(:id, 'age'), s(:integer, 1))),
+            s(:eq, s(:id, 'name'), s(:string, 'foo')),
+            s(:eq, s(:id, 'age'), s(:integer, 1))),
           s(:delimited,
-            s(:eql, s(:id, 'age'), s(:integer, 2))
+            s(:eq, s(:id, 'age'), s(:integer, 2))
            )
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
@@ -205,7 +205,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:id, 'name'), s(:id, 'age')),
           s(:id, 'users'),
           s(:delimited,
-            s(:eql, s(:id, 'id'), s(:integer, 1))
+            s(:eq, s(:id, 'id'), s(:integer, 1))
            )
          ),
         %q[SELECT "name", "age" FROM "users" WHERE "id" = 1;]
@@ -233,7 +233,7 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:select,
           s(:delimited, s(:id, 'name'), s(:id, 'age')),
           s(:id, 'users'),
-          s(:delimited, s(:eql, s(:id, 'id'), s(:integer, 1))),
+          s(:delimited, s(:eq, s(:id, 'id'), s(:integer, 1))),
           s(:delimited, s(:id, 'name'), s(:id, 'age'))
          ),
         <<-SQL.gsub(/\s+/, ' ').strip

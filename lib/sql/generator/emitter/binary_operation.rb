@@ -16,7 +16,7 @@ module SQL
           div:    '/',
           mod:    '%',
           concat: '||',
-          eql:    '='
+          eq:     '='
         )
 
         handle(*TYPES.keys)
