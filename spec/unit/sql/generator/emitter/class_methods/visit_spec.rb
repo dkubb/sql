@@ -34,7 +34,7 @@ describe SQL::Generator::Emitter, '.visit' do
     end
 
     context 'with unary negation' do
-      assert_generates s(:not, s(:true)), '!TRUE'
+      assert_generates s(:not, s(:true)), 'NOT TRUE'
     end
   end
 
