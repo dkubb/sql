@@ -74,6 +74,25 @@ describe SQL::Generator::Emitter, '.visit' do
     assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
   end
 
+  context 'unary prefix operations' do
+    {
+      count:  'COUNT',
+      sum:    'SUM',
+      min:    'MIN',
+      max:    'MAX',
+      avg:    'AVG',
+      var:    'VAR_POP',
+      stddev: 'STDDEV_POP',
+    }.each do |type, operator|
+      context type.inspect do
+        assert_generates(
+          s(type, s(:id, 'foo')),
+          %Q[#{operator} ("foo")]
+        )
+      end
+    end
+  end
+
   context 'binary infix operations' do
     context ':and' do
       assert_generates(
@@ -112,10 +131,12 @@ describe SQL::Generator::Emitter, '.visit' do
         mod: '%',
         pow: '^',
       }.each do |type, operator|
-        assert_generates(
-          s(type, s(:integer, 1), s(:integer, 1)),
-          "1 #{operator} 1"
-        )
+        context type.inspect do
+          assert_generates(
+            s(type, s(:integer, 1), s(:integer, 1)),
+            "1 #{operator} 1"
+          )
+        end
       end
     end
   end

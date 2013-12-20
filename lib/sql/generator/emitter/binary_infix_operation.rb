@@ -4,7 +4,7 @@ module SQL
   module Generator
     class Emitter
 
-      # Binary Operation emitter base class
+      # Binary infix operation emitter base class
       class BinaryInfixOperation < self
 
         TYPES = IceNine.deep_freeze(

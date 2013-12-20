@@ -28,9 +28,16 @@ module SQL
       K_WHERE = 'WHERE'.freeze
 
       # Operators
-      O_PLUS     = '+'.freeze
-      O_MINUS    = '-'.freeze
-      O_NEGATION = ('NOT' << WS).freeze
+      O_PLUS       = '+'.freeze
+      O_MINUS      = '-'.freeze
+      O_NEGATION   = ('NOT' << WS).freeze
+      O_COUNT      = 'COUNT'.freeze
+      O_SUM        = 'SUM'.freeze
+      O_MIN        = 'MIN'.freeze
+      O_MAX        = 'MAX'.freeze
+      O_AVG        = 'AVG'.freeze
+      O_VAR_POP    = 'VAR_POP'.freeze
+      O_STDDEV_POP = 'STDDEV_POP'.freeze
 
       # Delimiters
       D_QUOTE             = %q['].freeze
