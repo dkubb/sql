@@ -34,33 +34,36 @@ module SQL
       K_DELETE   = 'DELETE'.freeze
 
       # Operators
-      O_AND      = 'AND'.freeze
-      O_OR       = 'OR'.freeze
-      O_NEGATION = 'NOT'.freeze
-      O_COUNT    = 'COUNT'.freeze
-      O_SUM      = 'SUM'.freeze
-      O_MIN      = 'MIN'.freeze
-      O_MAX      = 'MAX'.freeze
-      O_AVG      = 'AVG'.freeze
-      O_VAR      = 'VAR_POP'.freeze
-      O_STDDEV   = 'STDDEV_POP'.freeze
-      O_SQRT     = 'SQRT'.freeze
-      O_ABS      = 'ABS'.freeze
-      O_LENGTH   = 'LENGTH'.freeze
-      O_PLUS     = '+'.freeze
-      O_MINUS    = '-'.freeze
-      O_MULTIPLY = '*'.freeze
-      O_DIVIDE   = '/'.freeze
-      O_MOD      = '%'.freeze
-      O_POW      = '^'.freeze
-      O_CONCAT   = '||'.freeze
-      O_EQ       = '='.freeze
-      O_NE       = '<>'.freeze
-      O_GT       = '>'.freeze
-      O_GTE      = '>='.freeze
-      O_LT       = '<'.freeze
-      O_LTE      = '<='.freeze
-      O_IS       = 'IS'.freeze
+      O_AND       = 'AND'.freeze
+      O_OR        = 'OR'.freeze
+      O_NEGATION  = 'NOT'.freeze
+      O_COUNT     = 'COUNT'.freeze
+      O_SUM       = 'SUM'.freeze
+      O_MIN       = 'MIN'.freeze
+      O_MAX       = 'MAX'.freeze
+      O_AVG       = 'AVG'.freeze
+      O_VAR       = 'VAR_POP'.freeze
+      O_STDDEV    = 'STDDEV_POP'.freeze
+      O_SQRT      = 'SQRT'.freeze
+      O_ABS       = 'ABS'.freeze
+      O_LENGTH    = 'LENGTH'.freeze
+      O_PLUS      = '+'.freeze
+      O_MINUS     = '-'.freeze
+      O_MULTIPLY  = '*'.freeze
+      O_DIVIDE    = '/'.freeze
+      O_MOD       = '%'.freeze
+      O_POW       = '^'.freeze
+      O_CONCAT    = '||'.freeze
+      O_EQ        = '='.freeze
+      O_NE        = '<>'.freeze
+      O_GT        = '>'.freeze
+      O_GTE       = '>='.freeze
+      O_LT        = '<'.freeze
+      O_LTE       = '<='.freeze
+      O_IS        = 'IS'.freeze
+      O_EXCEPT    = 'EXCEPT'.freeze
+      O_INTERSECT = 'INTERSECT'.freeze
+      O_UNION     = 'UNION'.freeze
 
       # Delimiters
       D_QUOTE             = %q['].freeze

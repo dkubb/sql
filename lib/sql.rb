@@ -45,6 +45,8 @@ require 'sql/generator/emitter/delete'
 require 'sql/generator/emitter/update'
 require 'sql/generator/emitter/select'
 
+require 'sql/generator/emitter/set'
+
 require 'sql/parser'
 require 'sql/version'
 require 'sql/node_helper'

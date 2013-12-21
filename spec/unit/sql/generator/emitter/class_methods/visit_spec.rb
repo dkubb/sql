@@ -262,6 +262,31 @@ describe SQL::Generator::Emitter, '.visit' do
     end
   end
 
+  context 'set operations' do
+    {
+      difference:   'EXCEPT',
+      intersection: 'INTERSECT',
+      union:        'UNION',
+    }.each do |type, operator|
+      context type.inspect do
+        assert_generates(
+          s(type,
+            s(:select, s(:delimited, s(:id, 'name')), s(:id, 'users')),
+            s(:select, s(:delimited, s(:id, 'name')), s(:id, 'customers')),
+            s(:select, s(:delimited, s(:id, 'name')), s(:id, 'employees')),
+          ),
+          <<-SQL.gsub(/\s+/, ' ').strip
+            (SELECT "name" FROM "users")
+            #{operator}
+            (SELECT "name" FROM "customers")
+            #{operator}
+            (SELECT "name" FROM "employees")
+          SQL
+        )
+      end
+    end
+  end
+
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), stream) }
