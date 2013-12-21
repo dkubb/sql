@@ -172,10 +172,11 @@ module SQL
       # @api private
       #
       def delimited(nodes, delimiter = DEFAULT_DELIMITER)
-        max = nodes.length - 1
-        nodes.each_with_index do |node, index|
+        head, *tail = nodes
+        visit(head)
+        tail.each do |node|
+          write(delimiter)
           visit(node)
-          write(delimiter) if index < max
         end
       end
 
