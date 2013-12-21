@@ -83,6 +83,8 @@ describe SQL::Generator::Emitter, '.visit' do
       avg:    'AVG',
       var:    'VAR_POP',
       stddev: 'STDDEV_POP',
+      sqrt:   'SQRT',
+      abs:    'ABS',
     }.each do |type, operator|
       context type.inspect do
         assert_generates(

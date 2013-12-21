@@ -14,7 +14,9 @@ module SQL
           max:    O_MAX,
           avg:    O_AVG,
           var:    O_VAR,
-          stddev: O_STDDEV
+          stddev: O_STDDEV,
+          sqrt:   O_SQRT,
+          abs:    O_ABS
         )
 
         handle(*TYPES.keys)
