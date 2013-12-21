@@ -6,7 +6,7 @@ describe SQL::Generator::Stream, '#<<' do
   subject { object << string }
 
   let(:object) { described_class.new }
-  let(:string) { 'foo' }
+  let(:string) { 'foo'               }
 
   specify do
     expect { subject }.to change { object.output }.from('').to('foo')
