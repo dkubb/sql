@@ -6,8 +6,6 @@ module SQL
     # Stream used to emit into
     class Stream
 
-      NL = Constants::NL
-
       # Return current output
       #
       # @return [#<<]
@@ -36,7 +34,7 @@ module SQL
       # @api private
       def <<(string)
         output << string
-        @start_of_line = string.end_with?(NL)
+        @start_of_line = string.end_with?(Constants::NL)
         self
       end
 
@@ -55,7 +53,7 @@ module SQL
       #
       # @api private
       def nl
-        output << NL
+        output << Constants::NL
         self
       end
 
