@@ -12,11 +12,9 @@ module SQL
     # @return [AST::Node]
     #
     # @api private
-    #
     def s(type, *children)
       AST::Node.new(type, children)
     end
 
   end # NodeHelper
-
 end # SQL

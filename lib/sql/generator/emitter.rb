@@ -18,7 +18,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def self.define_named_child(name, index)
         define_method(name) do
           children.at(index)
@@ -32,7 +31,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def self.define_remaining_children(from_index)
         define_method(:remaining_children) do
           children.drop(from_index)
@@ -44,7 +42,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def self.children(*names)
         names.each_with_index do |name, index|
           define_named_child(name, index)
@@ -58,7 +55,6 @@ module SQL
       # @return [Class<Emitter>]
       #
       # @api private
-      #
       def self.emit(*arguments)
         new(*arguments)
         self
@@ -71,7 +67,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def self.handle(*types)
         types.each do |type|
           REGISTRY[type] = self
@@ -87,7 +82,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def initialize(node, stream)
         @node, @stream = node, stream
         dispatch
@@ -102,7 +96,6 @@ module SQL
       # @return [Class<Emitter>]
       #
       # @api private
-      #
       def self.visit(node, stream)
         REGISTRY[node.type].emit(node, stream)
         self
@@ -113,7 +106,6 @@ module SQL
       # @return [Class<Emitter>]
       #
       # @api private
-      #
       def self.finalize
         REGISTRY.finalize
         self
@@ -124,7 +116,6 @@ module SQL
       # @return [Parser::AST::Node] node
       #
       # @api private
-      #
       attr_reader :node
 
       # Return stream
@@ -132,7 +123,6 @@ module SQL
       # @return [Stream] stream
       #
       # @api private
-      #
       attr_reader :stream
       protected :stream
 
@@ -143,7 +133,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def parenthesis
         write(PARENTHESIS_L)
         yield
@@ -157,7 +146,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def visit(node)
         self.class.visit(node, stream)
       end
@@ -170,7 +158,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def delimited(nodes, delimiter = DEFAULT_DELIMITER)
         head, *tail = nodes
         visit(head)
@@ -185,7 +172,6 @@ module SQL
       # @return [Array<Parser::AST::Node>]
       #
       # @api private
-      #
       def children
         node.children
       end
@@ -205,7 +191,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def write(*strings)
         strings.each(&stream.method(:<<))
       end
@@ -223,6 +208,5 @@ module SQL
       end
 
     end # Emitter
-
   end # Generator
 end # SQL

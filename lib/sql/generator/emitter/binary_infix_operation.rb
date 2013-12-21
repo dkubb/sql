@@ -37,7 +37,6 @@ module SQL
         # @return [undefined]
         #
         # @api private
-        #
         def dispatch
           visit(left)
           write(WS, TYPES.fetch(node.type), WS)
@@ -45,7 +44,6 @@ module SQL
         end
 
       end # BinaryInfixOperation
-
     end # Emitter
   end # Generator
 end # SQL

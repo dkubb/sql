@@ -13,7 +13,6 @@ module SQL
       # @return [#<<]
       #
       # @api private
-      #
       attr_reader :output
 
       # Initialize output stream
@@ -23,7 +22,6 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      #
       def initialize(output = '')
         @output        = output
         @start_of_line = true
@@ -36,7 +34,6 @@ module SQL
       # @return [self]
       #
       # @api private
-      #
       def <<(string)
         output << string
         @start_of_line = string.end_with?(NL)
@@ -48,7 +45,6 @@ module SQL
       # @return [self]
       #
       # @api private
-      #
       def indent
         Indented.new(self).nl
       end
@@ -58,7 +54,6 @@ module SQL
       # @return [self]
       #
       # @api private
-      #
       def nl
         output << NL
         self
@@ -71,7 +66,6 @@ module SQL
       # @return [Boolean]
       #
       # @api private
-      #
       def start_of_line?
         @start_of_line
       end
@@ -87,7 +81,6 @@ module SQL
         # @return [self]
         #
         # @api private
-        #
         def <<(string)
           output << DEFAULT_INDENT if output.start_of_line?
           super
@@ -98,13 +91,11 @@ module SQL
         # @return [self]
         #
         # @api private
-        #
         def unindent
           output.nl
         end
 
       end # Indented
-
     end # Stream
   end # Generator
 end # SQL

@@ -17,13 +17,11 @@ module SQL
           # @return [undefined]
           #
           # @api private
-          #
           def dispatch
             write(D_QUOTE, value.iso8601, D_QUOTE)
           end
 
         end # Date
-
       end # Literal
     end # Emitter
   end # Generator

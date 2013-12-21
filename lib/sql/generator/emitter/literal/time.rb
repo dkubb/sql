@@ -20,14 +20,12 @@ module SQL
           # @return [undefined]
           #
           # @api private
-          #
           def dispatch
             unfrozen = self.class.unfrozen(value)
             write(D_QUOTE, unfrozen.utc.iso8601(TIME_SCALE), D_QUOTE)
           end
 
         end # Time
-
       end # Literal
     end # Emitter
   end # Generator

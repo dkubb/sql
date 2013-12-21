@@ -17,13 +17,11 @@ module SQL
           # @return [undefined]
           #
           # @api private
-          #
           def dispatch
             write(value.to_s)
           end
 
         end # Integer
-
       end # Literal
     end # Emitter
   end # Generator

@@ -12,7 +12,6 @@ module SQL
     # @return [String]
     #
     # @api private
-    #
     def self.generate(node)
       stream = Stream.new
       Emitter.visit(node, stream)
@@ -20,5 +19,4 @@ module SQL
     end
 
   end # module Generator
-
 end # module SQL

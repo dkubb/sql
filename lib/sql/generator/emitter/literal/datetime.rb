@@ -20,13 +20,11 @@ module SQL
           # @return [undefined]
           #
           # @api private
-          #
           def dispatch
             write(D_QUOTE, value.new_offset.iso8601(TIME_SCALE), D_QUOTE)
           end
 
         end # Datetime
-
       end # Literal
     end # Emitter
   end # Generator

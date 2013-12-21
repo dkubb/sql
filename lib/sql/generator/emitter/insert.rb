@@ -17,7 +17,6 @@ module SQL
         # @return [undefined]
         #
         # @api private
-        #
         def dispatch
           write(K_INSERT, WS)
           visit(identifier)
@@ -27,7 +26,6 @@ module SQL
         end
 
       end # Insert
-
     end # Emitter
   end # Generator
 end # SQL

@@ -5,7 +5,7 @@ module SQL
 
     # Registry for emitters
     #
-    # @api private
+    # @private
     class Registry
 
       # Initialize registry
@@ -53,6 +53,5 @@ module SQL
       end
 
     end # Registry
-
   end # Generator
 end # SQL

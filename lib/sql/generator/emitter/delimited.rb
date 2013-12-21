@@ -20,7 +20,6 @@ module SQL
         end
 
       end # Delimited
-
     end # Emitter
   end # Generator
 end # SQL

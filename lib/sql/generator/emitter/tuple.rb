@@ -16,13 +16,11 @@ module SQL
         # @return [undefined]
         #
         # @api private
-        #
         def dispatch
           parenthesis { delimited(children) }
         end
 
       end # Tuple
-
     end # Emitter
   end # Generator
 end # SQL

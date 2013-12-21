@@ -27,7 +27,6 @@ module SQL
         end
 
       end # Update
-
     end # Emitter
   end # Generator
 end # SQL

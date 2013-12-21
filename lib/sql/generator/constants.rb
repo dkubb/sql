@@ -5,7 +5,7 @@ module SQL
 
     # Constants included in the emitter classes
     #
-    # @api private
+    # @private
     module Constants
       BRACES_L = '{'.freeze
       BRACES_R = '}'.freeze
@@ -73,6 +73,5 @@ module SQL
       DEFAULT_DELIMITER   = ', '.freeze
 
     end # Constants
-
   end # Generator
 end # SQL

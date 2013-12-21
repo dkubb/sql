@@ -23,13 +23,11 @@ module SQL
           # @return [undefined]
           #
           # @api private
-          #
           def dispatch
             write(TYPES.fetch(node.type))
           end
 
         end # Singleton
-
       end # Literal
     end # Emitter
   end # Generator

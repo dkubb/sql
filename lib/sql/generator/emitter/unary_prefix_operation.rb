@@ -31,14 +31,12 @@ module SQL
         # @return [undefined]
         #
         # @api private
-        #
         def dispatch
           write(TYPES.fetch(node.type), WS)
           parenthesis { visit(operand) }
         end
 
       end # UnaryPrefixOperation
-
     end # Emitter
   end # Generator
 end # SQL

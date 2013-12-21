@@ -26,7 +26,6 @@ module SQL
         end
 
       end # Literal
-
     end # Emitter
   end # Generator
 end # SQL

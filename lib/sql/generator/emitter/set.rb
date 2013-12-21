@@ -23,7 +23,6 @@ module SQL
         # @return [undefined]
         #
         # @api private
-        #
         def dispatch
           parenthesis { visit(first) }
           remaining_children.each do |operand|
@@ -33,7 +32,6 @@ module SQL
         end
 
       end # Set
-
     end # Emitter
   end # Generator
 end # SQL

@@ -24,14 +24,12 @@ module SQL
         # @return [undefined]
         #
         # @api private
-        #
         def dispatch
           write(TYPES.fetch(node.type))
           visit(value)
         end
 
       end # UnaryScalar
-
     end # Emitter
   end # Generator
 end # SQL
