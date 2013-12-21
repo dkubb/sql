@@ -46,6 +46,7 @@ module SQL
       O_STDDEV   = 'STDDEV_POP'.freeze
       O_SQRT     = 'SQRT'.freeze
       O_ABS      = 'ABS'.freeze
+      O_LENGTH   = 'LENGTH'.freeze
       O_PLUS     = '+'.freeze
       O_MINUS    = '-'.freeze
       O_MULTIPLY = '*'.freeze

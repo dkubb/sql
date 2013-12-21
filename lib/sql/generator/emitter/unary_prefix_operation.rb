@@ -16,7 +16,8 @@ module SQL
           var:    O_VAR,
           stddev: O_STDDEV,
           sqrt:   O_SQRT,
-          abs:    O_ABS
+          abs:    O_ABS,
+          length: O_LENGTH
         )
 
         handle(*TYPES.keys)

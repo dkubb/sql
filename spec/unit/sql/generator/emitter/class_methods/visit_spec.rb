@@ -85,6 +85,7 @@ describe SQL::Generator::Emitter, '.visit' do
       stddev: 'STDDEV_POP',
       sqrt:   'SQRT',
       abs:    'ABS',
+      length: 'LENGTH',
     }.each do |type, operator|
       context type.inspect do
         assert_generates(
