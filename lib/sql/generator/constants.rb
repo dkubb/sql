@@ -55,6 +55,10 @@ module SQL
       O_CONCAT   = '||'.freeze
       O_EQ       = '='.freeze
       O_NE       = '<>'.freeze
+      O_GT       = '>'.freeze
+      O_GTE      = '>='.freeze
+      O_LT       = '<'.freeze
+      O_LTE      = '<='.freeze
       O_IS       = 'IS'.freeze
 
       # Delimiters

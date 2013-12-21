@@ -19,7 +19,11 @@ module SQL
           concat: O_CONCAT,
           eq:     O_EQ,
           is:     O_IS,
-          ne:     O_NE
+          ne:     O_NE,
+          gt:     O_GT,
+          gte:    O_GTE,
+          lt:     O_LT,
+          lte:    O_LTE
         )
 
         handle(*TYPES.keys)
