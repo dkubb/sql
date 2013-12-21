@@ -122,6 +122,11 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:is, s(:id, 'foo'), s(:null)),
         '"foo" IS NULL'
       )
+
+      assert_generates(
+        s(:is, s(:id, 'foo'), s(:not, s(:null))),
+        '"foo" IS NOT NULL'
+      )
     end
   end
 
