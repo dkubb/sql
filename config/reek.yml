@@ -52,7 +52,8 @@ LongYieldList:
 NestedIterators:
   enabled: true
   exclude:
-  - SQL::Generator::Emitter#self.children # metaprogramming
+  - SQL::Generator::Emitter#self.children  # metaprogramming
+  - SQL::Generator::Emitter::Set#dispatch  # parenthesis inside a loop
   max_allowed_nesting: 1
   ignore_iterators: []
 NilCheck:
