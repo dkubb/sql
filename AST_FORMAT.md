@@ -40,13 +40,13 @@ Format:
 
 ~~~
 (uplus (int 1))
-"+(1)"
+"+1"
 
 (uminus (int 1))
-"-(1)"
+"-1"
 
 (not true)
-"!(TRUE)"
+"NOT TRUE"
 ~~~
 
 ## Binary scalar operators
