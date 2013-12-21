@@ -13,8 +13,8 @@ module SQL
           min:    O_MIN,
           max:    O_MAX,
           avg:    O_AVG,
-          var:    O_VAR_POP,
-          stddev: O_STDDEV_POP
+          var:    O_VAR,
+          stddev: O_STDDEV
         )
 
         handle(*TYPES.keys)

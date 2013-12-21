@@ -6,10 +6,6 @@ module SQL
 
       # Select statement emitter
       class Select < self
-        K_SELECT   = 'SELECT'.freeze
-        K_FROM     = 'FROM'.freeze
-        K_GROUP_BY = 'GROUP BY'.freeze
-
         handle :select
 
         children :columns, :identifier, :where, :group_by

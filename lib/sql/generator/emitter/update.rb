@@ -6,9 +6,6 @@ module SQL
 
       # Update statement emitter
       class Update < self
-        K_UPDATE = 'UPDATE'.freeze
-        K_SET    = 'SET'.freeze
-
         handle :update
 
         children :identifier, :assignment, :where

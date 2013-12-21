@@ -20,24 +20,38 @@ module SQL
       SC = ';'.freeze
 
       # Keywords
-      K_TRUE  = 'TRUE'.freeze
-      K_FALSE = 'FALSE'.freeze
-      K_NULL  = 'NULL'.freeze
-      K_AND   = 'AND'.freeze
-      K_OR    = 'OR'.freeze
-      K_WHERE = 'WHERE'.freeze
+      K_TRUE     = 'TRUE'.freeze
+      K_FALSE    = 'FALSE'.freeze
+      K_NULL     = 'NULL'.freeze
+      K_SELECT   = 'SELECT'.freeze
+      K_WHERE    = 'WHERE'.freeze
+      K_FROM     = 'FROM'.freeze
+      K_GROUP_BY = 'GROUP BY'.freeze
+      K_UPDATE   = 'UPDATE'.freeze
+      K_SET      = 'SET'.freeze
+      K_INSERT   = 'INSERT INTO'.freeze
+      K_VALUES   = 'VALUES'.freeze
+      K_DELETE   = 'DELETE'.freeze
 
       # Operators
-      O_PLUS       = '+'.freeze
-      O_MINUS      = '-'.freeze
-      O_NEGATION   = ('NOT' << WS).freeze
-      O_COUNT      = 'COUNT'.freeze
-      O_SUM        = 'SUM'.freeze
-      O_MIN        = 'MIN'.freeze
-      O_MAX        = 'MAX'.freeze
-      O_AVG        = 'AVG'.freeze
-      O_VAR_POP    = 'VAR_POP'.freeze
-      O_STDDEV_POP = 'STDDEV_POP'.freeze
+      O_AND      = 'AND'.freeze
+      O_OR       = 'OR'.freeze
+      O_NEGATION = 'NOT'.freeze
+      O_COUNT    = 'COUNT'.freeze
+      O_SUM      = 'SUM'.freeze
+      O_MIN      = 'MIN'.freeze
+      O_MAX      = 'MAX'.freeze
+      O_AVG      = 'AVG'.freeze
+      O_VAR      = 'VAR_POP'.freeze
+      O_STDDEV   = 'STDDEV_POP'.freeze
+      O_PLUS     = '+'.freeze
+      O_MINUS    = '-'.freeze
+      O_MULTIPLY = '*'.freeze
+      O_DIVIDE   = '/'.freeze
+      O_MOD      = '%'.freeze
+      O_POW      = '^'.freeze
+      O_CONCAT   = '||'.freeze
+      O_EQ       = '='.freeze
 
       # Delimiters
       D_QUOTE             = %q['].freeze

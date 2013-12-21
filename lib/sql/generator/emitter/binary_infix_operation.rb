@@ -8,16 +8,16 @@ module SQL
       class BinaryInfixOperation < self
 
         TYPES = IceNine.deep_freeze(
-          and:    K_AND,
-          or:     K_OR,
-          mul:    '*',
-          add:    '+',
-          sub:    '-',
-          div:    '/',
-          mod:    '%',
-          pow:    '^',
-          concat: '||',
-          eq:     '='
+          and:    O_AND,
+          or:     O_OR,
+          mul:    O_MULTIPLY,
+          add:    O_PLUS,
+          sub:    O_MINUS,
+          div:    O_DIVIDE,
+          mod:    O_MOD,
+          pow:    O_POW,
+          concat: O_CONCAT,
+          eq:     O_EQ
         )
 
         handle(*TYPES.keys)

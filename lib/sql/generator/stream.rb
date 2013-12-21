@@ -6,7 +6,7 @@ module SQL
     # Stream used to emit into
     class Stream
 
-      NL = "\n".freeze
+      NL = Constants::NL
 
       # Return current output
       #

@@ -6,9 +6,6 @@ module SQL
 
       # Insert statement emitter
       class Insert < self
-        K_INSERT = 'INSERT INTO'.freeze
-        K_VALUES = 'VALUES'.freeze
-
         handle :insert
 
         children :identifier, :tuple
