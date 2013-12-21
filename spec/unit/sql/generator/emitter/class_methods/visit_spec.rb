@@ -163,8 +163,8 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:id, 'users'),
           s(:delimited,
             s(:eq, s(:id, 'name'), s(:string, 'foo'))
-           )
-         ),
+          )
+        ),
         %q[DELETE FROM "users" WHERE "name" = 'foo';]
       )
     end
@@ -178,8 +178,8 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:delimited,
             s(:eq, s(:id, 'name'), s(:string, 'foo')),
             s(:eq, s(:id, 'age'), s(:integer, 1))
-           )
-         ),
+          )
+        ),
         %q[UPDATE "users" SET "name" = 'foo', "age" = 1;]
       )
     end
@@ -190,10 +190,11 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:id, 'users'),
           s(:delimited,
             s(:eq, s(:id, 'name'), s(:string, 'foo')),
-            s(:eq, s(:id, 'age'), s(:integer, 1))),
+            s(:eq, s(:id, 'age'), s(:integer, 1))
+          ),
           s(:delimited,
             s(:eq, s(:id, 'age'), s(:integer, 2))
-           )
+          )
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
           UPDATE "users"
@@ -218,12 +219,13 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates(
         s(:select,
           s(:delimited,
-            s(:id, 'name'), s(:id, 'age')),
+            s(:id, 'name'), s(:id, 'age')
+          ),
           s(:id, 'users'),
           s(:delimited,
             s(:eq, s(:id, 'id'), s(:integer, 1))
-           )
-         ),
+          )
+        ),
         %q[SELECT "name", "age" FROM "users" WHERE "id" = 1]
       )
     end
@@ -235,7 +237,7 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:id, 'users'),
           nil,
           s(:delimited, s(:id, 'name'), s(:id, 'age'))
-         ),
+        ),
         <<-SQL.gsub(/\s+/, ' ').strip
           SELECT "name", "age"
           FROM "users"
@@ -251,7 +253,7 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:id, 'users'),
           s(:delimited, s(:eq, s(:id, 'id'), s(:integer, 1))),
           s(:delimited, s(:id, 'name'), s(:id, 'age'))
-         ),
+        ),
         <<-SQL.gsub(/\s+/, ' ').strip
           SELECT "name", "age"
           FROM "users"
