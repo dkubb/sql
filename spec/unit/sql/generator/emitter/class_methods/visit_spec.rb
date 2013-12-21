@@ -96,50 +96,31 @@ describe SQL::Generator::Emitter, '.visit' do
   end
 
   context 'binary infix operations' do
-    context ':and' do
-      assert_generates(
-        s(:and, s(:id, 'foo'), s(:id, 'bar')),
-        '"foo" AND "bar"'
-      )
-    end
-
-    context ':concat' do
-      assert_generates(
-        s(:concat, s(:string, 'foo'), s(:string, 'bar')),
-        %q['foo' || 'bar']
-      )
-    end
-
-    context ':or' do
-      assert_generates(
-        s(:or, s(:id, 'foo'), s(:id, 'bar')),
-        '"foo" OR "bar"'
-      )
-    end
-
-    context ':eq' do
-      assert_generates(
-        s(:eq, s(:id, 'foo'), s(:string, 'bar')),
-        %q["foo" = 'bar']
-      )
-    end
-
-    context 'scalars' do
-      {
-        mul: '*',
-        add: '+',
-        sub: '-',
-        div: '/',
-        mod: '%',
-        pow: '^',
-      }.each do |type, operator|
-        context type.inspect do
-          assert_generates(
-            s(type, s(:integer, 1), s(:integer, 1)),
-            "1 #{operator} 1"
-          )
-        end
+    {
+      or:     'OR',
+      and:    'AND',
+      concat: '||',
+      mul:    '*',
+      add:    '+',
+      sub:    '-',
+      div:    '/',
+      mod:    '%',
+      pow:    '^',
+      eq:     '=',
+    }.each do |type, operator|
+      context type.inspect do
+        assert_generates(
+          s(type, s(:id, 'foo'), s(:id, 'bar')),
+          %Q["foo" #{operator} "bar"]
+        )
       end
+    end
+
+    context ':is' do
+      assert_generates(
+        s(:is, s(:id, 'foo'), s(:null)),
+        '"foo" IS NULL'
+      )
     end
   end
 

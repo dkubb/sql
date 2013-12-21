@@ -17,7 +17,8 @@ module SQL
           mod:    O_MOD,
           pow:    O_POW,
           concat: O_CONCAT,
-          eq:     O_EQ
+          eq:     O_EQ,
+          is:     O_IS
         )
 
         handle(*TYPES.keys)

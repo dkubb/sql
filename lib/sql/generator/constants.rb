@@ -54,6 +54,7 @@ module SQL
       O_POW      = '^'.freeze
       O_CONCAT   = '||'.freeze
       O_EQ       = '='.freeze
+      O_IS       = 'IS'.freeze
 
       # Delimiters
       D_QUOTE             = %q['].freeze
