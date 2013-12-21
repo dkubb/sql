@@ -8,7 +8,7 @@ module SQL
       class Select < self
         handle :select
 
-        children :columns, :identifier, :where, :group_by
+        children :fields, :from, :where, :group_by
 
       private
 
@@ -19,9 +19,9 @@ module SQL
         # @api private
         def dispatch
           write(K_SELECT, WS)
-          visit(columns)
+          visit(fields)
           write(WS, K_FROM, WS)
-          visit(identifier)
+          visit(from)
           write_node(where, K_WHERE)
           write_node(group_by, K_GROUP_BY)
         end
