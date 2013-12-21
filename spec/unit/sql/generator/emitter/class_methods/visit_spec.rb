@@ -107,6 +107,7 @@ describe SQL::Generator::Emitter, '.visit' do
       mod:    '%',
       pow:    '^',
       eq:     '=',
+      ne:     '<>',
     }.each do |type, operator|
       context type.inspect do
         assert_generates(

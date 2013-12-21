@@ -18,7 +18,8 @@ module SQL
           pow:    O_POW,
           concat: O_CONCAT,
           eq:     O_EQ,
-          is:     O_IS
+          is:     O_IS,
+          ne:     O_NE
         )
 
         handle(*TYPES.keys)
