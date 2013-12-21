@@ -210,7 +210,7 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:select,
           s(:delimited, s(:id, 'name'), s(:id, 'age')), s(:id, 'users')
         ),
-        %q[SELECT "name", "age" FROM "users";]
+        %q[SELECT "name", "age" FROM "users"]
       )
     end
 
@@ -224,7 +224,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'id'), s(:integer, 1))
            )
          ),
-        %q[SELECT "name", "age" FROM "users" WHERE "id" = 1;]
+        %q[SELECT "name", "age" FROM "users" WHERE "id" = 1]
       )
     end
 
@@ -239,7 +239,7 @@ describe SQL::Generator::Emitter, '.visit' do
         <<-SQL.gsub(/\s+/, ' ').strip
           SELECT "name", "age"
           FROM "users"
-          GROUP BY "name", "age";
+          GROUP BY "name", "age"
         SQL
       )
     end
@@ -256,7 +256,7 @@ describe SQL::Generator::Emitter, '.visit' do
           SELECT "name", "age"
           FROM "users"
           WHERE "id" = 1
-          GROUP BY "name", "age";
+          GROUP BY "name", "age"
         SQL
       )
     end
