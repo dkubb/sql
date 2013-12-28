@@ -47,6 +47,7 @@ require 'sql/generator/emitter/update'
 require 'sql/generator/emitter/select'
 
 require 'sql/generator/emitter/set'
+require 'sql/generator/emitter/join'
 
 require 'sql/parser'
 require 'sql/version'

@@ -307,6 +307,26 @@ describe SQL::Generator::Emitter, '.visit' do
     end
   end
 
+  context 'join operations' do
+    {
+      join:       'JOIN',
+      left_join:  'LEFT JOIN',
+      right_join: 'RIGHT JOIN',
+      full_join:  'FULL JOIN',
+    }.each do |type, operator|
+      context type.inspect do
+        assert_generates(
+          s(type,
+            s(:id, 'foo'),
+            s(:id, 'bar'),
+            s(:on, s(:eq, s(:id, 'foo', 'name'), s(:id, 'bar', 'name')))
+          ),
+          %Q["foo" #{operator} "bar" ON "foo"."name" = "bar"."name"]
+        )
+      end
+    end
+  end
+
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), stream) }

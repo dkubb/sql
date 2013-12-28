@@ -33,6 +33,10 @@ module SQL
       K_VALUES   = 'VALUES'.freeze
       K_DELETE   = 'DELETE'.freeze
 
+      # Unary Prefix Operators
+      O_NEGATION = 'NOT'.freeze
+      O_ON       = 'ON'.freeze
+
       # Unary Function Operators
       O_COUNT  = 'COUNT'.freeze
       O_SUM    = 'SUM'.freeze
@@ -48,7 +52,6 @@ module SQL
       # Binary Infix Operators
       O_AND      = 'AND'.freeze
       O_OR       = 'OR'.freeze
-      O_NEGATION = 'NOT'.freeze
       O_IN       = 'IN'.freeze
       O_BETWEEN  = 'BETWEEN'.freeze
       O_PLUS     = '+'.freeze
@@ -71,11 +74,18 @@ module SQL
       O_INTERSECT = 'INTERSECT'.freeze
       O_UNION     = 'UNION'.freeze
 
+      # Join Operators
+      O_JOIN       = 'JOIN'.freeze
+      O_LEFT_JOIN  = 'LEFT JOIN'.freeze
+      O_RIGHT_JOIN = 'RIGHT JOIN'.freeze
+      O_FULL_JOIN  = 'FULL JOIN'.freeze
+
       # Delimiters
       D_QUOTE             = %q['].freeze
       D_ESCAPED_QUOTE     = %q[''].freeze
       D_DBL_QUOTE         = '"'.freeze
       D_ESCAPED_DBL_QUOTE = '""'.freeze
+      D_PERIOD            = '.'.freeze
       DEFAULT_DELIMITER   = ', '.freeze
 
     end # Constants

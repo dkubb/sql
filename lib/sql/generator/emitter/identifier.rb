@@ -9,7 +9,7 @@ module SQL
 
         handle(:id)
 
-        children :value
+        children
 
       private
 
@@ -19,8 +19,13 @@ module SQL
         #
         # @api private
         def dispatch
-          identifier = value.gsub(D_DBL_QUOTE, D_ESCAPED_DBL_QUOTE)
-          write(D_DBL_QUOTE, identifier, D_DBL_QUOTE)
+          head, *tail = remaining_children.map do |value|
+            value.gsub(D_DBL_QUOTE, D_ESCAPED_DBL_QUOTE)
+          end
+          write(D_DBL_QUOTE, head, D_DBL_QUOTE)
+          tail.each do |value|
+            write(D_PERIOD, D_DBL_QUOTE, value, D_DBL_QUOTE)
+          end
         end
 
       end # Identifier
