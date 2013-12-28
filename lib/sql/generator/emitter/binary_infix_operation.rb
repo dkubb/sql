@@ -10,21 +10,21 @@ module SQL
         TYPES = IceNine.deep_freeze(
           and:     O_AND,
           or:      O_OR,
-          mul:     O_MULTIPLY,
+          between: O_BETWEEN,
           add:     O_PLUS,
           sub:     O_MINUS,
+          mul:     O_MULTIPLY,
           div:     O_DIVIDE,
           mod:     O_MOD,
           pow:     O_POW,
-          concat:  O_CONCAT,
-          eq:      O_EQ,
           is:      O_IS,
+          eq:      O_EQ,
           ne:      O_NE,
           gt:      O_GT,
           gte:     O_GTE,
           lt:      O_LT,
           lte:     O_LTE,
-          between: O_BETWEEN
+          concat:  O_CONCAT
         )
 
         handle(*TYPES.keys)

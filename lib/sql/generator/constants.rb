@@ -56,14 +56,14 @@ module SQL
       O_DIVIDE   = '/'.freeze
       O_MOD      = '%'.freeze
       O_POW      = '^'.freeze
-      O_CONCAT   = '||'.freeze
+      O_IS       = 'IS'.freeze
       O_EQ       = '='.freeze
       O_NE       = '<>'.freeze
       O_GT       = '>'.freeze
       O_GTE      = '>='.freeze
       O_LT       = '<'.freeze
       O_LTE      = '<='.freeze
-      O_IS       = 'IS'.freeze
+      O_CONCAT   = '||'.freeze
 
       # Set Operators
       O_EXCEPT    = 'EXCEPT'.freeze
