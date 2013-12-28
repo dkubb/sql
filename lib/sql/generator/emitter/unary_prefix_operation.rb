@@ -4,8 +4,8 @@ module SQL
   module Generator
     class Emitter
 
-      # Unary Scalar emitter class
-      class UnaryScalar < self
+      # Emitter class for unary operations using prefix notation
+      class UnaryPrefixOperation < self
 
         TYPES = IceNine.deep_freeze(
           uplus:  O_PLUS,
@@ -29,7 +29,7 @@ module SQL
           visit(value)
         end
 
-      end # UnaryScalar
+      end # UnaryPrefixOperation
     end # Emitter
   end # Generator
 end # SQL
