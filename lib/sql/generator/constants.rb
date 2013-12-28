@@ -75,10 +75,12 @@ module SQL
       O_UNION     = 'UNION'.freeze
 
       # Join Operators
-      O_JOIN       = 'JOIN'.freeze
-      O_LEFT_JOIN  = 'LEFT JOIN'.freeze
-      O_RIGHT_JOIN = 'RIGHT JOIN'.freeze
-      O_FULL_JOIN  = 'FULL JOIN'.freeze
+      O_JOIN         = 'JOIN'.freeze
+      O_LEFT_JOIN    = 'LEFT JOIN'.freeze
+      O_RIGHT_JOIN   = 'RIGHT JOIN'.freeze
+      O_FULL_JOIN    = 'FULL JOIN'.freeze
+      O_NATURAL_JOIN = 'NATURAL JOIN'.freeze
+      O_CROSS_JOIN   = 'CROSS JOIN'.freeze
 
       # Delimiters
       D_QUOTE             = %q['].freeze

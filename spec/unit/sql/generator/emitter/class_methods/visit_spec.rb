@@ -325,6 +325,18 @@ describe SQL::Generator::Emitter, '.visit' do
         )
       end
     end
+
+    {
+      natural_join: 'NATURAL JOIN',
+      cross_join:   'CROSS JOIN',
+    }.each do |type, operator|
+      context type.inspect do
+        assert_generates(
+          s(type, s(:id, 'foo'), s(:id, 'bar')),
+          %Q["foo" #{operator} "bar"]
+        )
+      end
+    end
   end
 
   context 'when emitter is missing' do
