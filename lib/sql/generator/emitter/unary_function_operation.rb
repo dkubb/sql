@@ -4,8 +4,8 @@ module SQL
   module Generator
     class Emitter
 
-      # Unary prefix operation emitter base class
-      class UnaryPrefixOperation < self
+      # Emitter class for unary operations using functional notation
+      class UnaryFunctionOperation < self
 
         TYPES = IceNine.deep_freeze(
           count:  O_COUNT,
@@ -36,7 +36,7 @@ module SQL
           parenthesis { visit(operand) }
         end
 
-      end # UnaryPrefixOperation
+      end # UnaryFunctionOperation
     end # Emitter
   end # Generator
 end # SQL
