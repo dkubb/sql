@@ -36,6 +36,7 @@ module SQL
       # Unary Prefix Operators
       O_NEGATION = 'NOT'.freeze
       O_ON       = 'ON'.freeze
+      O_USING    = 'USING'.freeze
 
       # Unary Function Operators
       O_COUNT  = 'COUNT'.freeze

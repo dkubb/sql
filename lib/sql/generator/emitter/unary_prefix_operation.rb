@@ -11,7 +11,8 @@ module SQL
           uplus:  O_PLUS,
           uminus: O_MINUS,
           not:    O_NEGATION + WS,
-          on:     O_ON + WS
+          on:     O_ON + WS,
+          using:  O_USING + WS
         )
 
         handle(*TYPES.keys)

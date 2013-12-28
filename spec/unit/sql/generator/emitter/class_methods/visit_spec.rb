@@ -323,6 +323,15 @@ describe SQL::Generator::Emitter, '.visit' do
           ),
           %Q["foo" #{operator} "bar" ON "foo"."name" = "bar"."name"]
         )
+
+        assert_generates(
+          s(type,
+            s(:id, 'foo'),
+            s(:id, 'bar'),
+            s(:using, s(:tuple, s(:id, 'name')))
+          ),
+          %Q["foo" #{operator} "bar" USING ("name")]
+        )
       end
     end
 
