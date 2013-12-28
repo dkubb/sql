@@ -137,6 +137,13 @@ describe SQL::Generator::Emitter, '.visit' do
         '"foo" IS NOT NULL'
       )
     end
+
+    context ':between' do
+      assert_generates(
+        s(:between, s(:id, 'foo'), s(:and, s(:integer, 1), s(:integer, 2))),
+        '"foo" BETWEEN 1 AND 2'
+      )
+    end
   end
 
   context 'tuples' do
