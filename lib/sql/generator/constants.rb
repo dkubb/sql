@@ -49,6 +49,7 @@ module SQL
       O_AND      = 'AND'.freeze
       O_OR       = 'OR'.freeze
       O_NEGATION = 'NOT'.freeze
+      O_IN       = 'IN'.freeze
       O_BETWEEN  = 'BETWEEN'.freeze
       O_PLUS     = '+'.freeze
       O_MINUS    = '-'.freeze

@@ -138,6 +138,13 @@ describe SQL::Generator::Emitter, '.visit' do
       )
     end
 
+    context ':in' do
+      assert_generates(
+        s(:in, s(:id, 'foo'), s(:tuple, s(:integer, 1), s(:integer, 2))),
+        '"foo" IN (1, 2)'
+      )
+    end
+
     context ':between' do
       assert_generates(
         s(:between, s(:id, 'foo'), s(:and, s(:integer, 1), s(:integer, 2))),
