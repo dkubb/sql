@@ -28,20 +28,6 @@ describe SQL::Generator::Emitter, '.visit' do
     assert_generates s(:decimal, BigDecimal('1.0')), '1.0'
   end
 
-  context 'unary scalars' do
-    context 'with unary plus' do
-      assert_generates s(:uplus, s(:integer, 1)), '+1'
-    end
-
-    context 'with unary minus' do
-      assert_generates s(:uminus, s(:integer, 1)), '-1'
-    end
-
-    context 'with unary negation' do
-      assert_generates s(:not, s(:true)), 'NOT TRUE'
-    end
-  end
-
   context 'with dates' do
     assert_generates s(:date, Date.new(2013, 1, 1)), %q['2013-01-01']
   end
@@ -76,6 +62,20 @@ describe SQL::Generator::Emitter, '.visit' do
 
   context 'identifiers' do
     assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
+  end
+
+  context 'unary scalars' do
+    context 'with unary plus' do
+      assert_generates s(:uplus, s(:integer, 1)), '+1'
+    end
+
+    context 'with unary minus' do
+      assert_generates s(:uminus, s(:integer, 1)), '-1'
+    end
+
+    context 'with unary negation' do
+      assert_generates s(:not, s(:true)), 'NOT TRUE'
+    end
   end
 
   context 'unary prefix operations' do
