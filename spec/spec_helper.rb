@@ -22,6 +22,7 @@ end
 
 require 'devtools/spec_helper'
 require 'sql'
+require 'bigdecimal'
 
 RSpec.configure do |config|
   config.include(SQL::NodeHelper)
