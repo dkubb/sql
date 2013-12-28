@@ -64,21 +64,21 @@ describe SQL::Generator::Emitter, '.visit' do
     assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
   end
 
-  context 'unary scalars' do
-    context 'with unary plus' do
+  context 'unary prefix operations' do
+    context 'with plus' do
       assert_generates s(:uplus, s(:integer, 1)), '+1'
     end
 
-    context 'with unary minus' do
+    context 'with minus' do
       assert_generates s(:uminus, s(:integer, 1)), '-1'
     end
 
-    context 'with unary negation' do
+    context 'with negation' do
       assert_generates s(:not, s(:true)), 'NOT TRUE'
     end
   end
 
-  context 'unary prefix operations' do
+  context 'unary function operations' do
     {
       count:  'COUNT',
       sum:    'SUM',
