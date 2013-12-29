@@ -18,6 +18,7 @@ matrix:
     - rvm: jruby-head
       env: JRUBY_OPTS="$JRUBY_OPTS --debug"  # for simplecov
   allow_failures:
+    - rvm: jruby-19mode  # inconsistent travis-ci failures
     - rvm: jruby-20mode  # inconsistent travis-ci failures
     - rvm: jruby-21mode  # inconsistent travis-ci failures
     - rvm: jruby-head    # inconsistent travis-ci failures
