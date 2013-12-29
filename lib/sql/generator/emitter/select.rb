@@ -20,9 +20,8 @@ module SQL
         def dispatch
           write(K_SELECT, WS)
           visit(fields)
-          write(WS, K_FROM, WS)
-          visit(from)
-          write_node(where, K_WHERE)
+          write_node(from,     K_FROM)
+          write_node(where,    K_WHERE)
           write_node(group_by, K_GROUP_BY)
         end
 
