@@ -280,6 +280,24 @@ describe SQL::Generator::Emitter, '.visit' do
         SQL
       )
     end
+
+    context 'with group by and having' do
+      assert_generates(
+        s(:select,
+          s(:fields, s(:id, 'name'), s(:id, 'age')),
+          s(:id, 'users'),
+          nil,
+          s(:group_by, s(:id, 'name'), s(:id, 'age')),
+          s(:having, s(:eq, s(:id, 'id'), s(:integer, 1)))
+        ),
+        <<-SQL.gsub(/\s+/, ' ').strip
+          SELECT "name", "age"
+          FROM "users"
+          GROUP BY "name", "age"
+          HAVING "id" = 1
+        SQL
+      )
+    end
   end
 
   context 'set operations' do

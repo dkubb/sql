@@ -27,6 +27,7 @@ module SQL
       K_WHERE    = 'WHERE'.freeze
       K_FROM     = 'FROM'.freeze
       K_GROUP_BY = 'GROUP BY'.freeze
+      K_HAVING   = 'HAVING'.freeze
       K_UPDATE   = 'UPDATE'.freeze
       K_SET      = 'SET'.freeze
       K_INSERT   = 'INSERT INTO'.freeze

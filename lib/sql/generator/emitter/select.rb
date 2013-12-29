@@ -8,7 +8,7 @@ module SQL
       class Select < self
         handle :select
 
-        children :fields, :from, :where, :group_by
+        children :fields, :from, :where, :group_by, :having
 
       private
 
@@ -23,6 +23,7 @@ module SQL
           write_node(from,     K_FROM)
           write_node(where,    K_WHERE)
           write_node(group_by, K_GROUP_BY)
+          write_node(having,   K_HAVING)
         end
 
       end # Select
