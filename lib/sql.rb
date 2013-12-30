@@ -37,6 +37,7 @@ require 'sql/generator/emitter/identifier'
 require 'sql/generator/emitter/binary_infix_operation'
 require 'sql/generator/emitter/unary_function_operation'
 require 'sql/generator/emitter/unary_prefix_operation'
+require 'sql/generator/emitter/sort_operation'
 
 require 'sql/generator/emitter/delimited'
 

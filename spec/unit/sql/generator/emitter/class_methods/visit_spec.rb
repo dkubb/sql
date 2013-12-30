@@ -272,12 +272,12 @@ describe SQL::Generator::Emitter, '.visit' do
           nil,
           nil,
           nil,
-          s(:order_by, s(:id, 'name'), s(:id, 'age'))
+          s(:order_by, s(:asc, s(:id, 'name')), s(:desc, s(:id, 'age')))
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
           SELECT "name", "age"
           FROM "users"
-          ORDER BY "name", "age"
+          ORDER BY "name" ASC, "age" DESC
         SQL
       )
     end

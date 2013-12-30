@@ -85,6 +85,10 @@ module SQL
       O_NATURAL_JOIN = 'NATURAL JOIN'.freeze
       O_CROSS_JOIN   = 'CROSS JOIN'.freeze
 
+      # Sort Operators
+      O_ASC  = 'ASC'.freeze
+      O_DESC = 'DESC'.freeze
+
       # Delimiters
       D_QUOTE             = %q['].freeze
       D_ESCAPED_QUOTE     = %q[''].freeze
