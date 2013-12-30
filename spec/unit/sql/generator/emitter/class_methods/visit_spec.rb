@@ -370,7 +370,10 @@ describe SQL::Generator::Emitter, '.visit' do
   context 'when emitter is missing' do
     it 'raises argument error' do
       expect { described_class.visit(s(:not_supported, []), stream) }
-        .to raise_error(ArgumentError, 'No emitter for node: :not_supported')
+        .to raise_error(
+          SQL::UnknownTypeError,
+          'No emitter for node: :not_supported'
+        )
     end
   end
 end
