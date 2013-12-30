@@ -6,6 +6,19 @@ module SQL
     # DSL Methods
     module DSL
 
+      # Visit node
+      #
+      # @param [Parser::AST::Node] node
+      # @param [Stream] stream
+      #
+      # @return [Class<Emitter>]
+      #
+      # @api private
+      def visit(node, stream)
+        @registry[node.type].emit(node, stream)
+        self
+      end
+
       # Finalize the emitter registry
       #
       # @return [Class<Emitter>]
@@ -16,7 +29,31 @@ module SQL
         self
       end
 
+    protected
+
+      # Emit node into stream
+      #
+      # @return [Class<Emitter>]
+      #
+      # @api private
+      def emit(*arguments)
+        new(*arguments)
+        self
+      end
+
     private
+
+      # Hook called when class is inherited
+      #
+      # @param [Class] descendant
+      #   the class inheriting Emitter
+      #
+      # @return [undefined]
+      #
+      # @api private
+      def inherited(descendant)
+        descendant.instance_variable_set(:@registry, @registry)
+      end
 
       # Register emitter for type
       #

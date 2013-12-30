@@ -29,41 +29,6 @@ module SQL
       attr_reader :stream
       protected :stream
 
-      # Hook called when class is inherited
-      #
-      # @param [Class] descendant
-      #   the class inheriting Emitter
-      #
-      # @return [undefined]
-      #
-      # @api private
-      def self.inherited(descendant)
-        descendant.instance_variable_set(:@registry, @registry)
-      end
-
-      # Emit node into stream
-      #
-      # @return [Class<Emitter>]
-      #
-      # @api private
-      def self.emit(*arguments)
-        new(*arguments)
-        self
-      end
-
-      # Visit node
-      #
-      # @param [Parser::AST::Node] node
-      # @param [Stream] stream
-      #
-      # @return [Class<Emitter>]
-      #
-      # @api private
-      def self.visit(node, stream)
-        @registry[node.type].emit(node, stream)
-        self
-      end
-
       # Initialize object
       #
       # @param [Parser::AST::Node] node
