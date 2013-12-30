@@ -14,6 +14,17 @@ module SQL
       # Regitry of Emitter subclasses by node type
       @registry = Registry.new
 
+    protected
+
+      # The node type
+      #
+      # @return [Symbol]
+      #
+      # @api private
+      def node_type
+        node.type
+      end
+
     private
 
       # Return node
@@ -30,16 +41,24 @@ module SQL
       # @api private
       attr_reader :stream
 
+      # Parent node
+      #
+      # @return [Emitter]
+      #
+      # @api private
+      attr_reader :parent
+
       # Initialize object
       #
       # @param [Parser::AST::Node] node
       # @param [Stream] stream
+      # @param [Emitter] parent
       #
       # @return [undefined]
       #
       # @api private
-      def initialize(node, stream)
-        @node, @stream = node, stream
+      def initialize(node, stream, parent = Root.instance)
+        @node, @stream, @parent = node, stream, parent
         dispatch
       end
 
@@ -62,7 +81,7 @@ module SQL
       #
       # @api private
       def visit(node)
-        self.class.visit(node, stream)
+        self.class.visit(node, stream, self)
       end
 
       # Emit delimited body

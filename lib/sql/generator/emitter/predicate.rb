@@ -24,7 +24,7 @@ module SQL
         #
         # @api private
         def dispatch
-          write_node(predicate, TYPES.fetch(node.type))
+          write_node(predicate, TYPES.fetch(node_type))
         end
 
       end # Predicate

@@ -32,7 +32,7 @@ module SQL
         #
         # @api private
         def dispatch
-          write(TYPES.fetch(node.type), WS)
+          write(TYPES.fetch(node_type), WS)
           parenthesis { visit(operand) }
         end
 

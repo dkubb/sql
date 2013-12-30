@@ -8,8 +8,6 @@ module SQL
       class BinaryInfixOperation < self
 
         TYPES = IceNine.deep_freeze(
-          and:     O_AND,
-          or:      O_OR,
           in:      O_IN,
           between: O_BETWEEN,
           add:     O_PLUS,
@@ -41,7 +39,7 @@ module SQL
         # @api private
         def dispatch
           visit(left)
-          write(WS, TYPES.fetch(node.type), WS)
+          write(WS, TYPES.fetch(node_type), WS)
           visit(right)
         end
 

@@ -25,7 +25,7 @@ module SQL
         # @api private
         def dispatch
           visit(field)
-          write(WS, TYPES.fetch(node.type))
+          write(WS, TYPES.fetch(node_type))
         end
 
       end # SortOperation
