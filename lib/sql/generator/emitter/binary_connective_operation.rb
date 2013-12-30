@@ -46,12 +46,7 @@ module SQL
         #
         # @api private
         def parenthesize?
-          case parent
-          when self.class
-            parent.node_type != node_type
-          else
-            false
-          end
+          kind_of?(parent.class) && parent.node_type != node_type
         end
 
       end # ConnectiveOperation
