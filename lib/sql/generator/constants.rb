@@ -7,16 +7,6 @@ module SQL
     #
     # @private
     module Constants
-      BRACES_L = '{'.freeze
-      BRACES_R = '}'.freeze
-      BRACES   = [BRACES_L, BRACES_R].freeze
-
-      PARENTHESIS_L = '('.freeze
-      PARENTHESIS_R = ')'.freeze
-      PARENTHESIS   = [PARENTHESIS_L, PARENTHESIS_R].freeze
-
-      WS = ' '.freeze
-      NL = "\n".freeze
 
       # Keywords
       K_TRUE     = 'TRUE'.freeze
@@ -96,6 +86,14 @@ module SQL
       D_ESCAPED_DBL_QUOTE = '""'.freeze
       D_PERIOD            = '.'.freeze
       D_COMMA             = ','.freeze
+
+      BRACES_L      = '{'.freeze
+      BRACES_R      = '}'.freeze
+      PARENTHESIS_L = '('.freeze
+      PARENTHESIS_R = ')'.freeze
+
+      WS = ' '.freeze
+      NL = "\n".freeze
 
     end # Constants
   end # Generator
