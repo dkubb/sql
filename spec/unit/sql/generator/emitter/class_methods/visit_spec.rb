@@ -254,34 +254,35 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:fields, s(:id, 'name'), s(:id, 'age')),
           s(:id, 'users'),
           nil,
-          s(:where, s(:id, 'name'), s(:id, 'age'))
-        ),
-        <<-SQL.gsub(/\s+/, ' ').strip
-          SELECT "name", "age"
-          FROM "users"
-          GROUP BY "name", "age"
-        SQL
-      )
-    end
-
-    context 'with where and group by' do
-      assert_generates(
-        s(:select,
-          s(:fields, s(:id, 'name'), s(:id, 'age')),
-          s(:id, 'users'),
-          s(:where, s(:eq, s(:id, 'id'), s(:integer, 1))),
           s(:group_by, s(:id, 'name'), s(:id, 'age'))
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
           SELECT "name", "age"
           FROM "users"
-          WHERE "id" = 1
           GROUP BY "name", "age"
         SQL
       )
     end
 
-    context 'with group by and having' do
+    context 'with order by' do
+      assert_generates(
+        s(:select,
+          s(:fields, s(:id, 'name'), s(:id, 'age')),
+          s(:id, 'users'),
+          nil,
+          nil,
+          nil,
+          s(:order_by, s(:id, 'name'), s(:id, 'age'))
+        ),
+        <<-SQL.gsub(/\s+/, ' ').strip
+          SELECT "name", "age"
+          FROM "users"
+          ORDER BY "name", "age"
+        SQL
+      )
+    end
+
+    context 'with having' do
       assert_generates(
         s(:select,
           s(:fields, s(:id, 'name'), s(:id, 'age')),

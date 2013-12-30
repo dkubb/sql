@@ -6,7 +6,7 @@ module SQL
 
       # Delimited names emitter
       class Delimited < self
-        handle :set, :fields, :where, :group_by, :having
+        handle :set, :fields, :where, :group_by, :having, :order_by
 
       private
 
