@@ -23,7 +23,6 @@ module SQL
           write(WS, K_SET, WS)
           visit(assignment)
           write_node(where, K_WHERE)
-          sc
         end
 
       end # Update

@@ -21,7 +21,6 @@ module SQL
           write(K_DELETE, WS, K_FROM, WS)
           visit(identifier)
           write_node(where, K_WHERE)
-          sc
         end
 
       end # Delete

@@ -17,7 +17,6 @@ module SQL
 
       WS = ' '.freeze
       NL = "\n".freeze
-      SC = ';'.freeze
 
       # Keywords
       K_TRUE     = 'TRUE'.freeze

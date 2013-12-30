@@ -166,13 +166,13 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:id, 'users'),
         s(:tuple, s(:integer, 1), s(:string, 'foo'))
       ),
-      %q[INSERT INTO "users" VALUES (1, 'foo');]
+      %q[INSERT INTO "users" VALUES (1, 'foo')]
     )
   end
 
   context 'delete' do
     context 'without where clause' do
-      assert_generates s(:delete, s(:id, 'users')), %q[DELETE FROM "users";]
+      assert_generates s(:delete, s(:id, 'users')), %q[DELETE FROM "users"]
     end
 
     context 'with where clause' do
@@ -183,7 +183,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'name'), s(:string, 'foo'))
           )
         ),
-        %q[DELETE FROM "users" WHERE "name" = 'foo';]
+        %q[DELETE FROM "users" WHERE "name" = 'foo']
       )
     end
   end
@@ -198,7 +198,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'age'), s(:integer, 1))
           )
         ),
-        %q[UPDATE "users" SET "name" = 'foo', "age" = 1;]
+        %q[UPDATE "users" SET "name" = 'foo', "age" = 1]
       )
     end
 
@@ -217,7 +217,7 @@ describe SQL::Generator::Emitter, '.visit' do
         <<-SQL.gsub(/\s+/, ' ').strip
           UPDATE "users"
           SET "name" = 'foo', "age" = 1
-          WHERE "age" = 2;
+          WHERE "age" = 2
         SQL
       )
     end

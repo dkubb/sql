@@ -179,16 +179,6 @@ module SQL
         node.children
       end
 
-      # Write semicolon
-      #
-      # @return [undefined]
-      #
-      # @api private
-      #
-      def sc
-        write(SC)
-      end
-
       # Write strings into stream
       #
       # @return [undefined]

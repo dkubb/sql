@@ -22,7 +22,6 @@ module SQL
           visit(identifier)
           write(WS, K_VALUES, WS)
           visit(tuple)
-          sc
         end
 
       end # Insert
