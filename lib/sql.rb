@@ -33,6 +33,7 @@ require 'sql/generator/constants'
 
 require 'sql/generator/stream'
 require 'sql/generator/registry'
+require 'sql/generator/dsl'
 
 require 'sql/generator/emitter'
 require 'sql/generator/emitter/literal'

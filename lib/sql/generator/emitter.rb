@@ -5,106 +5,14 @@ module SQL
 
     # Emitter base class
     class Emitter
+      extend DSL
       include Adamantium::Flat, AbstractType, Constants
 
       # Default delimiter
       DEFAULT_DELIMITER = D_COMMA + WS
 
       # Regitry of Emitter subclasses by node type
-      @@registry = Registry.new
-
-      # Define named child
-      #
-      # @param [Symbol] name
-      # @param [Fixnum] index
-      #
-      # @return [undefined]
-      #
-      # @api private
-      def self.define_named_child(name, index)
-        define_method(name) { children.at(index) }
-      end
-
-      # Define remaining children
-      #
-      # @param [Fixnum] from_index
-      #
-      # @return [undefined]
-      #
-      # @api private
-      def self.define_remaining_children(from_index)
-        define_method(:remaining_children) { children.drop(from_index) }
-      end
-
-      # Create name helpers
-      #
-      # @return [undefined]
-      #
-      # @api private
-      def self.children(*names)
-        names.each_with_index(&method(:define_named_child))
-        define_remaining_children(names.length)
-      end
-      private_class_method :children
-
-      # Emit node into stream
-      #
-      # @return [Class<Emitter>]
-      #
-      # @api private
-      def self.emit(*arguments)
-        new(*arguments)
-        self
-      end
-
-      # Register emitter for type
-      #
-      # @param [Symbol] type
-      #
-      # @return [undefined]
-      #
-      # @api private
-      def self.handle(*types)
-        types.each { |type| @@registry[type] = self }
-      end
-      private_class_method :handle
-
-      # Initialize object
-      #
-      # @param [Parser::AST::Node] node
-      # @param [Stream] stream
-      #
-      # @return [undefined]
-      #
-      # @api private
-      def initialize(node, stream)
-        @node, @stream = node, stream
-        dispatch
-      end
-      private_class_method :new
-
-      # Visit node
-      #
-      # @param [Parser::AST::Node] node
-      # @param [Stream] stream
-      #
-      # @return [Class<Emitter>]
-      #
-      # @api private
-      def self.visit(node, stream)
-        @@registry[node.type].emit(node, stream)
-        self
-      end
-
-      # Finalize the emitter registry
-      #
-      # @return [Class<Emitter>]
-      #
-      # @api private
-      def self.finalize
-        @@registry.finalize
-        self
-      end
+      @registry = Registry.new
 
       # Return node
       #
@@ -120,6 +28,55 @@ module SQL
       # @api private
       attr_reader :stream
       protected :stream
+
+      # Hook called when class is inherited
+      #
+      # @param [Class] descendant
+      #   the class inheriting Emitter
+      #
+      # @return [undefined]
+      #
+      # @api private
+      def self.inherited(descendant)
+        descendant.instance_variable_set(:@registry, @registry)
+      end
+
+      # Emit node into stream
+      #
+      # @return [Class<Emitter>]
+      #
+      # @api private
+      def self.emit(*arguments)
+        new(*arguments)
+        self
+      end
+
+      # Visit node
+      #
+      # @param [Parser::AST::Node] node
+      # @param [Stream] stream
+      #
+      # @return [Class<Emitter>]
+      #
+      # @api private
+      def self.visit(node, stream)
+        @registry[node.type].emit(node, stream)
+        self
+      end
+
+      # Initialize object
+      #
+      # @param [Parser::AST::Node] node
+      # @param [Stream] stream
+      #
+      # @return [undefined]
+      #
+      # @api private
+      def initialize(node, stream)
+        @node, @stream = node, stream
+        dispatch
+      end
+      private_class_method :new
 
     private
 
