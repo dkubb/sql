@@ -34,7 +34,8 @@ DuplicateMethodCall:
   allow_calls: []
 FeatureEnvy:
   enabled: true
-  exclude: []
+  exclude:
+  - SQL::UnknownTypeError#initialize
 IrresponsibleModule:
   enabled: true
   exclude: []
@@ -113,4 +114,5 @@ UtilityFunction:
   enabled: true
   exclude:
   - SQL::NodeHelper#s
+  - SQL::UnknownTypeError#initialize
   max_helper_calls: 0
