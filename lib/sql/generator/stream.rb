@@ -74,12 +74,12 @@ module SQL
 
         # Append string with indentation
         #
-        # @param [String] string
+        # @param [String] _string
         #
         # @return [self]
         #
         # @api private
-        def <<(string)
+        def <<(_string)
           output << DEFAULT_INDENT if output.start_of_line?
           super
         end
