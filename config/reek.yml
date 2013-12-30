@@ -39,7 +39,8 @@ IrresponsibleModule:
   exclude: []
 LongParameterList:
   enabled: true
-  exclude: []
+  exclude:
+  - SQL::Generator::DSL#visit
   max_params: 2
   overrides:
     initialize:
@@ -64,7 +65,8 @@ RepeatedConditional:
   max_ifs: 1
 TooManyInstanceVariables:
   enabled: true
-  exclude: []
+  exclude:
+  - SQL::Generator::Emitter  # incorrectly counts class ivar
   max_instance_variables: 3
 TooManyMethods:
   enabled: true
