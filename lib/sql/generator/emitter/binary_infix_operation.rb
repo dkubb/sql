@@ -8,8 +8,6 @@ module SQL
       class BinaryInfixOperation < self
 
         TYPES = IceNine.deep_freeze(
-          and:     O_AND,
-          or:      O_OR,
           in:      O_IN,
           between: O_BETWEEN,
           add:     O_PLUS,

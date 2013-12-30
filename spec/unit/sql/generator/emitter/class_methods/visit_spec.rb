@@ -102,8 +102,6 @@ describe SQL::Generator::Emitter, '.visit' do
 
   context 'binary infix operations' do
     {
-      or:     'OR',
-      and:    'AND',
       concat: '||',
       mul:    '*',
       add:    '+',
@@ -149,6 +147,42 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates(
         s(:between, s(:id, 'foo'), s(:and, s(:integer, 1), s(:integer, 2))),
         '"foo" BETWEEN 1 AND 2'
+      )
+    end
+  end
+
+  context 'binary connective operations' do
+    context ':and' do
+      assert_generates(
+        s(:and, s(:true), s(:true)),
+        'TRUE AND TRUE'
+      )
+
+      assert_generates(
+        s(:and, s(:true), s(:and, s(:true), s(:true))),
+        'TRUE AND TRUE AND TRUE'
+      )
+
+      assert_generates(
+        s(:and, s(:true), s(:or, s(:false), s(:true))),
+        'TRUE AND (FALSE OR TRUE)'
+      )
+    end
+
+    context ':or' do
+      assert_generates(
+        s(:or, s(:false), s(:true)),
+        'FALSE OR TRUE'
+      )
+
+      assert_generates(
+        s(:or, s(:false), s(:or, s(:false), s(:true))),
+        'FALSE OR FALSE OR TRUE'
+      )
+
+      assert_generates(
+        s(:or, s(:false), s(:and, s(:true), s(:true))),
+        'FALSE OR (TRUE AND TRUE)'
       )
     end
   end
