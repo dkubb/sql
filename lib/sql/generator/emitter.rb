@@ -30,16 +30,24 @@ module SQL
       # @api private
       attr_reader :stream
 
+      # Parent node
+      #
+      # @return [Parser::AST::Node, nil]
+      #
+      # @api private
+      attr_reader :parent
+
       # Initialize object
       #
       # @param [Parser::AST::Node] node
       # @param [Stream] stream
+      # @param [Parser::AST::Node, nil] parent
       #
       # @return [undefined]
       #
       # @api private
-      def initialize(node, stream)
-        @node, @stream = node, stream
+      def initialize(node, stream, parent = nil)
+        @node, @stream, @parent = node, stream, parent
         dispatch
       end
 
@@ -62,7 +70,7 @@ module SQL
       #
       # @api private
       def visit(node)
-        self.class.visit(node, stream)
+        self.class.visit(node, stream, @node)
       end
 
       # Emit delimited body
