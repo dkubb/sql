@@ -9,8 +9,20 @@ require 'abstract_type'
 module SQL
 
   # Raised when a node type is unknown
-  class UnknownTypeError < ArgumentError; end
+  class UnknownTypeError < ArgumentError
 
+    # Initialize the unknown type error exception
+    #
+    # @param [Symbol] type
+    #
+    # @return [undefined]
+    #
+    # @api private
+    def initialize(type)
+      super("No emitter for node: #{type.inspect}")
+    end
+
+  end # UnknownTypeError
 end # SQL
 
 require 'sql/ast/node'
