@@ -28,8 +28,8 @@ end # SQL
 require 'sql/ast/node'
 require 'sql/fuzzer'
 
+require 'sql/constants'
 require 'sql/generator'
-require 'sql/generator/constants'
 
 require 'sql/generator/stream'
 require 'sql/generator/registry'
