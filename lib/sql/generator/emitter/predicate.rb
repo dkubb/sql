@@ -4,15 +4,17 @@ module SQL
   module Generator
     class Emitter
 
-      # Delimited names emitter
-      class Delimited < self
+      # Predicate emitter
+      class Predicate < self
 
         TYPES = IceNine.deep_freeze(
-          group_by: K_GROUP_BY,
-          order_by: K_ORDER_BY
+          where:  K_WHERE,
+          having: K_HAVING
         )
 
         handle(*TYPES.keys)
+
+        children :predicate
 
       private
 
@@ -22,11 +24,10 @@ module SQL
         #
         # @api private
         def dispatch
-          write(WS, TYPES.fetch(node.type), WS)
-          delimited(children)
+          write_node(predicate, TYPES.fetch(node.type))
         end
 
-      end # Delimited
+      end # Predicate
     end # Emitter
   end # Generator
 end # SQL

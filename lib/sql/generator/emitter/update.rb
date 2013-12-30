@@ -21,8 +21,8 @@ module SQL
         # @api private
         def dispatch
           write_command(from)
-          write_node(assignment, K_SET)
-          write_node(where,      K_WHERE)
+          visit(assignment)
+          visit(where) if where
         end
 
       end # Update

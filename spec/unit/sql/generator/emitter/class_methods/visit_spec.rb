@@ -193,7 +193,7 @@ describe SQL::Generator::Emitter, '.visit' do
       assert_generates(
         s(:update,
           s(:id, 'users'),
-          s(:where,
+          s(:set,
             s(:eq, s(:id, 'name'), s(:string, 'foo')),
             s(:eq, s(:id, 'age'), s(:integer, 1))
           )
@@ -253,7 +253,6 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:select,
           s(:fields, s(:id, 'name'), s(:id, 'age')),
           s(:id, 'users'),
-          nil,
           s(:group_by, s(:id, 'name'), s(:id, 'age'))
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
@@ -269,9 +268,6 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:select,
           s(:fields, s(:id, 'name'), s(:id, 'age')),
           s(:id, 'users'),
-          nil,
-          nil,
-          nil,
           s(:order_by, s(:asc, s(:id, 'name')), s(:desc, s(:id, 'age')))
         ),
         <<-SQL.gsub(/\s+/, ' ').strip
@@ -287,7 +283,6 @@ describe SQL::Generator::Emitter, '.visit' do
         s(:select,
           s(:fields, s(:id, 'name'), s(:id, 'age')),
           s(:id, 'users'),
-          nil,
           s(:group_by, s(:id, 'name'), s(:id, 'age')),
           s(:having, s(:eq, s(:id, 'id'), s(:integer, 1)))
         ),

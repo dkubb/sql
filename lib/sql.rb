@@ -53,6 +53,9 @@ require 'sql/generator/emitter/unary_prefix_operation'
 require 'sql/generator/emitter/sort_operation'
 
 require 'sql/generator/emitter/delimited'
+require 'sql/generator/emitter/fields'
+require 'sql/generator/emitter/predicate'
+require 'sql/generator/emitter/update_set'
 
 require 'sql/generator/emitter/tuple'
 require 'sql/generator/emitter/insert'

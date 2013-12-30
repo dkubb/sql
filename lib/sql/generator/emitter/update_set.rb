@@ -4,13 +4,9 @@ module SQL
   module Generator
     class Emitter
 
-      # Delete statement emitter
-      class Delete < self
-        COMMAND = (K_DELETE + WS + K_FROM).freeze
-
-        handle :delete
-
-        children :from, :where
+      # Update set emitter
+      class UpdateSet < self
+        handle :set
 
       private
 
@@ -20,11 +16,11 @@ module SQL
         #
         # @api private
         def dispatch
-          write_command(from)
-          visit(where) if where
+          write(WS, K_SET, WS)
+          delimited(children)
         end
 
-      end # Delete
+      end # UpdateSet
     end # Emitter
   end # Generator
 end # SQL

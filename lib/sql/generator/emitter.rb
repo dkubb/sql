@@ -118,7 +118,6 @@ module SQL
       #
       # @api private
       def write_node(node, keyword)
-        return unless node
         write(WS, keyword, WS)
         visit(node)
       end
