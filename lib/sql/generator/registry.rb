@@ -35,12 +35,11 @@ module SQL
       # @param [Symbol] type
       # @param [Emitter] emitter
       #
-      # @return [self]
+      # @return [undefined]
       #
       # @api private
       def []=(type, emitter)
         @emitters[type] = emitter
-        self
       end
 
       # Finalize the registry
