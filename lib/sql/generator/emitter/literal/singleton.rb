@@ -24,7 +24,7 @@ module SQL
           #
           # @api private
           def dispatch
-            write(TYPES.fetch(node.type))
+            write(TYPES.fetch(node_type))
           end
 
         end # Singleton

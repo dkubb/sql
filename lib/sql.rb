@@ -36,6 +36,8 @@ require 'sql/generator/registry'
 require 'sql/generator/dsl'
 
 require 'sql/generator/emitter'
+require 'sql/generator/emitter/root'
+
 require 'sql/generator/emitter/literal'
 require 'sql/generator/emitter/literal/date'
 require 'sql/generator/emitter/literal/datetime'

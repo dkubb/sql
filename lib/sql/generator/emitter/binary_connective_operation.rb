@@ -26,7 +26,7 @@ module SQL
         def dispatch
           parenthesis do
             visit(left)
-            write(WS, TYPES.fetch(node.type), WS)
+            write(WS, TYPES.fetch(node_type), WS)
             visit(right)
           end
         end
@@ -46,10 +46,9 @@ module SQL
         #
         # @api private
         def parenthesize?
-          parent_type = parent.type if parent
-          case parent_type
-          when *TYPES.keys
-            parent_type != node.type
+          case parent
+          when self.class
+            parent.node_type != node_type
           else
             false
           end

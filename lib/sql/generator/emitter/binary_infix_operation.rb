@@ -39,7 +39,7 @@ module SQL
         # @api private
         def dispatch
           visit(left)
-          write(WS, TYPES.fetch(node.type), WS)
+          write(WS, TYPES.fetch(node_type), WS)
           visit(right)
         end
 

@@ -22,12 +22,12 @@ module SQL
       #
       # @param [Parser::AST::Node] node
       # @param [Stream] stream
-      # @param [Parser::AST::Node, nil] parent optional
+      # @param [Emitter] parent optional
       #
       # @return [Class<Emitter>]
       #
       # @api private
-      def visit(node, stream, parent = nil)
+      def visit(node, stream, parent = Emitter::Root.instance)
         @registry[node.type].emit(node, stream, parent)
         self
       end

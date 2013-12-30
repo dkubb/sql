@@ -26,7 +26,7 @@ module SQL
         def dispatch
           parenthesis { visit(first) }
           remaining_children.each do |operand|
-            write(WS, TYPES.fetch(node.type), WS)
+            write(WS, TYPES.fetch(node_type), WS)
             parenthesis { visit(operand) }
           end
         end
