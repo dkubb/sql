@@ -37,6 +37,7 @@ require 'sql/generator/dsl'
 
 require 'sql/generator/emitter'
 require 'sql/generator/emitter/root'
+require 'sql/generator/emitter/conditional_parenthesis'
 
 require 'sql/generator/emitter/literal'
 require 'sql/generator/emitter/literal/date'

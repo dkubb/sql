@@ -6,6 +6,7 @@ module SQL
 
       # Connective operation emitter base class
       class ConnectiveOperation < self
+        include ConditionalParenthesis
 
         TYPES = IceNine.deep_freeze(
           and: O_AND,
@@ -29,15 +30,6 @@ module SQL
             write(WS, TYPES.fetch(node_type), WS)
             visit(right)
           end
-        end
-
-        # Emit contents of the block within parenthesis when necessary
-        #
-        # @return [Boolean]
-        #
-        # @api private
-        def parenthesis
-          parenthesize? ? super : yield
         end
 
         # Test if the connective needs to be parenthesized

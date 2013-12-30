@@ -6,6 +6,8 @@ module SQL
 
       # Select statement emitter
       class Select < self
+        include ConditionalParenthesis
+
         COMMAND = K_SELECT
 
         handle :select
@@ -20,9 +22,20 @@ module SQL
         #
         # @api private
         def dispatch
-          write_command(fields)
-          write_node(from, K_FROM)
-          remaining_children.each(&method(:visit))
+          parenthesis do
+            write_command(fields)
+            write_node(from, K_FROM)
+            remaining_children.each(&method(:visit))
+          end
+        end
+
+        # Test if the statement needs to be parenthesized
+        #
+        # @return [Boolean]
+        #
+        # @api private
+        def parenthesize?
+          !parent.equal?(Root.instance)
         end
 
       end # Select

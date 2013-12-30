@@ -7,14 +7,12 @@ module SQL
       # Set statement emitter
       class Set < self
         TYPES = IceNine.deep_freeze(
-          difference:   O_EXCEPT,
-          intersection: O_INTERSECT,
-          union:        O_UNION,
+          difference:   WS + O_EXCEPT    + WS,
+          intersection: WS + O_INTERSECT + WS,
+          union:        WS + O_UNION     + WS,
         )
 
         handle(*TYPES.keys)
-
-        children :first
 
       private
 
@@ -24,11 +22,7 @@ module SQL
         #
         # @api private
         def dispatch
-          parenthesis { visit(first) }
-          remaining_children.each do |operand|
-            write(WS, TYPES.fetch(node_type), WS)
-            parenthesis { visit(operand) }
-          end
+          delimited(children, TYPES.fetch(node_type))
         end
 
       end # Set
