@@ -14,9 +14,7 @@ module SQL
       #
       # @api private
       def initialize
-        @emitters = Hash.new do |_emitters, type|
-          fail UnknownTypeError, type
-        end
+        @emitters = Hash.new { |_emitters, type| fail UnknownTypeError, type }
       end
 
       # Return emitter based on type
