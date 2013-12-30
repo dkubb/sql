@@ -14,20 +14,21 @@ module SQL
       # Regitry of Emitter subclasses by node type
       @registry = Registry.new
 
+    private
+
       # Return node
       #
-      # @return [Parser::AST::Node] node
+      # @return [Parser::AST::Node]
       #
       # @api private
       attr_reader :node
 
       # Return stream
       #
-      # @return [Stream] stream
+      # @return [Stream]
       #
       # @api private
       attr_reader :stream
-      protected :stream
 
       # Initialize object
       #
@@ -41,9 +42,6 @@ module SQL
         @node, @stream = node, stream
         dispatch
       end
-      private_class_method :new
-
-    private
 
       # Emit contents of block within parenthesis
       #

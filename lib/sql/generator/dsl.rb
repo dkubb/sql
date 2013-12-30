@@ -6,6 +6,18 @@ module SQL
     # DSL Methods
     module DSL
 
+      # Hook called when another module is extended by this module
+      #
+      # @param [Module] descendant
+      #   the module being extended with Emitter
+      #
+      # @return [undefined]
+      #
+      # @api private
+      def self.extended(descendant)
+        descendant.class_eval { private_class_method :new }
+      end
+
       # Visit node
       #
       # @param [Parser::AST::Node] node
