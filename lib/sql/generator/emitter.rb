@@ -7,11 +7,11 @@ module SQL
     class Emitter
       include Adamantium::Flat, AbstractType, Constants
 
-      # Regitry of Emitter subclasses by node type
-      REGISTRY = Registry.new
-
       # Default delimiter
       DEFAULT_DELIMITER = D_COMMA + WS
+
+      # Regitry of Emitter subclasses by node type
+      @@registry = Registry.new
 
       # Define named child
       #
@@ -71,9 +71,7 @@ module SQL
       #
       # @api private
       def self.handle(*types)
-        types.each do |type|
-          REGISTRY[type] = self
-        end
+        types.each { |type| @@registry[type] = self }
       end
       private_class_method :handle
 
@@ -100,7 +98,7 @@ module SQL
       #
       # @api private
       def self.visit(node, stream)
-        REGISTRY[node.type].emit(node, stream)
+        @@registry[node.type].emit(node, stream)
         self
       end
 
@@ -110,7 +108,7 @@ module SQL
       #
       # @api private
       def self.finalize
-        REGISTRY.finalize
+        @@registry.finalize
         self
       end
 
