@@ -90,7 +90,7 @@ module SQL
       D_DBL_QUOTE         = '"'.freeze
       D_ESCAPED_DBL_QUOTE = '""'.freeze
       D_PERIOD            = '.'.freeze
-      DEFAULT_DELIMITER   = ', '.freeze
+      D_COMMA             = ','.freeze
 
     end # Constants
   end # Generator

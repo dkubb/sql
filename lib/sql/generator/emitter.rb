@@ -10,6 +10,9 @@ module SQL
       # Regitry of Emitter subclasses by node type
       REGISTRY = Registry.new
 
+      # Default delimiter
+      DEFAULT_DELIMITER = D_COMMA + WS
+
       # Define named child
       #
       # @param [Symbol] name
