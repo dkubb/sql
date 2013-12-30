@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency('abstract_type', '~> 0.0.7')
   gem.add_runtime_dependency('adamantium',    '~> 0.1.0')
   gem.add_runtime_dependency('ast',           '~> 1.1.0')
-  gem.add_runtime_dependency('ice_nine',      '~> 0.10.0')
+  gem.add_runtime_dependency('ice_nine',      '~> 0.11.0')
 
   gem.add_development_dependency('bundler', '~> 1.3', '>= 1.3.5')
 end
