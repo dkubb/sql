@@ -188,16 +188,25 @@ module SQL
         strings.each(&stream.method(:<<))
       end
 
+      # Write the command
+      #
+      # @return [undefined]
+      #
+      # @api private
+      def write_command(node)
+        write(self.class::COMMAND, WS)
+        visit(node)
+      end
+
       # Write the node if it exists
       #
       # @return [undefined]
       #
       # @api private
       def write_node(node, keyword)
-        if node
-          write(WS, keyword, WS)
-          visit(node)
-        end
+        return unless node
+        write(WS, keyword, WS)
+        visit(node)
       end
 
     end # Emitter

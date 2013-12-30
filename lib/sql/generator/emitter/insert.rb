@@ -6,9 +6,11 @@ module SQL
 
       # Insert statement emitter
       class Insert < self
+        COMMAND = (K_INSERT + WS + K_INTO).freeze
+
         handle :insert
 
-        children :identifier, :tuple
+        children :from, :tuple
 
       private
 
@@ -18,10 +20,8 @@ module SQL
         #
         # @api private
         def dispatch
-          write(K_INSERT, WS)
-          visit(identifier)
-          write(WS, K_VALUES, WS)
-          visit(tuple)
+          write_command(from)
+          write_node(tuple, K_VALUES)
         end
 
       end # Insert

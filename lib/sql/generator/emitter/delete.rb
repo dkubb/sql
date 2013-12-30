@@ -6,9 +6,11 @@ module SQL
 
       # Delete statement emitter
       class Delete < self
+        COMMAND = (K_DELETE + WS + K_FROM).freeze
+
         handle :delete
 
-        children :identifier, :where
+        children :from, :where
 
       private
 
@@ -18,13 +20,11 @@ module SQL
         #
         # @api private
         def dispatch
-          write(K_DELETE, WS, K_FROM, WS)
-          visit(identifier)
+          write_command(from)
           write_node(where, K_WHERE)
         end
 
       end # Delete
-
     end # Emitter
   end # Generator
 end # SQL

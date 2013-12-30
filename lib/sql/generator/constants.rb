@@ -30,7 +30,8 @@ module SQL
       K_ORDER_BY = 'ORDER BY'.freeze
       K_UPDATE   = 'UPDATE'.freeze
       K_SET      = 'SET'.freeze
-      K_INSERT   = 'INSERT INTO'.freeze
+      K_INSERT   = 'INSERT'.freeze
+      K_INTO     = 'INTO'.freeze
       K_VALUES   = 'VALUES'.freeze
       K_DELETE   = 'DELETE'.freeze
 

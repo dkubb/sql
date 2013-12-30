@@ -6,6 +6,8 @@ module SQL
 
       # Select statement emitter
       class Select < self
+        COMMAND = K_SELECT
+
         handle :select
 
         children :fields, :from, :where, :group_by, :having, :order_by
@@ -18,8 +20,7 @@ module SQL
         #
         # @api private
         def dispatch
-          write(K_SELECT, WS)
-          visit(fields)
+          write_command(fields)
           write_node(from,     K_FROM)
           write_node(where,    K_WHERE)
           write_node(group_by, K_GROUP_BY)

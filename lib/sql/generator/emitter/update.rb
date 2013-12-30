@@ -6,9 +6,11 @@ module SQL
 
       # Update statement emitter
       class Update < self
+        COMMAND = K_UPDATE
+
         handle :update
 
-        children :identifier, :assignment, :where
+        children :from, :assignment, :where
 
       private
 
@@ -18,11 +20,9 @@ module SQL
         #
         # @api private
         def dispatch
-          write(K_UPDATE, WS)
-          visit(identifier)
-          write(WS, K_SET, WS)
-          visit(assignment)
-          write_node(where, K_WHERE)
+          write_command(from)
+          write_node(assignment, K_SET)
+          write_node(where,      K_WHERE)
         end
 
       end # Update
