@@ -33,11 +33,12 @@ require 'sql/generator'
 
 require 'sql/generator/stream'
 require 'sql/generator/registry'
-require 'sql/generator/dsl'
+
+require 'sql/generator/emitter/dsl'
+require 'sql/generator/emitter/conditional_parenthesis'
 
 require 'sql/generator/emitter'
 require 'sql/generator/emitter/root'
-require 'sql/generator/emitter/conditional_parenthesis'
 
 require 'sql/generator/emitter/literal'
 require 'sql/generator/emitter/literal/date'
