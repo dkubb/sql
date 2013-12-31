@@ -22,7 +22,7 @@ module SQL
         #
         # @api private
         def parenthesize?
-          raise NotImplementedError, "#{self}##{__method__} is not implemented"
+          fail NotImplementedError, "#{self}##{__method__} is not implemented"
         end
 
       end # ConditionalParenthesis
