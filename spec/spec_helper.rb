@@ -16,7 +16,7 @@ if ENV['COVERAGE'] == 'true'
     add_filter 'spec'
     add_filter 'vendor'
 
-    minimum_coverage 99.75
+    minimum_coverage 99.81
   end
 end
 
