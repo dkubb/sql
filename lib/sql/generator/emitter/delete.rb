@@ -6,8 +6,6 @@ module SQL
 
       # Delete statement emitter
       class Delete < self
-        COMMAND = (K_DELETE + WS + K_FROM).freeze
-
         handle :delete
 
         children :from, :where
@@ -20,7 +18,7 @@ module SQL
         #
         # @api private
         def dispatch
-          write_command(from)
+          write_command(from, K_DELETE)
           visit(where) if where
         end
 

@@ -8,8 +8,6 @@ module SQL
       class Select < self
         include ConditionalParenthesis
 
-        COMMAND = K_SELECT
-
         handle :select
 
         children :fields, :from
@@ -23,7 +21,7 @@ module SQL
         # @api private
         def dispatch
           parenthesis do
-            write_command(fields)
+            write_command(fields, K_SELECT)
             write_node(from, K_FROM)
             remaining_children.each(&method(:visit))
           end

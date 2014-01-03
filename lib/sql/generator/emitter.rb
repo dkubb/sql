@@ -124,9 +124,8 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      def write_command(node)
-        write(self.class::COMMAND, WS)
-        visit(node)
+      def write_command(node, keyword)
+        write_node(node, keyword, EMPTY_STRING)
       end
 
       # Write the node if it exists
@@ -134,8 +133,8 @@ module SQL
       # @return [undefined]
       #
       # @api private
-      def write_node(node, keyword)
-        write(WS, keyword, WS)
+      def write_node(node, keyword, prefix = WS)
+        write(prefix, keyword, WS)
         visit(node)
       end
 

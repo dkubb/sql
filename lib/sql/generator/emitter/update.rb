@@ -6,7 +6,6 @@ module SQL
 
       # Update statement emitter
       class Update < self
-        COMMAND = K_UPDATE
 
         handle :update
 
@@ -20,7 +19,7 @@ module SQL
         #
         # @api private
         def dispatch
-          write_command(from)
+          write_command(from, K_UPDATE)
           visit(assignment)
           visit(where) if where
         end

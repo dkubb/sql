@@ -19,10 +19,9 @@ module SQL
     K_ORDER_BY = 'ORDER BY'.freeze
     K_UPDATE   = 'UPDATE'.freeze
     K_SET      = 'SET'.freeze
-    K_INSERT   = 'INSERT'.freeze
-    K_INTO     = 'INTO'.freeze
+    K_INSERT   = 'INSERT INTO'.freeze
     K_VALUES   = 'VALUES'.freeze
-    K_DELETE   = 'DELETE'.freeze
+    K_DELETE   = 'DELETE FROM'.freeze
 
     # Unary Prefix Operators
     O_NEGATION = 'NOT'.freeze
@@ -93,6 +92,8 @@ module SQL
 
     WS = ' '.freeze
     NL = "\n".freeze
+
+    EMPTY_STRING = ''.freeze
 
   end # Constants
 end # SQL
