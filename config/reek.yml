@@ -40,6 +40,7 @@ IrresponsibleModule:
 LongParameterList:
   enabled: true
   exclude:
+  - SQL::Generator::Emitter#write_node
   - SQL::Generator::Emitter::DSL#visit
   max_params: 2
   overrides:
