@@ -4,5 +4,5 @@ module SQL
 
   # An SQL parser
   module Parser
-  end # module Parser
-end # module SQL
+  end # Parser
+end # SQL

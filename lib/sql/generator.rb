@@ -18,5 +18,5 @@ module SQL
       stream.output
     end
 
-  end # module Generator
-end # module SQL
+  end # Generator
+end # SQL

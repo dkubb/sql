@@ -38,5 +38,5 @@ module SQL
       self
     end
 
-  end # class Fuzzer
-end # module SQL
+  end # Fuzzer
+end # SQL

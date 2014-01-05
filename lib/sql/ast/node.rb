@@ -18,6 +18,6 @@ module SQL
         Generator.generate(self)
       end
 
-    end # class Node
-  end # module AST
-end # module SQL
+    end # Node
+  end # AST
+end # SQL
