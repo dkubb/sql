@@ -2,42 +2,39 @@
   # TODO: extract machine into separate rl file (minus ruby variable config)
   machine sql;
 
-  k_true  = 'TRUE';
-  k_false = 'FALSE';
-  k_null  = 'NULL';
+  identifier_start = alpha | 0x80..0xff;
+  identifier_part  = identifier_start | digit | '""';
+  identifier_body  = identifier_start ('_'? identifier_part)*;
+  identifier       = '"' identifier_body '"';
 
-  action mark               { mark();              }
-  action emit_identifier    { emit('identifier');  }
-  action emit_select        { emit('select');      }
-  action emit_from          { emit('from');        }
-  action emit_end           { emit('end');         }
-  action call_nested_select { fcall nested_select; }
-  action return             { fret;                }
+  main := |*
+    space;
 
-  identifier_part = '"' (alpha (alnum | '""')*) '"';
-  identifier      = (identifier_part ('.' identifier_part)*)
-                    >mark @emit_identifier;
+    # Keywords
+    'SELECT'   @{ emit('select') };
+    'FROM'     @{ emit('from')   };
+    'AS'       @{ emit('as')     };
 
-  alias  = ' ' identifier;
-  field  = identifier | k_true | k_false | k_null;
-  fields = field (', ' field)*;
+    # Literals
+    'TRUE'     @{ emit('true');  };
+    'FALSE'    @{ emit('false'); };
+    'NULL'     @{ emit('null');  };
 
-  from_clause   = 'FROM' @emit_from ' '
-                  (identifier alias? | '(' >call_nested_select alias);
+    # Delimiters
+    '('        @{ emit('left_paren');  };
+    ')'        @{ emit('right_paren'); };
+    ','        @{ emit('comma');       };
+    '.'        @{ emit('period');      };
 
-  select_clause = 'SELECT' @emit_select ' ' fields
-                  (' ' from_clause)?;
-
-  nested_select := select_clause ')' @emit_end @return;
-
-  main := select_clause;
+    identifier @{ emit('identifier'); };
+  *|;
 
   # TODO: keep ruby specific variables inline while moving previous code
+  access @;
   variable data @buffer;
   variable p    @p;
   variable pe   self.pe;
-  variable cs   @cs;
-  variable top  @top;
+  variable eof  @eof;
 }%%
 
 module SQL
@@ -59,7 +56,7 @@ module SQL
 
     def initialize(input)
       @input = input
-      @block = @ts = nil
+      @block = nil
       @buffer = []
       %% write init;
     end
@@ -67,9 +64,7 @@ module SQL
     def each(&block)
       return to_enum unless block
       return self if @block  # only allow one pass
-
       @block = block
-      stack  = []
 
       # Tokenize a stream of input
       while chunk = read_chunk
@@ -91,14 +86,13 @@ module SQL
 
   private
 
-    def mark
-      @ts = @p
+    def emit(token)
+      @block.call(token.to_sym, text)
+      @ts = nil
     end
 
-    def emit(token)
-      value = @buffer[@ts..@p] if @ts
-      @block.call(token.to_sym, value)
-      @ts = nil
+    def text
+      @buffer[@ts..@p]
     end
 
     def read_chunk
@@ -113,25 +107,16 @@ module SQL
     end
 
     def optimize_buffer
-      if @ts.nil?
-        clear_buffer
-      elsif @ts.nonzero?
-        truncate_buffer
-      end
+      reset_buffer if @ts.nil?
     end
 
-    def clear_buffer
+    def reset_buffer
       @buffer.clear
       @p = 0
     end
 
-    def truncate_buffer
-      @buffer.slice!(0, @ts)
-      @ts = 0
-    end
-
     def assert_valid_input
-      if @cs < sql_first_final
+      if @cs < %%{ write first_final; }%%
         fail InvalidInputError, @input
       end
     end
