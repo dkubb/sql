@@ -75,13 +75,11 @@ module SQL
 
       # Tokenize a stream of input
       while chunk = read_chunk
-        optimize_buffer
         @buffer.concat(chunk)
         %% write exec;
+        optimize_buffer
       end
-
       assert_valid_input
-
       self
     end
 
