@@ -11,6 +11,9 @@ token select from as
       E digit
       identifier
 
+# Rule naming conventions follow the ANSI SQL-92 BNF grammar:
+# http://savage.net.au/SQL/sql-92.bnf
+
 rule
   default
     : query_specification
