@@ -176,6 +176,7 @@ end
 
 def parse
   do_parse
+  self
 end
 
 def next_token
