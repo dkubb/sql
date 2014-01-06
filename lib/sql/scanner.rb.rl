@@ -20,12 +20,18 @@
     'FALSE'    @{ emit('false'); };
     'NULL'     @{ emit('null');  };
 
-    # Delimiters
+    # Operators
     '('        @{ emit('left_paren');  };
     ')'        @{ emit('right_paren'); };
     ','        @{ emit('comma');       };
     '.'        @{ emit('period');      };
+    '+'        @{ emit('plus_sign');   };
+    '-'        @{ emit('minus_sign');  };
+    '*'        @{ emit('asterisk');    };
+    '/'        @{ emit('solidus');     };
+    'E'        @{ emit('E');           };
 
+    digit      @{ emit('digit')       };
     identifier @{ emit('identifier'); };
   *|;
 
@@ -50,6 +56,7 @@ module SQL
 
     include Enumerable
 
+#    CHUNK_SIZE = 1024
     CHUNK_SIZE = 1  # XXX: 1 used for testing
 
     %% write data;
@@ -92,7 +99,7 @@ module SQL
     end
 
     def text
-      @buffer[@ts..@p]
+      @buffer[@ts..@p].pack('U*')
     end
 
     def read_chunk
