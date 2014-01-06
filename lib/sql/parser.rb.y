@@ -23,6 +23,25 @@ rule
     : plus_sign
     | minus_sign
 
+  subquery
+    : left_paren query_expression right_paren
+
+  query_expression
+    : non_join_query_expression
+
+  non_join_query_expression
+    : non_join_query_term
+
+  non_join_query_term
+    : non_join_query_primary
+
+  non_join_query_primary
+    : simple_table
+    | left_paren non_join_query_term right_paren
+
+  simple_table
+    : query_specification
+
   table_name
     : qualified_name
 
@@ -73,8 +92,15 @@ rule
     : from table_reference
 
   table_reference
-    : table_reference correlation_specification
+    : table_name correlation_specification
     | table_name
+    | derived_table correlation_specification
+
+  derived_table
+    : table_subquery
+
+  table_subquery
+    : subquery
 
   correlation_specification
     : as correlation_name
