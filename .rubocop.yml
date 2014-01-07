@@ -4,4 +4,3 @@ AllCops:
   Excludes:
     - 'Gemfile.devtools'
     - 'vendor/**'
-    - 'benchmarks/**'
