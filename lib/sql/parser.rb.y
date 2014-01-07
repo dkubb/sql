@@ -14,10 +14,10 @@ token select from as
 # Rule naming conventions follow the ANSI SQL-92 BNF grammar:
 # http://savage.net.au/SQL/sql-92.bnf
 
-rule
-  default
-    : query_specification
+start
+  query_specification
 
+rule
   sign
     : plus_sign
     | minus_sign
