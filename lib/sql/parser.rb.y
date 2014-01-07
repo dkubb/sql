@@ -18,10 +18,6 @@ rule
   default
     : query_specification
 
-  truth_value
-    : true
-    | false
-
   sign
     : plus_sign
     | minus_sign
@@ -62,8 +58,8 @@ rule
     | column_name
 
   qualifier
-    : table_name
-    | correlation_name
+    : correlation_name
+    | table_name
 
   correlation_name
     : identifier
@@ -93,11 +89,14 @@ rule
 
   from_clause
     : from table_reference
+    | from derived_table_reference
 
   table_reference
-    : table_name correlation_specification
+    : table_reference correlation_specification
     | table_name
-    | derived_table correlation_specification
+
+  derived_table_reference
+    : derived_table correlation_specification
 
   derived_table
     : table_subquery
@@ -107,9 +106,6 @@ rule
 
   correlation_specification
     : as correlation_name
-
-  correlation_name
-    : identifier
 
   value_expression
     : numeric_value_expression
@@ -121,8 +117,8 @@ rule
 
   term
     : factor
-    : term asterisk factor
-    : term solidus factor
+    | term asterisk factor
+    | term solidus factor
 
   factor
     : sign numeric_primary
