@@ -58,8 +58,7 @@ rule
     | column_name
 
   qualifier
-    : correlation_name
-    | table_name
+    : table_name
 
   correlation_name
     : identifier
