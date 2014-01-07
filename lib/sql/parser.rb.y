@@ -48,20 +48,20 @@ rule
     : qualified_identifier
 
   qualified_identifier
-    : identifier { result = s(:identifier, val[0]) }
+    : identifier { result = s(:identifier, val[0][1..-2]) }
 
   column_name
-    : identifier { result = s(:identifier, val[0]) }
+    : identifier { result = s(:identifier, val[0][1..-2]) }
 
   column_reference
-    : qualifier period column_name
+    : qualifier period column_name { result = val[0].concat(val[2]) }
     | column_name
 
   qualifier
     : table_name
 
   correlation_name
-    : identifier { result = s(:identifier, val[0]) }
+    : identifier { result = s(:identifier, val[0][1..-2]) }
 
   query_specification
     : query_specification table_expression { result = val[0].append(val[1]) }
@@ -74,7 +74,7 @@ rule
 
   select_sublist
     : derived_column
-    | qualifier period asterisk
+    | qualifier period asterisk { result = val[0].append(s(:asterisk)) }
 
   derived_column
     : derived_column as_clause { result = s(:as, val[0], val[1]) }
@@ -111,13 +111,13 @@ rule
 
   numeric_value_expression
     : term
-    | numeric_value_expression plus_sign term
-    | numeric_value_expression minus_sign term
+    | numeric_value_expression plus_sign term  { result = s(:add, val[0], val[2]) }
+    | numeric_value_expression minus_sign term { result = s(:sub, val[0], val[2]) }
 
   term
     : factor
-    | term asterisk factor
-    | term solidus factor
+    | term asterisk factor { result = s(:mul, val[0], val[2]) }
+    | term solidus factor  { result = s(:div, val[0], val[2]) }
 
   factor
     : sign numeric_primary { result = s(val[0], val[1]) }
@@ -129,7 +129,7 @@ rule
   value_expression_primary
     : unsigned_value_specification
     | column_reference
-    | left_paren value_expression right_paren
+    | left_paren value_expression right_paren  # TODO: add nodes for parens
 
   unsigned_value_specification
     : unsigned_literal
