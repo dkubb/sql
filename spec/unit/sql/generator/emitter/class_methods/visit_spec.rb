@@ -102,10 +102,9 @@ describe SQL::Generator::Emitter, '.visit' do
 
   context 'binary infix operations' do
     {
-      concat: '||',
-      mul:    '*',
       add:    '+',
       sub:    '-',
+      mul:    '*',
       div:    '/',
       mod:    '%',
       pow:    '^',
@@ -115,6 +114,7 @@ describe SQL::Generator::Emitter, '.visit' do
       gte:    '>=',
       lt:     '<',
       lte:    '<=',
+      concat: '||',
     }.each do |type, operator|
       context type.inspect do
         assert_generates(
