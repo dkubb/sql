@@ -23,7 +23,8 @@ module SQL
           gte:     O_GTE,
           lt:      O_LT,
           lte:     O_LTE,
-          concat:  O_CONCAT
+          concat:  O_CONCAT,
+          as:      O_AS
         )
 
         handle(*TYPES.keys)

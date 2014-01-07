@@ -115,6 +115,7 @@ describe SQL::Generator::Emitter, '.visit' do
       lt:     '<',
       lte:    '<=',
       concat: '||',
+      as:     'AS',
     }.each do |type, operator|
       context type.inspect do
         assert_generates(

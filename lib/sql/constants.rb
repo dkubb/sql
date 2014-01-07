@@ -59,6 +59,7 @@ module SQL
     O_LT       = '<'.freeze
     O_LTE      = '<='.freeze
     O_CONCAT   = '||'.freeze
+    O_AS       = 'AS'.freeze
 
     # Set Operators
     O_EXCEPT    = 'EXCEPT'.freeze
