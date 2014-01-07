@@ -11,9 +11,9 @@
     space;
 
     # Keywords
-    'SELECT'   @{ emit('select') };
-    'FROM'     @{ emit('from')   };
-    'AS'       @{ emit('as')     };
+    'SELECT'   @{ emit('select'); };
+    'FROM'     @{ emit('from');   };
+    'AS'       @{ emit('as');     };
 
     # Literals
     'TRUE'     @{ emit('true');  };
@@ -31,7 +31,7 @@
     '/'        @{ emit('solidus');     };
     'E'        @{ emit('E');           };
 
-    digit      @{ emit('digit')       };
+    digit      @{ emit('digit');      };
     identifier @{ emit('identifier'); };
   *|;
 
