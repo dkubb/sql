@@ -48,10 +48,10 @@ rule
     : qualified_identifier
 
   qualified_identifier
-    : identifier { result = s(:identifier, val[0][1..-2]) }
+    : identifier { result = s(:id, val[0][1..-2]) }
 
   column_name
-    : identifier { result = s(:identifier, val[0][1..-2]) }
+    : identifier { result = s(:id, val[0][1..-2]) }
 
   column_reference
     : qualifier period column_name { result = val[0].concat(val[2]) }
@@ -61,7 +61,7 @@ rule
     : table_name
 
   correlation_name
-    : identifier { result = s(:identifier, val[0][1..-2]) }
+    : identifier { result = s(:id, val[0][1..-2]) }
 
   query_specification
     : query_specification table_expression { result = val[0].append(val[1]) }
@@ -87,8 +87,8 @@ rule
     : from_clause
 
   from_clause
-    : from table_reference         { result = s(:from, val[1]) }
-    | from derived_table_reference { result = s(:from, val[1]) }
+    : from table_reference         { result = val[1] }
+    | from derived_table_reference { result = val[1] }
 
   table_reference
     : table_reference correlation_specification { result = s(:as, val[0], val[1]) }
