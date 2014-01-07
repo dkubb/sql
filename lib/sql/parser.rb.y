@@ -184,7 +184,7 @@ def initialize(scanner)
 end
 
 def parse
-  @result = do_parse
+  @result ||= do_parse
   self
 end
 
