@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'singleton'
+
 require 'ast'
 require 'ice_nine'
 require 'adamantium'
