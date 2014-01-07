@@ -174,6 +174,10 @@ include NodeHelper
 
 attr_reader :result
 
+def self.parse(input, scanner_class = Scanner)
+  new(scanner_class.new(input)).parse
+end
+
 def initialize(scanner)
   @tokens = scanner.each
   super()
