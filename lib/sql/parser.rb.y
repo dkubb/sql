@@ -19,11 +19,11 @@ start
 
 rule
   sign
-    : plus_sign
-    | minus_sign
+    : plus_sign  { result = :uplus  }
+    | minus_sign { result = :uminus }
 
   subquery
-    : left_paren query_expression right_paren
+    : left_paren query_expression right_paren { result = val[1] }
 
   query_expression
     : non_join_query_expression
@@ -36,7 +36,7 @@ rule
 
   non_join_query_primary
     : simple_table
-    | left_paren non_join_query_term right_paren
+    | left_paren non_join_query_term right_paren { result = val[1] }
 
   simple_table
     : query_specification
@@ -48,10 +48,10 @@ rule
     : qualified_identifier
 
   qualified_identifier
-    : identifier
+    : identifier { result = s(:identifier, val[0]) }
 
   column_name
-    : identifier
+    : identifier { result = s(:identifier, val[0]) }
 
   column_reference
     : qualifier period column_name
@@ -61,41 +61,41 @@ rule
     : table_name
 
   correlation_name
-    : identifier
+    : identifier { result = s(:identifier, val[0]) }
 
   query_specification
-    : query_specification table_expression
-    | select select_list
+    : query_specification table_expression { result = val[0].append(val[1]) }
+    | select select_list                   { result = s(:select, val[1])    }
 
   select_list
-    : asterisk
-    | select_list comma select_sublist
-    | select_sublist
+    : asterisk                         { result = s(:fields, s(:asterisk)) }
+    | select_list comma select_sublist { result = val[0].append(val[2])    }
+    | select_sublist                   { result = s(:fields, val[0])       }
 
   select_sublist
     : derived_column
     | qualifier period asterisk
 
   derived_column
-    : derived_column as_clause
+    : derived_column as_clause { result = s(:as, val[0], val[1]) }
     | value_expression
 
   as_clause
-    : as column_name
+    : as column_name { result = val[1] }
 
   table_expression
     : from_clause
 
   from_clause
-    : from table_reference
-    | from derived_table_reference
+    : from table_reference         { result = s(:from, val[1]) }
+    | from derived_table_reference { result = s(:from, val[1]) }
 
   table_reference
-    : table_reference correlation_specification
+    : table_reference correlation_specification { result = s(:as, val[0], val[1]) }
     | table_name
 
   derived_table_reference
-    : derived_table correlation_specification
+    : derived_table correlation_specification { result = s(:as, val[0], val[1]) }
 
   derived_table
     : table_subquery
@@ -104,7 +104,7 @@ rule
     : subquery
 
   correlation_specification
-    : as correlation_name
+    : as correlation_name { result = val[1] }
 
   value_expression
     : numeric_value_expression
@@ -120,7 +120,7 @@ rule
     | term solidus factor
 
   factor
-    : sign numeric_primary
+    : sign numeric_primary { result = s(val[0], val[1]) }
     | numeric_primary
 
   numeric_primary
@@ -142,14 +142,15 @@ rule
     | approximate_numeric_literal
 
   exact_numeric_literal
-    : exact_numeric_literal period unsigned_integer
+    : exact_numeric_literal period unsigned_integer { result = s(:float, sprintf('%d.%d', *val[0], *val[2]).to_f) }
     | unsigned_integer
 
   unsigned_integer
-    : digit
+    : unsigned_integer digit  { result = s(:integer, sprintf('%d%d', *val[0], val[1]).to_i) }
+    | digit                   { result = s(:integer, val[0].to_i) }
 
   approximate_numeric_literal
-    : mantissa E exponent
+    : mantissa E exponent     { result = s(:float, sprintf('%fE%d', *val[0], *val[2]).to_f) }
 
   mantissa
     : exact_numeric_literal
@@ -158,11 +159,20 @@ rule
     : signed_integer
 
   signed_integer
-    : sign unsigned_integer
+    : sign unsigned_integer {
+      op = case val[0]
+      when :uplus  then :+
+      when :uminus then :-
+      end
+      result = s(:integer, 0.send(op, *val[1].children))
+    }
     | unsigned_integer
 end
 
 ---- inner
+include NodeHelper
+
+attr_reader :result
 
 def initialize(scanner)
   @tokens = scanner.each
@@ -170,7 +180,7 @@ def initialize(scanner)
 end
 
 def parse
-  do_parse
+  @result = do_parse
   self
 end
 
