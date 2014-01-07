@@ -15,6 +15,7 @@ module SQL
     def s(type, *children)
       AST::Node.new(type, children)
     end
+    private :s
 
   end # NodeHelper
 end # SQL
