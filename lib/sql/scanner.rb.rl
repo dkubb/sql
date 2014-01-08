@@ -2,6 +2,8 @@
   # TODO: extract machine into separate rl file (minus ruby variable config)
   machine sql;
 
+  unsigned_integer = digit+;
+
   identifier_start = alpha | 0x80..0xff;
   identifier_part  = identifier_start | digit | '""';
   identifier_body  = identifier_start ('_'? identifier_part)*;
@@ -11,28 +13,28 @@
     space;
 
     # Keywords
-    'SELECT'   @{ emit('select'); };
-    'FROM'     @{ emit('from');   };
-    'AS'       @{ emit('as');     };
+    'SELECT'         { emit('select'); };
+    'FROM'           { emit('from');   };
+    'AS'             { emit('as');     };
 
     # Literals
-    'TRUE'     @{ emit('true');  };
-    'FALSE'    @{ emit('false'); };
-    'NULL'     @{ emit('null');  };
+    'TRUE'           { emit('true');  };
+    'FALSE'          { emit('false'); };
+    'NULL'           { emit('null');  };
 
     # Operators
-    '('        @{ emit('left_paren');  };
-    ')'        @{ emit('right_paren'); };
-    ','        @{ emit('comma');       };
-    '.'        @{ emit('period');      };
-    '+'        @{ emit('plus_sign');   };
-    '-'        @{ emit('minus_sign');  };
-    '*'        @{ emit('asterisk');    };
-    '/'        @{ emit('solidus');     };
-    'E'        @{ emit('E');           };
+    '('              { emit('left_paren');  };
+    ')'              { emit('right_paren'); };
+    ','              { emit('comma');       };
+    '.'              { emit('period');      };
+    '+'              { emit('plus_sign');   };
+    '-'              { emit('minus_sign');  };
+    '*'              { emit('asterisk');    };
+    '/'              { emit('solidus');     };
+    'E'              { emit('E');           };
 
-    digit      @{ emit('digit');      };
-    identifier @{ emit('identifier'); };
+    unsigned_integer { emit_unsigned_integer(); };
+    identifier       { emit_identifier();       };
   *|;
 
   # TODO: keep ruby specific variables inline while moving previous code
@@ -91,13 +93,23 @@ module SQL
 
   private
 
-    def emit(token)
-      @block.call(token.to_sym, text)
+    def emit(token, value = text)
+      @block.call(token.to_sym, value)
       @ts = nil
     end
 
+    def emit_unsigned_integer
+      emit(:unsigned_integer, Integer(text))
+    end
+
+    def emit_identifier
+      identifier = text
+      identifier.gsub!(/\A"(.*)"\z/, '\1') and identifier.gsub!('""', '"')
+      emit(:identifier, identifier)
+    end
+
     def text
-      @buffer[@ts..@p].pack('U*')
+      @buffer[@ts...@te].pack('U*')
     end
 
     def read_chunk

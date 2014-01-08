@@ -8,7 +8,7 @@ token select from as
       left_paren right_paren
       comma period
       plus_sign minus_sign asterisk solidus
-      E digit
+      E unsigned_integer
       identifier
 
 # Rule naming conventions follow the ANSI SQL-92 BNF grammar:
@@ -48,10 +48,10 @@ rule
     : qualified_identifier
 
   qualified_identifier
-    : identifier { result = s(:id, val[0][1..-2]) }
+    : identifier { result = s(:id, val[0]) }
 
   column_name
-    : identifier { result = s(:id, val[0][1..-2]) }
+    : identifier { result = s(:id, val[0]) }
 
   column_reference
     : qualifier period column_name { result = val[0].concat(val[2]) }
@@ -61,7 +61,7 @@ rule
     : table_name
 
   correlation_name
-    : identifier { result = s(:id, val[0][1..-2]) }
+    : identifier { result = s(:id, val[0]) }
 
   query_specification
     : query_specification table_expression { result = val[0].append(val[1]) }
@@ -142,15 +142,11 @@ rule
     | approximate_numeric_literal
 
   exact_numeric_literal
-    : exact_numeric_literal period unsigned_integer { result = s(:float, sprintf('%d.%d', *val[0], *val[2]).to_f) }
-    | unsigned_integer
-
-  unsigned_integer
-    : unsigned_integer digit  { result = s(:integer, sprintf('%d%d', *val[0], val[1]).to_i) }
-    | digit                   { result = s(:integer, val[0].to_i) }
+    : exact_numeric_literal period unsigned_integer { result = s(:float, sprintf('%d.%d', *val[0], val[2]).to_f) }
+    | unsigned_integer                              { result = s(:integer, val[0]) }
 
   approximate_numeric_literal
-    : mantissa E exponent     { result = s(:float, sprintf('%fE%d', *val[0], *val[2]).to_f) }
+    : mantissa E exponent { result = s(:float, sprintf('%fE%d', *val[0], *val[2]).to_f) }
 
   mantissa
     : exact_numeric_literal
@@ -161,12 +157,12 @@ rule
   signed_integer
     : sign unsigned_integer {
       op = case val[0]
-      when :uplus  then :+
-      when :uminus then :-
+      when :uplus  then :+@
+      when :uminus then :-@
       end
-      result = s(:integer, 0.send(op, *val[1].children))
+      result = s(:integer, val[0].public_send(op))
     }
-    | unsigned_integer
+    | unsigned_integer { result = s(:integer, val[0]) }
 end
 
 ---- inner
