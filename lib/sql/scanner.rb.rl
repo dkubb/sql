@@ -74,14 +74,7 @@ module SQL
       return to_enum unless block
       return self if @block  # only allow one pass
       @block = block
-
-      # Tokenize a stream of input
-      while chunk = read_chunk
-        @buffer.concat(chunk)
-        %% write exec;
-        optimize_buffer
-      end
-      assert_valid_input
+      scan_input
       self
     end
 
@@ -92,6 +85,15 @@ module SQL
     end
 
   private
+
+    def scan_input
+      while chunk = read_chunk
+        @buffer.concat(chunk)
+        %% write exec;
+        optimize_buffer
+      end
+      assert_valid_input
+    end
 
     def emit(token, value = text)
       @block.call(token.to_sym, value)
