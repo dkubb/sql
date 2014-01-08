@@ -3,4 +3,6 @@ AllCops:
     - 'Gemfile'
   Excludes:
     - 'Gemfile.devtools'
+    - 'lib/sql/parser.rb'
+    - 'lib/sql/scanner.rb'
     - 'vendor/**'
