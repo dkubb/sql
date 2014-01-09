@@ -1,4 +1,5 @@
-# encoding: utf-8
+# Rule naming conventions follow the ANSI SQL-92 BNF grammar:
+# http://savage.net.au/SQL/sql-92.bnf
 
 # An SQL parser
 class SQL::Parser
@@ -10,9 +11,6 @@ token select from as
       plus_sign minus_sign asterisk solidus
       E unsigned_integer
       identifier
-
-# Rule naming conventions follow the ANSI SQL-92 BNF grammar:
-# http://savage.net.au/SQL/sql-92.bnf
 
 start
   query_specification
