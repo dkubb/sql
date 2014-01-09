@@ -22,7 +22,7 @@ module SQL
         def dispatch
           parenthesis do
             write_command(fields, K_SELECT)
-            write_node(from, K_FROM)
+            write_node(from, K_FROM) if from
             remaining_children.each(&method(:visit))
           end
         end
