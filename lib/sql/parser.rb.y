@@ -158,7 +158,7 @@ rule
       when :uplus  then :+@
       when :uminus then :-@
       end
-      result = s(:integer, val[0].public_send(op))
+      result = s(:integer, val[1].public_send(op))
     }
     | unsigned_integer { result = s(:integer, *val) }
 end
