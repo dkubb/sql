@@ -48,10 +48,10 @@ rule
     : qualified_identifier
 
   qualified_identifier
-    : identifier { result = s(:id, val[0]) }
+    : identifier { result = s(:id, *val) }
 
   column_name
-    : identifier { result = s(:id, val[0]) }
+    : identifier { result = s(:id, *val) }
 
   column_reference
     : qualifier period column_name { result = val[0].concat(val[2]) }
@@ -61,7 +61,7 @@ rule
     : table_name
 
   correlation_name
-    : identifier { result = s(:id, val[0]) }
+    : identifier { result = s(:id, *val) }
 
   query_specification
     : query_specification table_expression { result = val[0].append(val[1]) }
@@ -70,14 +70,14 @@ rule
   select_list
     : asterisk                         { result = s(:fields, s(:asterisk)) }
     | select_list comma select_sublist { result = val[0].append(val[2])    }
-    | select_sublist                   { result = s(:fields, val[0])       }
+    | select_sublist                   { result = s(:fields, *val)         }
 
   select_sublist
     : derived_column
     | qualifier period asterisk { result = val[0].append(s(:asterisk)) }
 
   derived_column
-    : derived_column as_clause { result = s(:as, val[0], val[1]) }
+    : derived_column as_clause { result = s(:as, *val) }
     | value_expression
 
   as_clause
@@ -91,11 +91,11 @@ rule
     | from derived_table_reference { result = val[1] }
 
   table_reference
-    : table_reference correlation_specification { result = s(:as, val[0], val[1]) }
+    : table_reference correlation_specification { result = s(:as, *val) }
     | table_name
 
   derived_table_reference
-    : derived_table correlation_specification { result = s(:as, val[0], val[1]) }
+    : derived_table correlation_specification { result = s(:as, *val) }
 
   derived_table
     : table_subquery
@@ -120,7 +120,7 @@ rule
     | term solidus factor  { result = s(:div, val[0], val[2]) }
 
   factor
-    : sign numeric_primary { result = s(val[0], val[1]) }
+    : sign numeric_primary { result = s(*val) }
     | numeric_primary
 
   numeric_primary
@@ -129,7 +129,7 @@ rule
   value_expression_primary
     : unsigned_value_specification
     | column_reference
-    | left_paren value_expression right_paren  # TODO: add nodes for parens
+    | left_paren value_expression right_paren { result = val[1] }
 
   unsigned_value_specification
     : unsigned_literal
@@ -162,7 +162,7 @@ rule
       end
       result = s(:integer, val[0].public_send(op))
     }
-    | unsigned_integer { result = s(:integer, val[0]) }
+    | unsigned_integer { result = s(:integer, *val) }
 end
 
 ---- inner
