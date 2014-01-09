@@ -12,6 +12,13 @@ token select from as
       E unsigned_integer
       identifier
 
+prechigh
+  left IDENTIFIER_SEPARATOR
+  right UNARY
+  left asterisk solidus
+  left plus_sign minus_sign
+preclow
+
 start
   query_specification
 
@@ -52,7 +59,7 @@ rule
     : identifier { result = s(:id, *val) }
 
   column_reference
-    : qualifier period column_name { result = val[0].concat(val[2]) }
+    : qualifier period =IDENTIFIER_SEPARATOR column_name { result = val[0].concat(val[2]) }
     | column_name
 
   qualifier
@@ -72,7 +79,7 @@ rule
 
   select_sublist
     : derived_column
-    | qualifier period asterisk { result = val[0].append(s(:asterisk)) }
+    | qualifier period =IDENTIFIER_SEPARATOR asterisk { result = val[0].append(s(:asterisk)) }
 
   derived_column
     : derived_column as_clause { result = s(:as, *val) }
@@ -118,7 +125,7 @@ rule
     | term solidus factor  { result = s(:div, val[0], val[2]) }
 
   factor
-    : sign numeric_primary { result = s(*val) }
+    : sign =UNARY numeric_primary { result = s(*val) }
     | numeric_primary
 
   numeric_primary
@@ -153,7 +160,7 @@ rule
     : signed_integer
 
   signed_integer
-    : sign unsigned_integer {
+    : sign =UNARY unsigned_integer {
       op = case val[0]
       when :uplus  then :+@
       when :uminus then :-@
