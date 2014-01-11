@@ -120,7 +120,7 @@ describe SQL::Generator::Emitter, '.visit' do
       context type.inspect do
         assert_generates(
           s(type, s(:id, 'foo'), s(:id, 'bar')),
-          %Q["foo" #{operator} "bar"]
+          %Q[("foo" #{operator} "bar")]
         )
       end
     end
@@ -128,26 +128,26 @@ describe SQL::Generator::Emitter, '.visit' do
     context ':is' do
       assert_generates(
         s(:is, s(:id, 'foo'), s(:null)),
-        '"foo" IS NULL'
+        '("foo" IS NULL)'
       )
 
       assert_generates(
         s(:is, s(:id, 'foo'), s(:not, s(:null))),
-        '"foo" IS NOT NULL'
+        '("foo" IS NOT NULL)'
       )
     end
 
     context ':in' do
       assert_generates(
         s(:in, s(:id, 'foo'), s(:tuple, s(:integer, 1), s(:integer, 2))),
-        '"foo" IN (1, 2)'
+        '("foo" IN (1, 2))'
       )
     end
 
     context ':between' do
       assert_generates(
         s(:between, s(:id, 'foo'), s(:and, s(:integer, 1), s(:integer, 2))),
-        '"foo" BETWEEN 1 AND 2'
+        '("foo" BETWEEN 1 AND 2)'
       )
     end
   end
@@ -218,7 +218,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'name'), s(:string, 'foo'))
           )
         ),
-        %q[DELETE FROM "users" WHERE "name" = 'foo']
+        %q[DELETE FROM "users" WHERE ("name" = 'foo')]
       )
     end
   end
@@ -233,7 +233,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'age'), s(:integer, 1))
           )
         ),
-        %q[UPDATE "users" SET "name" = 'foo', "age" = 1]
+        %q[UPDATE "users" SET ("name" = 'foo'), ("age" = 1)]
       )
     end
 
@@ -249,11 +249,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'age'), s(:integer, 2))
           )
         ),
-        <<-SQL.gsub(/\s+/, ' ').strip
-          UPDATE "users"
-          SET "name" = 'foo', "age" = 1
-          WHERE "age" = 2
-        SQL
+        %q[UPDATE "users" SET ("name" = 'foo'), ("age" = 1) WHERE ("age" = 2)]
       )
     end
   end
@@ -279,7 +275,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'id'), s(:integer, 1))
           )
         ),
-        %q[SELECT "name", "age" FROM "users" WHERE "id" = 1]
+        %q[SELECT "name", "age" FROM "users" WHERE ("id" = 1)]
       )
     end
 
@@ -290,11 +286,7 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:id, 'users'),
           s(:group_by, s(:id, 'name'), s(:id, 'age'))
         ),
-        <<-SQL.gsub(/\s+/, ' ').strip
-          SELECT "name", "age"
-          FROM "users"
-          GROUP BY "name", "age"
-        SQL
+        %q[SELECT "name", "age" FROM "users" GROUP BY "name", "age"]
       )
     end
 
@@ -305,11 +297,7 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:id, 'users'),
           s(:order_by, s(:asc, s(:id, 'name')), s(:desc, s(:id, 'age')))
         ),
-        <<-SQL.gsub(/\s+/, ' ').strip
-          SELECT "name", "age"
-          FROM "users"
-          ORDER BY "name" ASC, "age" DESC
-        SQL
+        %q[SELECT "name", "age" FROM "users" ORDER BY "name" ASC, "age" DESC]
       )
     end
 
@@ -325,7 +313,7 @@ describe SQL::Generator::Emitter, '.visit' do
           SELECT "name", "age"
           FROM "users"
           GROUP BY "name", "age"
-          HAVING "id" = 1
+          HAVING ("id" = 1)
         SQL
       )
     end
@@ -370,7 +358,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:id, 'bar'),
             s(:on, s(:eq, s(:id, 'foo', 'name'), s(:id, 'bar', 'name')))
           ),
-          %Q["foo" #{operator} "bar" ON "foo"."name" = "bar"."name"]
+          %Q["foo" #{operator} "bar" ON ("foo"."name" = "bar"."name")]
         )
 
         assert_generates(
