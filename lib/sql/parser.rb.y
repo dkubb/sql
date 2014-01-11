@@ -8,14 +8,17 @@ token select from as
       true false null
       left_paren right_paren
       comma period
-      plus_sign minus_sign asterisk solidus
+      pow
+      asterisk solidus mod
+      plus_sign minus_sign
       E unsigned_integer
       identifier
 
 prechigh
   left IDENTIFIER_SEPARATOR
   right UNARY
-  left asterisk solidus
+  left pow
+  left asterisk solidus mod
   left plus_sign minus_sign
 preclow
 
@@ -121,8 +124,10 @@ rule
 
   term
     : factor
-    | term asterisk factor { result = s(:mul, val[0], val[2]) }
-    | term solidus factor  { result = s(:div, val[0], val[2]) }
+    | term pow      factor  { result = s(:pow, val[0], val[2]) }
+    | term asterisk factor  { result = s(:mul, val[0], val[2]) }
+    | term solidus  factor  { result = s(:div, val[0], val[2]) }
+    | term mod      factor  { result = s(:mod, val[0], val[2]) }
 
   factor
     : sign =UNARY numeric_primary { result = s(*val) }

@@ -31,6 +31,8 @@
     '-'              { emit('minus_sign');  };
     '*'              { emit('asterisk');    };
     '/'              { emit('solidus');     };
+    '%'              { emit('mod');         };
+    '^'              { emit('pow');         };
     'E'              { emit('E');           };
 
     unsigned_integer { emit_unsigned_integer(); };
