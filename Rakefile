@@ -23,6 +23,6 @@ task :clean do
 end
 
 # Add compile as a dependency to spec tasks
-%w[spec spec:unit spec:integration].each do |task_name|
+%w[ci:metrics spec spec:unit spec:integration].each do |task_name|
   task(task_name => :compile)
 end
