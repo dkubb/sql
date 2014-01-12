@@ -11,8 +11,10 @@ token select from as
       pow
       asterisk solidus mod
       plus_sign minus_sign
-      E unsigned_integer
+      E
       identifier
+      unsigned_integer
+      string
 
 prechigh
   left IDENTIFIER_SEPARATOR
@@ -29,6 +31,19 @@ rule
   sign
     : plus_sign  { result = :uplus  }
     | minus_sign { result = :uminus }
+
+  truth_value
+    : true  { result = s(:true)  }
+    | false { result = s(:false) }
+
+  general_literal
+    : character_string_literal
+    | truth_value
+    | null { result = s(:null) }
+
+  character_string_literal
+    : character_string_literal string { result = s(:string, [*val[0], val[1]].join) }
+    | string                          { result = s(:string, val[0])                 }
 
   subquery
     : left_paren query_expression right_paren { result = val[1] }
@@ -146,6 +161,7 @@ rule
 
   unsigned_literal
     : unsigned_numeric_literal
+    | general_literal
 
   unsigned_numeric_literal
     : exact_numeric_literal

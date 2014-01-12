@@ -39,6 +39,7 @@ module SQL
     O_SQRT   = 'SQRT'.freeze
     O_ABS    = 'ABS'.freeze
     O_LENGTH = 'LENGTH'.freeze
+    O_DATE   = 'DATE'.freeze
 
     # Binary Infix Operators
     O_AND      = 'AND'.freeze

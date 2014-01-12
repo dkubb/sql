@@ -2,15 +2,20 @@
   # TODO: extract machine into separate rl file (minus ruby variable config)
   machine sql;
 
-  unsigned_integer = digit+;
+  separator          = ' ' | "\r" | "\n";
+  quoted_string      = "'" (any - "'" | "''")* "'";  # FIXME: not greedy enough
 
-  identifier_start = alpha | 0x80..0xff;
-  identifier_part  = identifier_start | digit | '""';
-  identifier_body  = identifier_start ('_'? identifier_part)*;
-  identifier       = '"' identifier_body '"';
+  unsigned_integer   = digit+;
 
+  identifier_start   = alpha | 0x80..0xff;
+  identifier_part    = identifier_start | digit | '""';
+  identifier_body    = identifier_start ('_'? identifier_part)*;
+  identifier         = '"' identifier_body '"';
+
+  # TODO: consider using a normal machine for this, since it
+  # should not backtrack
   main := |*
-    space;
+    separator;
 
     # Keywords
     'SELECT'         { emit('select'); };
@@ -35,8 +40,10 @@
     '^'              { emit('pow');         };
     'E'              { emit('E');           };
 
+    quoted_string    { emit_string();           };
     unsigned_integer { emit_unsigned_integer(); };
-    identifier       { emit_identifier();       };
+
+    identifier       { emit_identifier(); };
   *|;
 
   # TODO: keep ruby specific variables inline while moving previous code
@@ -102,14 +109,20 @@ module SQL
       @ts = nil
     end
 
+    def emit_identifier
+      identifier = text
+      identifier.sub!(/\A"(.*)"\z/, '\1') and identifier.gsub!('""', '"')
+      emit(:identifier, identifier)
+    end
+
     def emit_unsigned_integer
       emit(:unsigned_integer, Integer(text))
     end
 
-    def emit_identifier
-      identifier = text
-      identifier.gsub!(/\A"(.*)"\z/, '\1') and identifier.gsub!('""', '"')
-      emit(:identifier, identifier)
+    def emit_string
+      string = text
+      string.sub!(/\A'(.*)'\z/, '\1') and string.gsub!("''", "'")
+      emit(:string, string)
     end
 
     def text
