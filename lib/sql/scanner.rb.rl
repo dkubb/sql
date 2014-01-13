@@ -2,19 +2,24 @@
   # TODO: extract machine into separate rl file (minus ruby variable config)
   machine sql;
 
-  separator          = ' ' | "\r" | "\n";
-  quoted_string      = "'" (any - "'" | "''")* "'";  # FIXME: not greedy enough
+  delimiter        = 0;
+  separator        = ' ' | "\r" | "\n";
+  quote            = "'";
+  double_quote     = '"';
+  extended_ascii   = 0x80..0xff;
+  underscore       = '_';
 
-  unsigned_integer   = digit+;
+  quoted_string    = quote (^quote | quote{2})** quote;
 
-  identifier_start   = alpha | 0x80..0xff;
-  identifier_part    = identifier_start | digit | '""';
-  identifier_body    = identifier_start ('_'? identifier_part)*;
-  identifier         = '"' identifier_body '"';
+  unsigned_integer = digit+;
 
-  # TODO: consider using a normal machine for this, since it
-  # should not backtrack
+  identifier_start = alpha | extended_ascii;
+  identifier_part  = identifier_start | digit | double_quote{2};
+  identifier_body  = identifier_start (underscore? identifier_part)*;
+  identifier       = double_quote identifier_body double_quote;
+
   main := |*
+    delimiter;
     separator;
 
     # Keywords
@@ -67,15 +72,17 @@ module SQL
 
     include Enumerable
 
-#    CHUNK_SIZE = 1024
-    CHUNK_SIZE = 1  # XXX: 1 used for testing
+#    CHUNK_SIZE  = 1024
+    CHUNK_SIZE  = 1  # XXX: used for testing
+    END_OF_FILE = [0].freeze
 
     %% write data;
 
     def initialize(input)
-      @input = input
-      @block = nil
-      @buffer = []
+      @input    = input
+      @encoding = input.external_encoding
+      @block    = nil
+      @buffer   = []
       %% write init;
     end
 
@@ -96,11 +103,12 @@ module SQL
   private
 
     def scan_input
-      while chunk = read_chunk
+      begin
+        chunk = read_chunk
         @buffer.concat(chunk)
         %% write exec;
         optimize_buffer
-      end
+      end until chunk == END_OF_FILE
       assert_valid_input
     end
 
@@ -126,18 +134,22 @@ module SQL
     end
 
     def text
-      @buffer[@ts...@te].pack('U*')
+      @buffer[@ts...@te].pack(pack_format)
     end
 
     def read_chunk
-      chunk  = @input.read_nonblock(CHUNK_SIZE)
-      format = chunk.encoding == Encoding::UTF_8 ? 'U*' : 'C*'
-      chunk.unpack(format)
+      chunk = @input.read_nonblock(CHUNK_SIZE)
+      # TODO: handle when the chunk is not aligned to a character boundary
+      chunk.unpack(pack_format)
     rescue IO::WaitReadable
       IO.select([@input])
       retry
     rescue EOFError
-      # return nil
+      END_OF_FILE
+    end
+
+    def pack_format
+      @encoding == Encoding::UTF_8 ? 'U*' : 'C*'
     end
 
     def optimize_buffer

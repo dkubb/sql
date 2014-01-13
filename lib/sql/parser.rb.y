@@ -145,7 +145,13 @@ rule
     | term mod      factor  { result = s(:mod, val[0], val[2]) }
 
   factor
-    : sign =UNARY numeric_primary { result = s(*val) }
+    : sign =UNARY numeric_primary {
+      op = case val[0]
+      when :uplus  then :+@
+      when :uminus then :-@
+      end
+      result = s(val[1].type, val[1].children.first.public_send(op))
+    }
     | numeric_primary
 
   numeric_primary
