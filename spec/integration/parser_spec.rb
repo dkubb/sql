@@ -24,10 +24,8 @@ describe SQL::Parser do
     assert_parses "SELECT 'a''b'",  s(:select, s(:fields, s(:string, "a'b")))
     assert_parses "SELECT 'a' 'b'", s(:select, s(:fields, s(:string, "ab")))
 
-    pending do
-      string = 'Iñtërnâtiônàlizætiøn'
-      assert_parses "SELECT '#{string}'", s(:select, s(:fields, s(:string, string)))
-    end
+    string = 'Iñtërnâtiônàlizætiøn'.freeze
+    assert_parses "SELECT '#{string}'", s(:select, s(:fields, s(:string, string)))
   end
 
   context 'exact numeric literal' do
@@ -80,7 +78,7 @@ describe SQL::Parser do
     assert_parses 'SELECT "a_b"',   s(:select, s(:fields, s(:id, 'a_b')))
     assert_parses 'SELECT "a"."b"', s(:select, s(:fields, s(:id, 'a', 'b')))
 
-    id = "a#{128.chr}"
+    id = "a#{128.chr}".freeze
     assert_parses %Q[SELECT "#{id}"], s(:select, s(:fields, s(:id, id)))
   end
 end

@@ -80,7 +80,7 @@ module SQL
 
     def initialize(input)
       @input    = input
-      @encoding = input.external_encoding
+      @encoding = @input.external_encoding
       @block    = nil
       @buffer   = []
       %% write init;
@@ -134,22 +134,16 @@ module SQL
     end
 
     def text
-      @buffer[@ts...@te].pack(pack_format)
+      @buffer[@ts...@te].pack('C*').force_encoding(@encoding)
     end
 
     def read_chunk
-      chunk = @input.read_nonblock(CHUNK_SIZE)
-      # TODO: handle when the chunk is not aligned to a character boundary
-      chunk.unpack(pack_format)
+      @input.read_nonblock(CHUNK_SIZE).bytes
     rescue IO::WaitReadable
       IO.select([@input])
       retry
     rescue EOFError
       END_OF_FILE
-    end
-
-    def pack_format
-      @encoding == Encoding::UTF_8 ? 'U*' : 'C*'
     end
 
     def optimize_buffer
