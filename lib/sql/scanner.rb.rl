@@ -3,7 +3,9 @@
   machine sql;
 
   delimiter        = 0;
-  separator        = ' ' | "\r" | "\n";
+  cr               = "\r";
+  lf               = "\n";
+  separator        = ' ' | cr lf | lf;
   quote            = "'";
   double_quote     = '"';
   underscore       = '_';
