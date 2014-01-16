@@ -6,14 +6,13 @@
   separator        = ' ' | "\r" | "\n";
   quote            = "'";
   double_quote     = '"';
-  extended_ascii   = 0x80..0xff;
   underscore       = '_';
 
   quoted_string    = quote (^quote | quote{2})** quote;
 
   unsigned_integer = digit+;
 
-  identifier_start = alpha | extended_ascii;
+  identifier_start = alpha;
   identifier_part  = identifier_start | digit | double_quote{2};
   identifier_body  = identifier_start (underscore? identifier_part)*;
   identifier       = double_quote identifier_body double_quote;

@@ -77,8 +77,5 @@ describe SQL::Parser do
     assert_parses 'SELECT "a""b"',  s(:select, s(:fields, s(:id, 'a"b')))
     assert_parses 'SELECT "a_b"',   s(:select, s(:fields, s(:id, 'a_b')))
     assert_parses 'SELECT "a"."b"', s(:select, s(:fields, s(:id, 'a', 'b')))
-
-    id = "a#{128.chr}".freeze
-    assert_parses %Q[SELECT "#{id}"], s(:select, s(:fields, s(:id, id)))
   end
 end
