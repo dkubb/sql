@@ -6,6 +6,7 @@ gemspec
 
 platform :rbx do
   gem 'rubysl-bigdecimal', '~> 2.0.2'
+  gem 'rubysl-enumerator', '~> 2.0.0'
 end
 
 group :development, :test do
