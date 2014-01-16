@@ -106,7 +106,7 @@ module SQL
     def scan_input
       begin
         chunk = read_chunk
-        @buffer.concat(chunk)
+        @buffer.push(*chunk)
         %% write exec;
         optimize_buffer
       end until chunk == END_OF_FILE
