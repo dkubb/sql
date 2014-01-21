@@ -7,29 +7,35 @@ describe SQL::Generator::Emitter, '.visit' do
   include_context 'emitter'
 
   context 'with literal singletons' do
-    assert_generates s(:true),  'TRUE'
-    assert_generates s(:false), 'FALSE'
-    assert_generates s(:null),  'NULL'
+    assert_generates s(:select, s(:fields, s(:true))),  'SELECT TRUE'
+    assert_generates s(:select, s(:fields, s(:false))), 'SELECT FALSE'
+    assert_generates s(:select, s(:fields, s(:null))),  'SELECT NULL'
   end
 
   context 'with strings' do
-    assert_generates s(:string, %q[echo 'Hello']), %q['echo ''Hello''']
+    assert_generates(
+      s(:select, s(:fields, s(:string, %q[echo 'Hello']))),
+      %q[SELECT 'echo ''Hello''']
+    )
   end
 
   context 'with integers' do
-    assert_generates s(:integer, 1), '1'
+    assert_generates s(:select, s(:fields, s(:integer, 1))), 'SELECT 1'
   end
 
   context 'with floats' do
-    assert_generates s(:float, 1.0), '1.0'
+    assert_generates s(:select, s(:fields, s(:float, 1.0))), 'SELECT 1.0'
   end
 
   context 'with decimals' do
-    assert_generates s(:decimal, BigDecimal('1.0')), '1.0'
+    assert_generates s(:select, s(:fields, s(:decimal, BigDecimal('1.0')))), 'SELECT 1.0'
   end
 
   context 'with dates' do
-    assert_generates s(:date, Date.new(2013, 1, 1)), %q['2013-01-01']
+    assert_generates(
+      s(:select, s(:fields, s(:date, Date.new(2013, 1, 1)))),
+      %q[SELECT DATE '2013-01-01']
+    )
   end
 
   context 'with datetimes' do
@@ -40,8 +46,8 @@ describe SQL::Generator::Emitter, '.visit' do
     datetime = DateTime.new(2013, 12, 31, 15, 59, 59 + nsec_in_seconds, offset)
 
     assert_generates(
-      s(:datetime, datetime),
-      %q['2013-12-31T23:59:59.000000001+00:00']  # converts to UTC
+      s(:select, s(:fields, s(:datetime, datetime))),
+      %q[SELECT '2013-12-31T23:59:59.000000001+00:00']  # converts to UTC
     )
   end
 
@@ -55,26 +61,26 @@ describe SQL::Generator::Emitter, '.visit' do
     end
 
     assert_generates(
-      s(:time, time),
-      %q['2010-12-31T23:59:59.000001000Z']  # converts to UTC
+      s(:select, s(:fields, s(:time, time))),
+      %q[SELECT '2010-12-31T23:59:59.000001000Z']  # converts to UTC
     )
   end
 
   context 'identifiers' do
-    assert_generates s(:id, 'echo "oh hai"'), '"echo ""oh hai"""'
+    assert_generates s(:select, s(:fields, s(:id, 'echo "oh hai"'))), 'SELECT "echo ""oh hai"""'
   end
 
   context 'unary prefix operations' do
     context 'with plus' do
-      assert_generates s(:uplus, s(:integer, 1)), '+1'
+      assert_generates s(:select, s(:fields, s(:uplus, s(:integer, 1)))), 'SELECT +1'
     end
 
     context 'with minus' do
-      assert_generates s(:uminus, s(:integer, 1)), '-1'
+      assert_generates s(:select, s(:fields, s(:uminus, s(:integer, 1)))), 'SELECT -1'
     end
 
     context 'with negation' do
-      assert_generates s(:not, s(:true)), 'NOT TRUE'
+      assert_generates s(:select, s(:fields, s(:not, s(:true)))), 'SELECT NOT TRUE'
     end
   end
 
@@ -93,8 +99,8 @@ describe SQL::Generator::Emitter, '.visit' do
     }.each do |type, operator|
       context type.inspect do
         assert_generates(
-          s(type, s(:id, 'foo')),
-          %Q[#{operator} ("foo")]
+          s(:select, s(:fields, s(type, s(:id, 'foo')))),
+          %Q[SELECT #{operator} ("foo")]
         )
       end
     end
@@ -119,35 +125,43 @@ describe SQL::Generator::Emitter, '.visit' do
     }.each do |type, operator|
       context type.inspect do
         assert_generates(
-          s(type, s(:id, 'foo'), s(:id, 'bar')),
-          %Q["foo" #{operator} "bar"]
+          s(:select, s(:fields, s(type, s(:id, 'foo'), s(:id, 'bar')))),
+          %Q[SELECT ("foo" #{operator} "bar")]
         )
       end
     end
 
     context ':is' do
       assert_generates(
-        s(:is, s(:id, 'foo'), s(:null)),
-        '"foo" IS NULL'
+        s(:select, s(:fields, s(:is, s(:id, 'foo'), s(:null)))),
+        'SELECT ("foo" IS NULL)'
       )
 
       assert_generates(
-        s(:is, s(:id, 'foo'), s(:not, s(:null))),
-        '"foo" IS NOT NULL'
+        s(:select, s(:fields, s(:is, s(:id, 'foo'), s(:not, s(:null))))),
+        'SELECT ("foo" IS NOT NULL)'
       )
     end
 
     context ':in' do
       assert_generates(
-        s(:in, s(:id, 'foo'), s(:tuple, s(:integer, 1), s(:integer, 2))),
-        '"foo" IN (1, 2)'
+        s(:select,
+          s(:fields,
+            s(:in, s(:id, 'foo'), s(:tuple, s(:integer, 1), s(:integer, 2)))
+          )
+        ),
+        'SELECT ("foo" IN (1, 2))'
       )
     end
 
     context ':between' do
       assert_generates(
-        s(:between, s(:id, 'foo'), s(:and, s(:integer, 1), s(:integer, 2))),
-        '"foo" BETWEEN 1 AND 2'
+        s(:select,
+          s(:fields,
+            s(:between, s(:id, 'foo'), s(:and, s(:integer, 1), s(:integer, 2)))
+          )
+        ),
+        'SELECT ("foo" BETWEEN 1 AND 2)'
       )
     end
   end
@@ -155,44 +169,37 @@ describe SQL::Generator::Emitter, '.visit' do
   context 'binary connective operations' do
     context ':and' do
       assert_generates(
-        s(:and, s(:true), s(:true)),
-        'TRUE AND TRUE'
+        s(:select, s(:fields, s(:and, s(:true), s(:true)))),
+        'SELECT TRUE AND TRUE'
       )
 
       assert_generates(
-        s(:and, s(:true), s(:and, s(:true), s(:true))),
-        'TRUE AND TRUE AND TRUE'
+        s(:select, s(:fields, s(:and, s(:true), s(:and, s(:true), s(:true))))),
+        'SELECT TRUE AND TRUE AND TRUE'
       )
 
       assert_generates(
-        s(:and, s(:true), s(:or, s(:false), s(:true))),
-        'TRUE AND (FALSE OR TRUE)'
+        s(:select, s(:fields, s(:and, s(:true), s(:or, s(:false), s(:true))))),
+        'SELECT TRUE AND (FALSE OR TRUE)'
       )
     end
 
     context ':or' do
       assert_generates(
-        s(:or, s(:false), s(:true)),
-        'FALSE OR TRUE'
+        s(:select, s(:fields, s(:or, s(:false), s(:true)))),
+        'SELECT FALSE OR TRUE'
       )
 
       assert_generates(
-        s(:or, s(:false), s(:or, s(:false), s(:true))),
-        'FALSE OR FALSE OR TRUE'
+        s(:select, s(:fields, s(:or, s(:false), s(:or, s(:false), s(:true))))),
+        'SELECT FALSE OR FALSE OR TRUE'
       )
 
       assert_generates(
-        s(:or, s(:false), s(:and, s(:true), s(:true))),
-        'FALSE OR (TRUE AND TRUE)'
+        s(:select, s(:fields, s(:or, s(:false), s(:and, s(:true), s(:true))))),
+        'SELECT FALSE OR (TRUE AND TRUE)'
       )
     end
-  end
-
-  context 'tuples' do
-    assert_generates(
-      s(:tuple, s(:integer, 1), s(:string, 'foo')),
-      "(1, 'foo')"
-    )
   end
 
   context 'insert' do
@@ -218,7 +225,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'name'), s(:string, 'foo'))
           )
         ),
-        %q[DELETE FROM "users" WHERE "name" = 'foo']
+        %q[DELETE FROM "users" WHERE ("name" = 'foo')]
       )
     end
   end
@@ -233,7 +240,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'age'), s(:integer, 1))
           )
         ),
-        %q[UPDATE "users" SET "name" = 'foo', "age" = 1]
+        %q[UPDATE "users" SET ("name" = 'foo'), ("age" = 1)]
       )
     end
 
@@ -249,11 +256,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'age'), s(:integer, 2))
           )
         ),
-        <<-SQL.gsub(/\s+/, ' ').strip
-          UPDATE "users"
-          SET "name" = 'foo', "age" = 1
-          WHERE "age" = 2
-        SQL
+        %q[UPDATE "users" SET ("name" = 'foo'), ("age" = 1) WHERE ("age" = 2)]
       )
     end
   end
@@ -279,7 +282,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:eq, s(:id, 'id'), s(:integer, 1))
           )
         ),
-        %q[SELECT "name", "age" FROM "users" WHERE "id" = 1]
+        %q[SELECT "name", "age" FROM "users" WHERE ("id" = 1)]
       )
     end
 
@@ -290,11 +293,7 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:id, 'users'),
           s(:group_by, s(:id, 'name'), s(:id, 'age'))
         ),
-        <<-SQL.gsub(/\s+/, ' ').strip
-          SELECT "name", "age"
-          FROM "users"
-          GROUP BY "name", "age"
-        SQL
+        %q[SELECT "name", "age" FROM "users" GROUP BY "name", "age"]
       )
     end
 
@@ -305,11 +304,7 @@ describe SQL::Generator::Emitter, '.visit' do
           s(:id, 'users'),
           s(:order_by, s(:asc, s(:id, 'name')), s(:desc, s(:id, 'age')))
         ),
-        <<-SQL.gsub(/\s+/, ' ').strip
-          SELECT "name", "age"
-          FROM "users"
-          ORDER BY "name" ASC, "age" DESC
-        SQL
+        %q[SELECT "name", "age" FROM "users" ORDER BY "name" ASC, "age" DESC]
       )
     end
 
@@ -325,7 +320,7 @@ describe SQL::Generator::Emitter, '.visit' do
           SELECT "name", "age"
           FROM "users"
           GROUP BY "name", "age"
-          HAVING "id" = 1
+          HAVING ("id" = 1)
         SQL
       )
     end
@@ -370,7 +365,7 @@ describe SQL::Generator::Emitter, '.visit' do
             s(:id, 'bar'),
             s(:on, s(:eq, s(:id, 'foo', 'name'), s(:id, 'bar', 'name')))
           ),
-          %Q["foo" #{operator} "bar" ON "foo"."name" = "bar"."name"]
+          %Q["foo" #{operator} "bar" ON ("foo"."name" = "bar"."name")]
         )
 
         assert_generates(

@@ -18,7 +18,7 @@ module SQL
           #
           # @api private
           def dispatch
-            write(D_QUOTE, value.iso8601, D_QUOTE)
+            write(O_DATE + WS, D_QUOTE, value.iso8601, D_QUOTE)
           end
 
         end # Date

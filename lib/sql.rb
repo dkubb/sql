@@ -73,9 +73,11 @@ require 'sql/generator/emitter/select'
 require 'sql/generator/emitter/set'
 require 'sql/generator/emitter/join'
 
-require 'sql/parser'
 require 'sql/version'
 require 'sql/node_helper'
+
+require 'sql/scanner'
+require 'sql/parser'
 
 # Finalize the emitter dispatch table
 SQL::Generator::Emitter.finalize

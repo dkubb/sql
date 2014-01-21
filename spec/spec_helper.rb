@@ -13,15 +13,18 @@ if ENV['COVERAGE'] == 'true'
     command_name 'spec:unit'
 
     add_filter 'config'
+    add_filter 'lib/sql/parser.rb'
+    add_filter 'lib/sql/scanner.rb'
     add_filter 'spec'
     add_filter 'vendor'
 
-    minimum_coverage 99.81
+    minimum_coverage 99.82
   end
 end
 
 require 'devtools/spec_helper'
 require 'sql'
+require 'stringio'
 require 'bigdecimal'
 
 RSpec.configure do |config|
