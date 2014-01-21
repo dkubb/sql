@@ -22,5 +22,5 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency('ast',           '~> 1.1.0')
   gem.add_runtime_dependency('ice_nine',      '~> 0.11.0')
 
-  gem.add_development_dependency('bundler', '~> 1.3', '>= 1.3.5')
+  gem.add_development_dependency('bundler', '~> 1.5', '>= 1.5.2')
 end
